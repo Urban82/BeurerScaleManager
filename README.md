@@ -5,3 +5,9 @@ This project would be a Linux replacement for the **Beurer HealthManager** (see
 only for Windows&reg;.
 
 Author: Danilo Treffiletti <urban82@gmail.com>
+
+## Dependencies
+
+This project use:
+* Qt 4.8
+* libusb-1.0
