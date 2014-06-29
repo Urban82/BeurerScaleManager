@@ -1,0 +1,5 @@
+set(RCS
+)
+list_add_prefix(RCS ${CMAKE_CURRENT_SOURCE_DIR}/)
+
+set(BSM_RCS ${BSM_RCS} ${RCS} PARENT_SCOPE)
