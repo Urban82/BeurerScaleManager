@@ -28,6 +28,11 @@
 
 #include <QDebug>
 
+/*! Starting point for the application.
+ * \param argc the number of command-line arguments
+ * \param argv the array of command-line arguments
+ * \return the exit status value: \c 0 if no errors
+ */
 int main(int argc, char** argv)
 {
     int exit_status = 0;

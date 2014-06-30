@@ -52,3 +52,12 @@ endif(DEBUG)
 add_executable(BeurerScaleManager ${BSM_SRCS})
 target_link_libraries(BeurerScaleManager ${QT_QTCORE_LIBRARY} ${LIBUSB_LIBRARIES})
 install(TARGETS BeurerScaleManager RUNTIME DESTINATION bin)
+
+if(DOXYGEN_FOUND)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/BeurerScaleManager.doxy ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+    add_custom_target(docs
+        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating documentation with Doxygen" VERBATIM
+    )
+endif(DOXYGEN_FOUND)
