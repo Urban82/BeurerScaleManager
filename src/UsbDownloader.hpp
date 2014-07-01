@@ -23,7 +23,7 @@
 #ifndef USBDOWNLOADER_HPP
 #define USBDOWNLOADER_HPP
 
-#include <QtCore/QObject>
+#include <QtCore/QThread>
 #include <QtCore/QByteArray>
 
 class libusb_context;
@@ -36,21 +36,16 @@ class libusb_context;
  * When the download is completed, a signal is emitted. A progress signal is also
  * emitted while downloading.
  */
-class UsbDownloader : public QObject
+class UsbDownloader : public QThread
 {
     Q_OBJECT
 
 public:
     /*! Constructor of the class.
-     * \param parent the parent QObject
+     * \param parent the parent QThread
      */
-    explicit UsbDownloader(QObject* parent = 0);
+    explicit UsbDownloader(QThread* parent = 0);
     virtual ~UsbDownloader();
-
-    /*! Start the download of the data.
-     * \return \c true if the download was started, \c false otherwise (i.e. a download is in progress)
-     */
-    bool start();
 
 signals:
     /*! The download was completed.
@@ -58,8 +53,10 @@ signals:
      */
     void completed(const QByteArray& data);
 
-private:
+protected:
     libusb_context* ctx;
+
+    virtual void run();
 };
 
 #endif // USBDOWNLOADER_HPP

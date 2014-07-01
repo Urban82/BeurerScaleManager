@@ -37,8 +37,8 @@
 //! USB control wValue
 #define USB_CTRL_VALUE      0x0300
 
-UsbDownloader::UsbDownloader(QObject* parent)
-    : QObject(parent)
+UsbDownloader::UsbDownloader(QThread* parent)
+    : QThread(parent)
     , ctx(0)
 {
     // Initialize libusb session
@@ -60,10 +60,8 @@ UsbDownloader::~UsbDownloader()
     qDebug() << "libusb closed";
 }
 
-bool UsbDownloader::start()
+void UsbDownloader::run()
 {
-    bool retval = false;
-
     libusb_device_handle* handle = 0;
 
     do { // Error loop
@@ -97,9 +95,11 @@ bool UsbDownloader::start()
         }
         qDebug() << "Interface claimed";
 
-        // TODO prepare to send request
+        // TODO Prepare to send request
 
-        // TODO prepare to receive data
+        // TODO Prepare to receive data
+
+        // TODO Emit completion signal
     } while(false);
 
     // Close USB device
@@ -110,6 +110,4 @@ bool UsbDownloader::start()
         handle = 0;
         qDebug() << "Closed USB device";
     }
-
-    return retval;
 }
