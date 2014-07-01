@@ -1,11 +1,13 @@
 set(SRCS
+    UsbDownloader.cpp
 )
-list_add_prefix(SRCS ${CMAKE_CURRENT_SOURCE_DIR}/)
 set(HDRS
+    UsbDownloader.hpp
 )
-list_add_prefix(HDRS ${CMAKE_CURRENT_SOURCE_DIR}/)
 set(UIS
 )
+list_add_prefix(SRCS ${CMAKE_CURRENT_SOURCE_DIR}/)
+list_add_prefix(HDRS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(UIS ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 set(BSM_SRCS ${BSM_SRCS} ${SRCS} PARENT_SCOPE)
