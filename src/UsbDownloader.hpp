@@ -54,8 +54,10 @@ signals:
     void completed(const QByteArray& data);
 
 protected:
+    //! The libusb context.
     libusb_context* ctx;
 
+    //! The starting point for the thread.
     virtual void run();
 };
 
