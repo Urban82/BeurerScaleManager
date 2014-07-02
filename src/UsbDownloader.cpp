@@ -34,10 +34,35 @@
 #define USB_INTERFACE_IN    0x00
 //! USB interface number for interrupt transfer
 #define USB_INTERFACE_OUT   0x01
+//! USB interrupt data length
+#define USB_INTR_DATA_LEN   8
 //! USB control bRequest - HID set report
 #define USB_CTRL_REQUEST    0x09
 //! USB control wValue
 #define USB_CTRL_VALUE      0x0300
+//! USB control data length
+#define USB_CTRL_DATA_LEN   8
+//! USB control data first byte value (others are 0x00)
+#define USB_CTRL_DATA_FIRST 0x10
+//! USB expected data length
+#define USB_EXPECTED_LEN    8192
+
+//! \private
+struct UsbDownloaderData {
+    bool completed;
+    QByteArray data;
+};
+
+/*!
+ * Callback for the USB control transfer.
+ * \param transfer the pointer to the the control transfer
+ */
+void cb_out(libusb_transfer *transfer);
+/*!
+ * Callback for the USB interrupt transfer.
+ * \param transfer the pointer to the the control transfer
+ */
+void cb_in(libusb_transfer *transfer);
 
 UsbDownloader::UsbDownloader(QThread* parent)
     : QThread(parent)
@@ -97,11 +122,35 @@ void UsbDownloader::run()
         }
         qDebug() << "Interface claimed";
 
-        // TODO Prepare to send request
+        // Prepare to receive data
+        qDebug() << "Register for interrupt data";
+        libusb_transfer *transfer_receive = libusb_alloc_transfer(0);
+        unsigned char buffer_receive[8];
+        UsbDownloaderData usb_data;
+        libusb_fill_interrupt_transfer(transfer_receive, handle, LIBUSB_ENDPOINT_IN | USB_INTERFACE_OUT, buffer_receive, sizeof(buffer_receive), cb_in, &usb_data, 30000);
+        libusb_submit_transfer(transfer_receive);
 
-        // TODO Prepare to receive data
+        // Prepare to send request
+        qDebug() << "Send control request";
+        libusb_transfer *transfer_send = libusb_alloc_transfer(0);
+        unsigned char buffer_send[LIBUSB_CONTROL_SETUP_SIZE + 8] __attribute__ ((aligned (2)));
+        libusb_fill_control_setup(buffer_send, LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE, USB_CTRL_REQUEST, USB_CTRL_VALUE, 0, 8);
+        buffer_send[LIBUSB_CONTROL_SETUP_SIZE] = 0x10;
+        memset(buffer_send + LIBUSB_CONTROL_SETUP_SIZE + 1, 0, 7);
+        libusb_fill_control_transfer(transfer_send, handle, buffer_send, cb_out, 0, 3000);
+        libusb_submit_transfer(transfer_send);
 
-        // TODO Emit completion signal
+        // Wait for completion
+        while (!usb_data.completed) {
+            qDebug() << "Waiting!";
+            r = libusb_handle_events_completed(ctx, 0);
+            if (r < 0)
+                break;
+        }
+
+        // Emit completion signal
+        if (usb_data.completed)
+            emit completed(usb_data.data);
     } while(false);
 
     // Close USB device
@@ -112,4 +161,29 @@ void UsbDownloader::run()
         handle = 0;
         qDebug() << "Closed USB device";
     }
+}
+
+void cb_out(struct libusb_transfer *transfer)
+{
+    qDebug() << "[OUT]" << "status =" << transfer->status << "- actual length =" << transfer->actual_length;
+}
+
+void cb_in(struct libusb_transfer *transfer)
+{
+    qDebug() << "[IN]" << "status =" << transfer->status << "- actual length =" << transfer->actual_length;
+    QString s;
+    for (int i = 0; i < transfer->actual_length; ++i) {
+        s.append(QString("%1 ").arg((short) transfer->buffer[i], 2, 16, QChar('0')));
+    }
+    qDebug() << "[IN]" << s.toStdString().c_str();
+
+    UsbDownloaderData* usb_data = (UsbDownloaderData*) transfer->user_data;
+    usb_data->data.append((char *)transfer->buffer, transfer->actual_length);
+    if (usb_data->data.size() >= USB_EXPECTED_LEN) {
+        usb_data->completed = true;
+        return;
+    }
+
+    if (transfer->status == LIBUSB_TRANSFER_COMPLETED || transfer->status == LIBUSB_TRANSFER_OVERFLOW)
+        libusb_submit_transfer(transfer);
 }
