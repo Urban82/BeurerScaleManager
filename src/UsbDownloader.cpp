@@ -30,8 +30,10 @@
 #define BSM_VID             0x04d9
 //! USB Product ID for the Beurer USB Scale (found on BF 480 USB model)
 #define BSM_PID             0x8010
-//! USB interface number
-#define USB_INT_NUM         0x0
+//! USB interface number for control transfer
+#define USB_INTERFACE_IN    0x00
+//! USB interface number for interrupt transfer
+#define USB_INTERFACE_OUT   0x01
 //! USB control bRequest - HID set report
 #define USB_CTRL_REQUEST    0x09
 //! USB control wValue
@@ -76,9 +78,9 @@ void UsbDownloader::run()
         qDebug() << "USB device opened";
 
         // Detach kernel driver
-        if (libusb_kernel_driver_active(handle, USB_INT_NUM)) {
+        if (libusb_kernel_driver_active(handle, USB_INTERFACE_IN)) {
             qDebug() << "Detaching kernel driver...";
-            r = libusb_detach_kernel_driver(handle, USB_INT_NUM);
+            r = libusb_detach_kernel_driver(handle, USB_INTERFACE_IN);
             if (r < 0) {
                 qCritical() << "libusb_detach_kernel_driver error" << r;
                 break;
@@ -88,7 +90,7 @@ void UsbDownloader::run()
 
         // Claim interface
         qDebug() << "Claiming interface...";
-        r = libusb_claim_interface(handle, USB_INT_NUM);
+        r = libusb_claim_interface(handle, USB_INTERFACE_IN);
         if (r < 0) {
             qCritical() << "usb_claim_interface error" << r;
             break;
@@ -104,7 +106,7 @@ void UsbDownloader::run()
 
     // Close USB device
     if (handle) {
-        libusb_release_interface(handle, USB_INT_NUM);
+        libusb_release_interface(handle, USB_INTERFACE_IN);
         qDebug() << "Released interface";
         libusb_close(handle);
         handle = 0;
