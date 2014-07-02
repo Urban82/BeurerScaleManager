@@ -42,9 +42,9 @@ class UsbDownloader : public QThread
 
 public:
     /*! Constructor of the class.
-     * \param parent the parent QThread
+     * \param parent the parent QObject
      */
-    explicit UsbDownloader(QThread* parent = 0);
+    explicit UsbDownloader(QObject* parent = 0);
     virtual ~UsbDownloader();
 
 signals:

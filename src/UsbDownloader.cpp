@@ -64,7 +64,7 @@ void cb_out(libusb_transfer *transfer);
  */
 void cb_in(libusb_transfer *transfer);
 
-UsbDownloader::UsbDownloader(QThread* parent)
+UsbDownloader::UsbDownloader(QObject* parent)
     : QThread(parent)
     , ctx(0)
 {
