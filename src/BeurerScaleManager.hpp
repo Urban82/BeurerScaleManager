@@ -1,14 +1,8 @@
 /*!
- * \file main.cpp
- * \author Danilo Treffiletti <urban82@gmail.com>
- * \date 2014-06-29
+ * \file BeurerScaleManager.hpp
+ * \author Danilo Treffiletti <danilo@treffiletti.it>
+ * \date 2014-07-02
  * \copyright 2014 (c) Danilo Treffiletti
- *
- * \brief Starting point for the application.
- *
- * This project would be a Linux replacement for the Beurer HealthManager (see
- * https://connect.beurer.com/Download/Common/Software.aspx) that is available
- * only for Windows(r).
  *
  *    This file is part of BeurerScaleManager.
  *
@@ -26,23 +20,36 @@
  *    along with BeurerScaleManager.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QDebug>
+#ifndef BEURERSCALEMANAGER_HPP
+#define BEURERSCALEMANAGER_HPP
 
-#include <QtGui/QApplication>
+#include <QtGui/QWidget>
 
-#include "BeurerScaleManager.hpp"
-
-/*! Starting point for the application.
- * \param argc the number of command-line arguments
- * \param argv the array of command-line arguments
- * \return the exit status value: \c 0 if no errors
- */
-int main(int argc, char** argv)
+namespace Ui
 {
-    QApplication app(argc, argv);
-
-    BeurerScaleManager win;
-    win.show();
-
-    return app.exec();
+class BeurerScaleManager;
 }
+
+/*!
+ * \class BeurerScaleManager
+ * \brief QWidget for the main window.
+ *
+ * This class implements the QWidget for the main window.
+ */
+class BeurerScaleManager : public QWidget
+{
+    Q_OBJECT
+
+public:
+    /*! Constructor of the class.
+     * \param parent the parent QWidget
+     * \param f the WindowFlags for the widget
+     */
+    explicit BeurerScaleManager(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    virtual ~BeurerScaleManager();
+
+private:
+    Ui::BeurerScaleManager* ui;
+};
+
+#endif // BEURERSCALEMANAGER_HPP

@@ -1,10 +1,15 @@
 set(SRCS
+    BeurerScaleManager.cpp
+
     UsbDownloader.cpp
 )
 set(HDRS
+    BeurerScaleManager.hpp
+
     UsbDownloader.hpp
 )
 set(UIS
+    BeurerScaleManager.ui
 )
 list_add_prefix(SRCS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(HDRS ${CMAKE_CURRENT_SOURCE_DIR}/)
