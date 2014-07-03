@@ -30,6 +30,8 @@ namespace Ui
 class BeurerScaleManager;
 }
 
+class UsbDownloader;
+
 /*!
  * \class BeurerScaleManager
  * \brief QWidget for the main window.
@@ -51,6 +53,14 @@ public:
 protected slots:
     //! The "Start download" button was clicked
     void startDownload();
+    //! The download was completed
+    void downloadCompleted(const QByteArray& data);
+    //! The download was not completed for an error
+    void downloadError();
+
+protected:
+    //! The UsbDownloader object
+    UsbDownloader* usb;
 
 private:
     Ui::BeurerScaleManager* ui;
