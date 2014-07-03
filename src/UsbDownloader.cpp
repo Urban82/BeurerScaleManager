@@ -97,6 +97,7 @@ UsbDownloader::~UsbDownloader()
 void UsbDownloader::run()
 {
     libusb_device_handle* handle = 0;
+    bool hasError = true;
 
     do { // Error loop
         int r;
@@ -160,8 +161,10 @@ void UsbDownloader::run()
         }
 
         // Emit completion signal
-        if (usb_data.completed)
+        if (usb_data.completed) {
             emit completed(usb_data.data);
+            hasError = false;
+        }
     } while(false);
 
     // Close USB device
@@ -172,6 +175,10 @@ void UsbDownloader::run()
         handle = 0;
         qDebug() << "Closed USB device";
     }
+
+    // Emit error signal
+    if (hasError)
+        emit error();
 }
 
 void cb_out(struct libusb_transfer *transfer)

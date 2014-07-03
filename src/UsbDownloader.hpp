@@ -53,6 +53,9 @@ signals:
      */
     void completed(const QByteArray& data);
 
+    //! The download cannot be completed
+    void error();
+
 protected:
     //! The libusb context.
     libusb_context* ctx;
