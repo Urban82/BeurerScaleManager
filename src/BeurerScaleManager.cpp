@@ -32,3 +32,9 @@ BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
 
 BeurerScaleManager::~BeurerScaleManager()
 {}
+
+void BeurerScaleManager::startDownload()
+{
+    qDebug() << "START download";
+    ui->btnStartDownload->setDisabled(true);
+}

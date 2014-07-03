@@ -30,7 +30,43 @@ COPYRIGHT: 2014 (c) Danilo Treffiletti
     <height>300</height>
    </rect>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QPushButton" name="btnStartDownload">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>60</y>
+     <width>161</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&amp;Start Download</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnStartDownload</sender>
+   <signal>clicked()</signal>
+   <receiver>BeurerScaleManager</receiver>
+   <slot>startDownload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>285</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>startDownload()</slot>
+ </slots>
 </ui>
