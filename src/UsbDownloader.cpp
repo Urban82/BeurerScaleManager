@@ -25,6 +25,7 @@
 #include <libusb.h>
 
 #include <QtCore/QDebug>
+#include <QtCore/QFile>
 
 //! USB Vendor ID for the Beurer USB Scale
 #define BSM_VID             0x04d9
@@ -47,10 +48,16 @@
 //! USB expected data length
 #define USB_EXPECTED_LEN    8192
 
+//! File for the dump of the USB data (debug)
+#define USB_WRITE_DUMP      "usbdump.txt"
+
 //! \private
 struct UsbDownloaderData {
     bool completed;
     QByteArray data;
+#ifdef USB_WRITE_DUMP
+    QFile dump;
+#endif
 };
 
 /*!
@@ -127,6 +134,10 @@ void UsbDownloader::run()
         libusb_transfer *transfer_receive = libusb_alloc_transfer(0);
         unsigned char buffer_receive[8];
         UsbDownloaderData usb_data;
+#ifdef USB_WRITE_DUMP
+        usb_data.dump.setFileName(USB_WRITE_DUMP);
+        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Append);
+#endif
         libusb_fill_interrupt_transfer(transfer_receive, handle, LIBUSB_ENDPOINT_IN | USB_INTERFACE_OUT, buffer_receive, sizeof(buffer_receive), cb_in, &usb_data, 30000);
         libusb_submit_transfer(transfer_receive);
 
@@ -178,6 +189,16 @@ void cb_in(struct libusb_transfer *transfer)
     qDebug() << "[IN]" << s.toStdString().c_str();
 
     UsbDownloaderData* usb_data = (UsbDownloaderData*) transfer->user_data;
+
+#ifdef USB_WRITE_DUMP
+    if (usb_data->dump.isOpen() && usb_data->dump.isWritable()) {
+        QByteArray buffer((char *)transfer->buffer, transfer->actual_length);
+        usb_data->dump.write(buffer.toHex());
+        usb_data->dump.write("\n");
+        usb_data->dump.close();
+    }
+#endif
+
     usb_data->data.append((char *)transfer->buffer, transfer->actual_length);
     if (usb_data->data.size() >= USB_EXPECTED_LEN) {
         usb_data->completed = true;
