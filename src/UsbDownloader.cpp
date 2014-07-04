@@ -48,6 +48,8 @@
 //! USB expected data length
 #define USB_EXPECTED_LEN    8192
 
+//! File to read to simulate USB data (debug)
+#define USB_READ_DUMP       "usbdata.txt"
 //! File for the dump of the USB data (debug)
 #define USB_WRITE_DUMP      "usbdump.txt"
 
@@ -75,6 +77,7 @@ UsbDownloader::UsbDownloader(QObject* parent)
     : QThread(parent)
     , ctx(0)
 {
+#ifndef READ_DUMP
     // Initialize libusb session
     if (libusb_init(&ctx) < 0) {
         qCritical() << "Failed to initialize libusb";
@@ -85,19 +88,23 @@ UsbDownloader::UsbDownloader(QObject* parent)
     // Set debug-level to INFO
     libusb_set_debug(ctx, LIBUSB_LOG_LEVEL_INFO);
     qDebug() << "libusb initialized";
+#endif
 }
 
 UsbDownloader::~UsbDownloader()
 {
+#ifndef READ_DUMP
     // Close libusb session
     libusb_exit(ctx);
     qDebug() << "libusb closed";
+#endif
 }
 
 void UsbDownloader::run()
 {
-    libusb_device_handle* handle = 0;
     bool hasError = true;
+#ifndef USB_READ_DUMP
+    libusb_device_handle* handle = 0;
 
     do { // Error loop
         int r;
@@ -175,7 +182,55 @@ void UsbDownloader::run()
         handle = 0;
         qDebug() << "Closed USB device";
     }
+#else
+    do { // Error loop
+        QFile usb_data_file(USB_READ_DUMP);
+        if (!usb_data_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qCritical() << "Failed to open" << USB_READ_DUMP;
+            break;
+        }
 
+        UsbDownloaderData usb_data;
+#ifdef USB_WRITE_DUMP
+        usb_data.dump.setFileName(USB_WRITE_DUMP);
+        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Append);
+#endif
+
+        while (!usb_data_file.atEnd()) {
+            char buff[20];
+            qint64 s = usb_data_file.readLine(buff, 20);
+            if (s < 16 || s > 17)
+                break;
+
+            if (s == 17 && buff[16] != '\n')
+                break;
+
+            libusb_transfer t;
+            unsigned char b[8];
+            bool ok;
+            t.buffer = b;
+            t.actual_length = 8;
+            t.status = LIBUSB_TRANSFER_ERROR; // ignored as error, to avoid resubmit
+            t.user_data = &usb_data;
+            for(int i = 0; i < 8; ++i) {
+                b[i] = (unsigned char) QString("%1%2").arg(buff[i * 2]).arg(buff[i * 2 + 1]).toUShort(&ok, 16);
+                if (!ok)
+                    break;
+            }
+            if (!ok)
+                break;
+
+            cb_in(&t);
+        }
+
+        if (usb_data_file.atEnd()) {
+            emit completed(usb_data.data);
+            hasError = false;
+        }
+
+        usb_data_file.close();
+    } while(false);
+#endif
     // Emit error signal
     if (hasError)
         emit error();
