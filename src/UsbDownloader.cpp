@@ -94,9 +94,11 @@ UsbDownloader::UsbDownloader(QObject* parent)
 UsbDownloader::~UsbDownloader()
 {
 #ifndef READ_DUMP
-    // Close libusb session
-    libusb_exit(ctx);
-    qDebug() << "libusb closed";
+    if (ctx) {
+        // Close libusb session
+        libusb_exit(ctx);
+        qDebug() << "libusb closed";
+    }
 #endif
 }
 
@@ -108,6 +110,11 @@ void UsbDownloader::run()
 
     do { // Error loop
         int r;
+
+        if (!ctx) {
+            qCritical() << "Missing initialization for libusb";
+            break;
+        }
 
         // Open USB device
         handle = libusb_open_device_with_vid_pid(ctx, BSM_VID, BSM_PID);
