@@ -53,6 +53,9 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
 {
     qDebug() << "END download";
     ui->btnStartDownload->setEnabled(true);
+
+    qDebug() << "Data received:" << data.size() << "bytes";
+    qDebug() << data.toHex();
 }
 
 void BeurerScaleManager::downloadError()
