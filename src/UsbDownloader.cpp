@@ -159,10 +159,10 @@ void UsbDownloader::run()
         // Prepare to send request
         qDebug() << "Send control request";
         libusb_transfer *transfer_send = libusb_alloc_transfer(0);
-        unsigned char buffer_send[LIBUSB_CONTROL_SETUP_SIZE + 8] __attribute__ ((aligned (2)));
-        libusb_fill_control_setup(buffer_send, LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE, USB_CTRL_REQUEST, USB_CTRL_VALUE, 0, 8);
-        buffer_send[LIBUSB_CONTROL_SETUP_SIZE] = 0x10;
-        memset(buffer_send + LIBUSB_CONTROL_SETUP_SIZE + 1, 0, 7);
+        unsigned char buffer_send[LIBUSB_CONTROL_SETUP_SIZE + USB_CTRL_DATA_LEN] __attribute__ ((aligned (2)));
+        libusb_fill_control_setup(buffer_send, LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE, USB_CTRL_REQUEST, USB_CTRL_VALUE, 0, USB_CTRL_DATA_LEN);
+        buffer_send[LIBUSB_CONTROL_SETUP_SIZE] = USB_CTRL_DATA_FIRST;
+        memset(buffer_send + LIBUSB_CONTROL_SETUP_SIZE + 1, 0, USB_CTRL_DATA_LEN - 1);
         libusb_fill_control_transfer(transfer_send, handle, buffer_send, cb_out, 0, 3000);
         libusb_submit_transfer(transfer_send);
 
