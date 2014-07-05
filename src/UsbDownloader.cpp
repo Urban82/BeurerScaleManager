@@ -151,7 +151,7 @@ void UsbDownloader::run()
         UsbDownloaderData usb_data;
 #ifdef USB_WRITE_DUMP
         usb_data.dump.setFileName(USB_WRITE_DUMP);
-        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Append);
+        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Truncate);
 #endif
         libusb_fill_interrupt_transfer(transfer_receive, handle, LIBUSB_ENDPOINT_IN | USB_INTERFACE_OUT, buffer_receive, sizeof(buffer_receive), cb_in, &usb_data, 30000);
         libusb_submit_transfer(transfer_receive);
@@ -173,6 +173,11 @@ void UsbDownloader::run()
             if (r < 0)
                 break;
         }
+
+#ifdef USB_WRITE_DUMP
+        if (usb_data.dump.isOpen())
+            usb_data.dump.close();
+#endif
 
         // Emit completion signal
         if (usb_data.completed) {
@@ -200,7 +205,7 @@ void UsbDownloader::run()
         UsbDownloaderData usb_data;
 #ifdef USB_WRITE_DUMP
         usb_data.dump.setFileName(USB_WRITE_DUMP);
-        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Append);
+        usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Truncate);
 #endif
 
         while (!usb_data_file.atEnd()) {
@@ -229,6 +234,11 @@ void UsbDownloader::run()
 
             cb_in(&t);
         }
+
+#ifdef USB_WRITE_DUMP
+        if (usb_data.dump.isOpen())
+            usb_data.dump.close();
+#endif
 
         if (usb_data_file.atEnd()) {
             emit completed(usb_data.data);
@@ -264,7 +274,6 @@ void cb_in(struct libusb_transfer *transfer)
         QByteArray buffer((char *)transfer->buffer, transfer->actual_length);
         usb_data->dump.write(buffer.toHex());
         usb_data->dump.write("\n");
-        usb_data->dump.close();
     }
 #endif
 
