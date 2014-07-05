@@ -77,7 +77,7 @@ UsbDownloader::UsbDownloader(QObject* parent)
     : QThread(parent)
     , ctx(0)
 {
-#ifndef READ_DUMP
+#ifndef USB_READ_DUMP
     // Initialize libusb session
     if (libusb_init(&ctx) < 0) {
         qCritical() << "Failed to initialize libusb";
@@ -93,7 +93,7 @@ UsbDownloader::UsbDownloader(QObject* parent)
 
 UsbDownloader::~UsbDownloader()
 {
-#ifndef READ_DUMP
+#ifndef USB_READ_DUMP
     if (ctx) {
         // Close libusb session
         libusb_exit(ctx);
