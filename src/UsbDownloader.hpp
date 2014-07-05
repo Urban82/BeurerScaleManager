@@ -1,6 +1,6 @@
 /*!
  * \file UsbDownloader.hpp
- * \author Danilo Treffiletti <danilo@treffiletti.it>
+ * \author Danilo Treffiletti <urban82@gmail.com>
  * \date 2014-07-01
  * \copyright 2014 (c) Danilo Treffiletti
  *
