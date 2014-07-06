@@ -2,11 +2,15 @@ set(SRCS
     BeurerScaleManager.cpp
 
     UsbDownloader.cpp
+
+    UserMeasurement.cpp
 )
 set(HDRS
     BeurerScaleManager.hpp
 
     UsbDownloader.hpp
+
+    UserMeasurement.hpp
 )
 set(UIS
     BeurerScaleManager.ui
