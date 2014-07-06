@@ -54,7 +54,7 @@ signals:
      */
     void completed(const QByteArray& data);
 
-    //! The download cannot be completed
+    //! The download cannot be completed.
     void error();
 
 protected:

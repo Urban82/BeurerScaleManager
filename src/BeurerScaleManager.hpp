@@ -52,15 +52,15 @@ public:
     virtual ~BeurerScaleManager();
 
 protected slots:
-    //! The "Start download" button was clicked
+    //! The "Start download" button was clicked.
     void startDownload();
-    //! The download was completed
+    //! The download was completed.
     void downloadCompleted(const QByteArray& data);
-    //! The download was not completed for an error
+    //! The download was not completed for an error.
     void downloadError();
 
 protected:
-    //! The UsbDownloader object
+    //! The UsbDownloader object.
     UsbDownloader* usb;
 
 private:
