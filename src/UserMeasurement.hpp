@@ -64,7 +64,38 @@ public:
      * \param parent the parent QObject
      */
     explicit UserMeasurement(QObject* parent = 0);
+    /*! Copy constructor of the class.
+     * \param other the other UserMeasurement to copy
+     * \param parent the parent QObject
+     */
+    UserMeasurement(const UserMeasurement& other, QObject* parent = 0);
     virtual ~UserMeasurement();
+
+    /*! Assignment operator.
+     * \param other the other UserMeasurement to copy
+     */
+    virtual UserMeasurement& operator=(const UserMeasurement& other);
+
+    /*! Relative operator (greater than)
+     * \param other the other UserMeasurement to compare
+     * \return \c true if this UserMeasurement is greater than the \p other, \c false otherwise
+     */
+    virtual bool operator>(const UserMeasurement& other);
+    /*! Relative operator (less than)
+     * \param other the other UserMeasurement to compare
+     * \return \c true if this UserMeasurement is less than the \p other, \c false otherwise
+     */
+    virtual bool operator<(const UserMeasurement& other);
+    /*! Relative operator (greater or equal than)
+     * \param other the other UserMeasurement to compare
+     * \return \c true if this UserMeasurement is greater or equal than the \p other, \c false otherwise
+     */
+    virtual bool operator>=(const UserMeasurement& other);
+    /*! Relative operator (less or equal than)
+     * \param other the other UserMeasurement to compare
+     * \return \c true if this UserMeasurement is less or equal than the \p other, \c false otherwise
+     */
+    virtual bool operator<=(const UserMeasurement& other);
 
     /*! Getter for the dateTime property.
      * \sa dateTime setDateTime
