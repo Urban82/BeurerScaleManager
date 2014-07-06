@@ -2,6 +2,7 @@
  * \file BeurerScaleManager.cpp
  * \author Danilo Treffiletti <urban82@gmail.com>
  * \date 2014-07-02
+ * \brief Implementation for the BeurerScaleManager class
  * \copyright 2014 (c) Danilo Treffiletti
  *
  *    This file is part of BeurerScaleManager.
