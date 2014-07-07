@@ -35,6 +35,7 @@ BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     ui = new Ui::BeurerScaleManager();
     ui->setupUi(this);
 
+    connect(usb, SIGNAL(progress(int)), ui->progressDownload, SLOT(setValue(int)));
     connect(usb, SIGNAL(completed(QByteArray)), this, SLOT(downloadCompleted(QByteArray)));
     connect(usb, SIGNAL(error()), this, SLOT(downloadError()));
 }
@@ -46,6 +47,7 @@ void BeurerScaleManager::startDownload()
 {
     qDebug() << "START download";
     ui->btnStartDownload->setDisabled(true);
+    ui->progressDownload->setValue(0);
 
     usb->start();
 }

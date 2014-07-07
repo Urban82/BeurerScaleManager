@@ -171,6 +171,7 @@ void UsbDownloader::run()
         while (!usb_data.completed) {
             qDebug() << "Waiting!";
             r = libusb_handle_events_completed(ctx, 0);
+            emit progress(100 * usb_data.data.size() / USB_EXPECTED_LEN);
             if (r < 0)
                 break;
         }
@@ -234,6 +235,7 @@ void UsbDownloader::run()
                 break;
 
             cb_in(&t);
+            emit progress(100 * usb_data.data.size() / USB_EXPECTED_LEN);
         }
 
 #ifdef USB_WRITE_DUMP

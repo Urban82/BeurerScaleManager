@@ -46,6 +46,19 @@ COPYRIGHT: 2014 (c) Danilo Treffiletti
     <string>&amp;Start Download</string>
    </property>
   </widget>
+  <widget class="QProgressBar" name="progressDownload">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>150</y>
+     <width>341</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="format">
+    <string notr="true">%p%</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

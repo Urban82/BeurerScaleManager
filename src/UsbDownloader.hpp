@@ -57,6 +57,11 @@ signals:
     //! The download cannot be completed.
     void error();
 
+    /*! The download is in progress
+     * \param perc the percentage of the progress
+     */
+    void progress(const int perc);
+
 protected:
     //! The libusb context.
     libusb_context* ctx;
