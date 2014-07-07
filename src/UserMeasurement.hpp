@@ -101,46 +101,52 @@ public:
      * \sa dateTime setDateTime
      */
     QDateTime getDateTime() const;
+
+    /*! Getter for the weight property.
+     * \sa weight setWeight
+     */
+    double getWeight() const;
+
+    /*! Getter for the bodyFatPercent property.
+     * \sa bodyFatPercent setBodyFatPercent
+     */
+    double getBodyFatPercent() const;
+
+    /*! Getter for the waterPercent property.
+     * \sa waterPercent setWaterPercent
+     */
+    double getWaterPercent() const;
+
+    /*! Getter for the musclePercent property.
+     * \sa musclePercent setMusclePercent
+     */
+    double getMusclePercent() const;
+
+public Q_SLOTS:
     /*! Setter for the dateTime property.
      * \param dateTime the new value
      * \sa dateTime getDateTime
      */
     void setDateTime(const QDateTime& dateTime);
 
-    /*! Getter for the weight property.
-     * \sa weight setWeight
-     */
-    double getWeight() const;
     /*! Setter for the weight property.
      * \param weight the new value
      * \sa weight getWeight
      */
     void setWeight(const double& weight);
 
-    /*! Getter for the bodyFatPercent property.
-     * \sa bodyFatPercent setBodyFatPercent
-     */
-    double getBodyFatPercent() const;
     /*! Setter for the bodyFatPercent property.
      * \param bodyFatPercent the new value
      * \sa bodyFatPercent getBodyFatPercent
      */
     void setBodyFatPercent(const double& bodyFatPercent);
 
-    /*! Getter for the waterPercent property.
-     * \sa waterPercent setWaterPercent
-     */
-    double getWaterPercent() const;
     /*! Setter for the waterPercent property.
      * \param waterPercent the new value
      * \sa waterPercent getWaterPercent
      */
     void setWaterPercent(const double& waterPercent);
 
-    /*! Getter for the musclePercent property.
-     * \sa musclePercent setMusclePercent
-     */
-    double getMusclePercent() const;
     /*! Setter for the musclePercent property.
      * \param musclePercent the new value
      * \sa musclePercent getMusclePercent

@@ -107,46 +107,52 @@ public:
      * \sa birthDate setBirthDate
      */
     QDate getBirthDate() const;
+
+    /*! Getter for the height property.
+     * \sa height setHeight
+     */
+    ushort getHeight() const;
+
+    /*! Getter for the gender property.
+     * \sa Gender gender setGender
+     */
+    Gender getGender() const;
+
+    /*! Getter for the activity property.
+     * \sa Activity activity setActivity
+     */
+    Activity getActivity() const;
+
+    /*! Getter for the measurements property.
+     * \sa UserMeasurement UserMeasurementList measurements setMeasurements
+     */
+    UserMeasurementList& getMeasurements();
+
+public Q_SLOTS:
     /*! Setter for the birthDate property.
      * \param birthDate the new value
      * \sa birthDate getBirthDate
      */
     void setBirthDate(const QDate& birthDate);
 
-    /*! Getter for the height property.
-     * \sa height setHeight
-     */
-    ushort getHeight() const;
     /*! Setter for the height property.
      * \param height the new value
      * \sa height getHeight
      */
     void setHeight(const ushort& height);
 
-    /*! Getter for the gender property.
-     * \sa Gender gender setGender
-     */
-    Gender getGender() const;
     /*! Setter for the gender property.
      * \param gender the new value
      * \sa Gender gender getGender
      */
     void setGender(const Gender& gender);
 
-    /*! Getter for the activity property.
-     * \sa Activity activity setActivity
-     */
-    Activity getActivity() const;
     /*! Setter for the activity property.
      * \param activity the new value
      * \sa Activity activity getActivity
      */
     void setActivity(const Activity& activity);
 
-    /*! Getter for the measurements property.
-     * \sa UserMeasurement UserMeasurementList measurements setMeasurements
-     */
-    UserMeasurementList& getMeasurements();
     /*! Setter for the measurements property.
      * \param measurements the new value
      * \sa UserMeasurement UserMeasurementList measurements getMeasurements

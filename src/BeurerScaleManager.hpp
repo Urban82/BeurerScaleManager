@@ -51,7 +51,7 @@ public:
     explicit BeurerScaleManager(QWidget* parent = 0, Qt::WindowFlags f = 0);
     virtual ~BeurerScaleManager();
 
-protected slots:
+protected Q_SLOTS:
     //! The "Start download" button was clicked.
     void startDownload();
     //! The download was completed.
