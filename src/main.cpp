@@ -2,13 +2,8 @@
  * \file main.cpp
  * \author Danilo Treffiletti <urban82@gmail.com>
  * \date 2014-06-29
- * \copyright 2014 (c) Danilo Treffiletti
- *
  * \brief Starting point for the application.
- *
- * This project would be a Linux replacement for the Beurer HealthManager (see
- * https://connect.beurer.com/Download/Common/Software.aspx) that is available
- * only for Windows(r).
+ * \copyright 2014 (c) Danilo Treffiletti
  *
  *    This file is part of BeurerScaleManager.
  *

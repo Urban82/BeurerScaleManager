@@ -3,7 +3,8 @@
  * \copyright 2014 (c) Danilo Treffiletti
  *
  * This project would be a Linux replacement for the <b>Beurer HealthManager</b> (see
- * <https://connect.beurer.com/Download/Common/Software.aspx>) that is available only for Windows&reg;.
+ * <https://connect.beurer.com/Download/Common/Software.aspx>) that is available only
+ * for Windows&reg;.
  *
  * \section Dependencies
  * This project use:
