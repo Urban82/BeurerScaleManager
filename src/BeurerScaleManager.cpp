@@ -25,6 +25,7 @@
 #include "ui_BeurerScaleManager.h"
 
 #include "UsbDownloader.hpp"
+#include "UsbData.hpp"
 
 #include <QtCore/QDebug>
 
@@ -59,6 +60,12 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
 
     qDebug() << "Data received:" << data.size() << "bytes";
     qDebug() << data.toHex();
+
+    UsbData usb_data;
+    if (usb_data.parse(data)) {
+        qDebug() << "Parsed" << usb_data.getUserData().size() << "users";
+        qDebug() << "Scale date and time is" << usb_data.getDateTime();
+    }
 }
 
 void BeurerScaleManager::downloadError()

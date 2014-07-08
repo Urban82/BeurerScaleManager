@@ -70,6 +70,16 @@ public:
      */
     QList<UserData>& getUserData();
 
+public Q_SLOTS:
+    /*! \brief Parse the USB data.
+     *
+     * The data received from the scale are parsed to collect each measurement
+     * for each user and the extra data the scale send in the USB transfer.
+     * \param data the QByteArray containing the USB data
+     * \return \c true if the data were parsed successfully, \c false otherwise
+     */
+    bool parse(const QByteArray& data);
+
 private:
     QDateTime       m_dateTime;
     QList<UserData> m_userData;
