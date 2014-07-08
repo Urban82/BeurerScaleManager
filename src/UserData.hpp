@@ -43,6 +43,7 @@ class UserData : public QObject
 {
     Q_OBJECT
 
+public:
     /*! Gender enumerator.
      * \sa gender
      */
@@ -65,6 +66,7 @@ class UserData : public QObject
         VeryHigh,   //!< Intensive physical effort, intensive training or hard physical work for at least one hour daily
     };
 
+private:
     /*! The ID of the user.
      * \sa getId setId
      */
