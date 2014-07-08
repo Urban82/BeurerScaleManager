@@ -2,6 +2,7 @@ set(SRCS
     BeurerScaleManager.cpp
 
     UsbDownloader.cpp
+    UsbData.cpp
 
     UserMeasurement.cpp
     UserData.cpp
@@ -10,6 +11,7 @@ set(HDRS
     BeurerScaleManager.hpp
 
     UsbDownloader.hpp
+    UsbData.hpp
 
     UserMeasurement.hpp
     UserData.hpp
