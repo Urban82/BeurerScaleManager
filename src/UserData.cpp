@@ -25,6 +25,7 @@
 
 UserData::UserData(QObject* parent)
     : QObject(parent)
+    , m_id(0)
     , m_height(0)
     , m_gender(Unknown)
     , m_activity(None)
@@ -33,6 +34,7 @@ UserData::UserData(QObject* parent)
 
 UserData::UserData(const UserData& other, QObject* parent)
     : QObject(parent)
+    , m_id(other.m_id)
     , m_birthDate(other.m_birthDate)
     , m_height(other.m_height)
     , m_gender(other.m_gender)
@@ -47,12 +49,23 @@ UserData::~UserData()
 
 UserData& UserData::operator=(const UserData& other)
 {
+    m_id = other.m_id;
     m_birthDate = other.m_birthDate;
     m_height = other.m_height;
     m_gender = other.m_gender;
     m_activity = other.m_activity;
     m_measurements = other.m_measurements;
     return *this;
+}
+
+uchar UserData::getId() const
+{
+    return m_id;
+}
+
+void UserData::setId(const uchar& id)
+{
+    m_id = id;
 }
 
 QDate UserData::getBirthDate() const

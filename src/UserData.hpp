@@ -65,6 +65,10 @@ class UserData : public QObject
         VeryHigh,   //!< Intensive physical effort, intensive training or hard physical work for at least one hour daily
     };
 
+    /*! The ID of the user.
+     * \sa getId setId
+     */
+    Q_PROPERTY(uchar id READ getId WRITE setId);
     /*! The birth date of the user.
      * \sa getBirthDate setBirthDate
      */
@@ -103,6 +107,11 @@ public:
      */
     virtual UserData& operator=(const UserData& other);
 
+    /*! Getter for the id property.
+     * \sa id setId
+     */
+    uchar getId() const;
+
     /*! Getter for the birthDate property.
      * \sa birthDate setBirthDate
      */
@@ -129,6 +138,12 @@ public:
     UserMeasurementList& getMeasurements();
 
 public Q_SLOTS:
+    /*! Setter for the id property.
+     * \param id the new value
+     * \sa id getId
+     */
+    void setId(const uchar& id);
+
     /*! Setter for the birthDate property.
      * \param birthDate the new value
      * \sa birthDate getBirthDate
@@ -160,6 +175,7 @@ public Q_SLOTS:
     void setMeasurements(const UserMeasurementList& measurements);
 
 protected:
+    uchar m_id;                         //!< id property value.             \sa id getId setId
     QDate m_birthDate;                  //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
     ushort m_height;                    //!< height property value.         \sa height getHeight setHeight
     Gender m_gender;                    //!< gender property value.         \sa gender getGender setGender
