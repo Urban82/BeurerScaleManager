@@ -78,12 +78,12 @@ void UserData::setBirthDate(const QDate& birthDate)
     m_birthDate = birthDate;
 }
 
-ushort UserData::getHeight() const
+uchar UserData::getHeight() const
 {
     return m_height;
 }
 
-void UserData::setHeight(const ushort& height)
+void UserData::setHeight(const uchar& height)
 {
     m_height = height;
 }

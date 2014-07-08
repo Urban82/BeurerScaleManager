@@ -76,7 +76,7 @@ class UserData : public QObject
     /*! The height of the user (in cm).
      * \sa getHeight setHeight
      */
-    Q_PROPERTY(ushort height READ getHeight WRITE setHeight);
+    Q_PROPERTY(uchar height READ getHeight WRITE setHeight);
     /*! The gender of the user.
      * \sa Gender getGender setGender
      */
@@ -120,7 +120,7 @@ public:
     /*! Getter for the height property.
      * \sa height setHeight
      */
-    ushort getHeight() const;
+    uchar getHeight() const;
 
     /*! Getter for the gender property.
      * \sa Gender gender setGender
@@ -154,7 +154,7 @@ public Q_SLOTS:
      * \param height the new value
      * \sa height getHeight
      */
-    void setHeight(const ushort& height);
+    void setHeight(const uchar& height);
 
     /*! Setter for the gender property.
      * \param gender the new value
@@ -177,7 +177,7 @@ public Q_SLOTS:
 protected:
     uchar m_id;                         //!< id property value.             \sa id getId setId
     QDate m_birthDate;                  //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
-    ushort m_height;                    //!< height property value.         \sa height getHeight setHeight
+    uchar m_height;                     //!< height property value.         \sa height getHeight setHeight
     Gender m_gender;                    //!< gender property value.         \sa gender getGender setGender
     Activity m_activity;                //!< activity property value.       \sa activity getActivity setActivity
     UserMeasurementList m_measurements; //!< measurements property values.  \sa measurements getMeasurements setMeasurements
