@@ -50,9 +50,9 @@
 #define USB_EXPECTED_LEN    8192
 
 //! File to read to simulate USB data (debug)
-#define USB_READ_DUMP       "usbdata.txt"
+// #define USB_READ_DUMP       "usbdata.txt"
 //! File for the dump of the USB data (debug)
-#define USB_WRITE_DUMP      "usbdump.txt"
+// #define USB_WRITE_DUMP      "usbdump.txt"
 
 //! \private
 struct UsbDownloaderData {
