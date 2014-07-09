@@ -100,7 +100,7 @@ QDateTime UsbData::getDateTime() const
     return m_dateTime;
 }
 
-QList<UserData>& UsbData::getUserData()
+QList<UserData*>& UsbData::getUserData()
 {
     return m_userData;
 }
@@ -115,7 +115,7 @@ bool UsbData::parse(const QByteArray& data)
     m_dateTime = QDateTime(scale_date, scale_time);
 
     for (int user = 0; user < NUM_USERS; ++user) {
-        UserData ud;
+        UserData* ud = new UserData();
 
         int user_offset = user * USER_LEN;
         int extra_offset = EXTRA_BLOCK_OFF + user * EXTRA_USER_LEN;
@@ -124,29 +124,29 @@ bool UsbData::parse(const QByteArray& data)
         if (id < 1 || id > 10)
             continue;
 
-        ud.setId(id);
-        ud.setHeight(data[extra_offset + 1]);
-        ud.setBirthDate(uchar2QDate(data[extra_offset + 2], data[extra_offset + 3]));
-        ud.setGender( ((data[extra_offset + 4] & 0x80) == 0x00) ? UserData::Male : UserData::Female );
+        ud->setId(id);
+        ud->setHeight(data[extra_offset + 1]);
+        ud->setBirthDate(uchar2QDate(data[extra_offset + 2], data[extra_offset + 3]));
+        ud->setGender( ((data[extra_offset + 4] & 0x80) == 0x00) ? UserData::Male : UserData::Female );
         switch (data[extra_offset + 4] & 0x0F) {
             case 0:
-                ud.setActivity(UserData::None);
+                ud->setActivity(UserData::None);
                 break;
             case 1:
-                ud.setActivity(UserData::Low);
+                ud->setActivity(UserData::Low);
                 break;
             case 2:
-                ud.setActivity(UserData::Medium);
+                ud->setActivity(UserData::Medium);
                 break;
             case 3:
-                ud.setActivity(UserData::High);
+                ud->setActivity(UserData::High);
                 break;
             case 4:
-                ud.setActivity(UserData::VeryHigh);
+                ud->setActivity(UserData::VeryHigh);
                 break;
             default:
                 // Invalid value, set to None
-                ud.setActivity(UserData::None);
+                ud->setActivity(UserData::None);
                 break;
         }
 
@@ -164,14 +164,14 @@ bool UsbData::parse(const QByteArray& data)
             if (dateTime.isNull() || !dateTime.isValid())
                 break;
 
-            UserMeasurement um;
-            um.setWeight(uchar2ushort(data[weight_offset], data[weight_offset + 1]) * 0.1);
-            um.setBodyFatPercent(uchar2ushort(data[bodyFat_offset], data[bodyFat_offset + 1]) * 0.1);
-            um.setWaterPercent(uchar2ushort(data[water_offset], data[water_offset + 1]) * 0.1);
-            um.setMusclePercent(uchar2ushort(data[muscle_offset], data[muscle_offset + 1]) * 0.1);
-            um.setDateTime(dateTime);
+            UserMeasurement* um = new UserMeasurement();
+            um->setWeight(uchar2ushort(data[weight_offset], data[weight_offset + 1]) * 0.1);
+            um->setBodyFatPercent(uchar2ushort(data[bodyFat_offset], data[bodyFat_offset + 1]) * 0.1);
+            um->setWaterPercent(uchar2ushort(data[water_offset], data[water_offset + 1]) * 0.1);
+            um->setMusclePercent(uchar2ushort(data[muscle_offset], data[muscle_offset + 1]) * 0.1);
+            um->setDateTime(dateTime);
 
-            ud.getMeasurements().append(um);
+            ud->getMeasurements().append(um);
         }
 
         m_userData.append(ud);

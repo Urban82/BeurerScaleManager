@@ -43,6 +43,7 @@
 class UsbData : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(UsbData)
 
     /*! The date and the time of the scale.
      * \sa getDateTime
@@ -51,7 +52,7 @@ class UsbData : public QObject
     /*! The data for all the users.
      * \sa getUserData
      */
-    Q_PROPERTY(QList<UserData> userData READ getUserData);
+    Q_PROPERTY(QList<UserData*> userData READ getUserData);
 
 public:
     /*! Constructor of the class.
@@ -68,7 +69,7 @@ public:
     /*! Getter for the userData property.
      * \sa userData
      */
-    QList<UserData>& getUserData();
+    QList<UserData*>& getUserData();
 
 public Q_SLOTS:
     /*! \brief Parse the USB data.
@@ -81,8 +82,8 @@ public Q_SLOTS:
     bool parse(const QByteArray& data);
 
 private:
-    QDateTime       m_dateTime;
-    QList<UserData> m_userData;
+    QDateTime           m_dateTime;
+    QList<UserData*>    m_userData;
 };
 
 #endif // USBDATA_HPP

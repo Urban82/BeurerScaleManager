@@ -40,6 +40,7 @@ class libusb_context;
 class UsbDownloader : public QThread
 {
     Q_OBJECT
+    Q_DISABLE_COPY(UsbDownloader)
 
 public:
     /*! Constructor of the class.

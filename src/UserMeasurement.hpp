@@ -37,6 +37,7 @@
 class UserMeasurement : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(UserMeasurement)
 
     /*! The date and the time of the measurement.
      * \sa getDateTime setDateTime
@@ -64,17 +65,7 @@ public:
      * \param parent the parent QObject
      */
     explicit UserMeasurement(QObject* parent = 0);
-    /*! Copy constructor of the class.
-     * \param other the other UserMeasurement to copy
-     * \param parent the parent QObject
-     */
-    UserMeasurement(const UserMeasurement& other, QObject* parent = 0);
     virtual ~UserMeasurement();
-
-    /*! Assignment operator.
-     * \param other the other UserMeasurement to copy
-     */
-    virtual UserMeasurement& operator=(const UserMeasurement& other);
 
     /*! Relative operator (greater than)
      * \param other the other UserMeasurement to compare
@@ -162,6 +153,6 @@ protected:
 };
 
 //! List of measurements
-typedef QList<UserMeasurement> UserMeasurementList;
+typedef QList<UserMeasurement*> UserMeasurementList;
 
 #endif // USERMEASUREMENT_HPP

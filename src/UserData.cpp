@@ -32,30 +32,9 @@ UserData::UserData(QObject* parent)
 {
 }
 
-UserData::UserData(const UserData& other, QObject* parent)
-    : QObject(parent)
-    , m_id(other.m_id)
-    , m_birthDate(other.m_birthDate)
-    , m_height(other.m_height)
-    , m_gender(other.m_gender)
-    , m_activity(other.m_activity)
-    , m_measurements(other.m_measurements)
-{
-}
-
 UserData::~UserData()
 {
-}
-
-UserData& UserData::operator=(const UserData& other)
-{
-    m_id = other.m_id;
-    m_birthDate = other.m_birthDate;
-    m_height = other.m_height;
-    m_gender = other.m_gender;
-    m_activity = other.m_activity;
-    m_measurements = other.m_measurements;
-    return *this;
+    qDeleteAll(m_measurements);
 }
 
 uchar UserData::getId() const

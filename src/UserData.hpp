@@ -42,6 +42,7 @@
 class UserData : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(UserData)
 
 public:
     /*! Gender enumerator.
@@ -97,17 +98,7 @@ public:
      * \param parent the parent QObject
      */
     explicit UserData(QObject* parent = 0);
-    /*! Copy constructor of the class.
-     * \param other the other UserData to copy
-     * \param parent the parent QObject
-     */
-    UserData(const UserData& other, QObject* parent = 0);
     virtual ~UserData();
-
-    /*! Assignment operator.
-     * \param other the other UserData to copy
-     */
-    virtual UserData& operator=(const UserData& other);
 
     /*! Getter for the id property.
      * \sa id setId
