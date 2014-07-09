@@ -25,6 +25,7 @@
 #define USBDATA_HPP
 
 #include <QtCore/QObject>
+#include <QtCore/QDebug>
 #include <QtCore/QDateTime>
 #include <QtCore/QList>
 #include <QtCore/QByteArray>
@@ -84,6 +85,11 @@ public Q_SLOTS:
 private:
     QDateTime           m_dateTime;
     QList<UserData*>    m_userData;
+
+    friend QDebug operator<<(QDebug dbg, const UsbData& ud);
 };
+
+QDebug operator<<(QDebug dbg, const UsbData& ud);
+QDebug operator<<(QDebug dbg, const UsbData* ud);
 
 #endif // USBDATA_HPP

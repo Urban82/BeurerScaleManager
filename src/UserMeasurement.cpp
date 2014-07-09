@@ -105,3 +105,30 @@ void UserMeasurement::setMusclePercent(const double& musclePercent)
 {
     m_musclePercent = musclePercent;
 }
+
+QDebug operator<<(QDebug dbg, const UserMeasurement& um)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    dbg.nospace() << "UserMeasurement("
+                  << um.m_dateTime.toString() << " - "
+                  << um.m_weight << "kg, "
+                  << um.m_bodyFatPercent << "%, "
+                  << um.m_waterPercent << "%, "
+                  << um.m_musclePercent << "%)";
+    return dbg.space();
+#endif
+}
+
+QDebug operator<<(QDebug dbg, const UserMeasurement* um)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    if (um)
+        return operator<<(dbg, *um);
+    dbg.nospace() << "UserMeasurement()";
+    return dbg.space();
+#endif
+}

@@ -25,6 +25,7 @@
 #define USERDATA_HPP
 
 #include <QtCore/QObject>
+#include <QtCore/QDebug>
 #include <QtCore/QDate>
 
 #include "UserMeasurement.hpp"
@@ -174,6 +175,11 @@ protected:
     Gender              m_gender;       //!< gender property value.         \sa gender getGender setGender
     Activity            m_activity;     //!< activity property value.       \sa activity getActivity setActivity
     UserMeasurementList m_measurements; //!< measurements property values.  \sa measurements getMeasurements setMeasurements
+
+    friend QDebug operator<<(QDebug dbg, const UserData& ud);
 };
+
+QDebug operator<<(QDebug dbg, const UserData& ud);
+QDebug operator<<(QDebug dbg, const UserData* ud);
 
 #endif // USERDATA_HPP

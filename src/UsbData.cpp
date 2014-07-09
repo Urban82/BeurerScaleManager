@@ -25,7 +25,6 @@
 
 #include <QtCore/QDate>
 #include <QtCore/QTime>
-#include <QtCore/QDebug>
 
 //! Number of users in the scale memory.
 #define NUM_USERS        10
@@ -178,6 +177,30 @@ bool UsbData::parse(const QByteArray& data)
     }
 
     return true;
+}
+
+QDebug operator<<(QDebug dbg, const UsbData& ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    dbg.nospace() << "UsbData("
+                  << ud.m_dateTime.toString() << ", "
+                  << ud.m_userData.size() << " " << ud.m_userData << ")";
+    return dbg.space();
+#endif
+}
+
+QDebug operator<<(QDebug dbg, const UsbData* ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    if (ud)
+        return operator<<(dbg, *ud);
+    dbg.nospace() << "UsbData()";
+    return dbg.space();
+#endif
 }
 
 ushort uchar2ushort(const uchar b1, const uchar b2)

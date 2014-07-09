@@ -25,6 +25,7 @@
 #define USERMEASUREMENT_HPP
 
 #include <QtCore/QObject>
+#include <QtCore/QDebug>
 #include <QtCore/QDateTime>
 #include <QtCore/QList>
 
@@ -150,7 +151,12 @@ protected:
     double      m_bodyFatPercent;   //!< bodyFatPercent property value. \sa bodyFatPercent getBodyFatPercent setBodyFatPercent
     double      m_waterPercent;     //!< waterPercent property value.   \sa waterPercent getWaterPercent setWaterPercent
     double      m_musclePercent;    //!< musclePercent property value.  \sa musclePercent getMusclePercent setMusclePercent
+
+    friend QDebug operator<<(QDebug dbg, const UserMeasurement& um);
 };
+
+QDebug operator<<(QDebug dbg, const UserMeasurement& um);
+QDebug operator<<(QDebug dbg, const UserMeasurement* um);
 
 //! List of measurements
 typedef QList<UserMeasurement*> UserMeasurementList;

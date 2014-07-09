@@ -65,6 +65,7 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
     if (usb_data.parse(data)) {
         qDebug() << "Parsed" << usb_data.getUserData().size() << "users";
         qDebug() << "Scale date and time is" << usb_data.getDateTime();
+        qDebug() << usb_data;
     }
 }
 

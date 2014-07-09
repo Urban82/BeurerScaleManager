@@ -96,3 +96,43 @@ void UserData::setMeasurements(const UserMeasurementList& measurements)
 {
     m_measurements = measurements;
 }
+
+QDebug operator<<(QDebug dbg, const UserData& ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    dbg.nospace() << "UserData("
+                  << ud.m_id << ", "
+                  << ud.m_birthDate.toString() << ", "
+                  << ud.m_height << "m, ";
+    switch (ud.m_gender) {
+        case UserData::Male:
+            dbg.nospace() << "M";
+            break;
+        case UserData::Female:
+            dbg.nospace() << "F";
+            break;
+        default:
+            dbg.nospace() << "?";
+            break;
+    }
+    dbg.nospace() << ", "
+                  << (int) ud.m_activity << ", ";
+    dbg.nospace() << ud.m_measurements.size() << " " << ud.m_measurements;
+    dbg.nospace() << ")";
+    return dbg.space();
+#endif
+}
+
+QDebug operator<<(QDebug dbg, const UserData* ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    if (ud)
+        return operator<<(dbg, *ud);
+    dbg.nospace() << "UserData()";
+    return dbg.space();
+#endif
+}
