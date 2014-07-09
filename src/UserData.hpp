@@ -168,11 +168,11 @@ public Q_SLOTS:
     void setMeasurements(const UserMeasurementList& measurements);
 
 protected:
-    uchar m_id;                         //!< id property value.             \sa id getId setId
-    QDate m_birthDate;                  //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
-    uchar m_height;                     //!< height property value.         \sa height getHeight setHeight
-    Gender m_gender;                    //!< gender property value.         \sa gender getGender setGender
-    Activity m_activity;                //!< activity property value.       \sa activity getActivity setActivity
+    uchar               m_id;           //!< id property value.             \sa id getId setId
+    QDate               m_birthDate;    //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
+    uchar               m_height;       //!< height property value.         \sa height getHeight setHeight
+    Gender              m_gender;       //!< gender property value.         \sa gender getGender setGender
+    Activity            m_activity;     //!< activity property value.       \sa activity getActivity setActivity
     UserMeasurementList m_measurements; //!< measurements property values.  \sa measurements getMeasurements setMeasurements
 };
 
