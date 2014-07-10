@@ -114,8 +114,6 @@ bool UsbData::parse(const QByteArray& data)
     m_dateTime = QDateTime(scale_date, scale_time);
 
     for (int user = 0; user < NUM_USERS; ++user) {
-        UserData* ud = new UserData();
-
         int user_offset = user * USER_LEN;
         int extra_offset = EXTRA_BLOCK_OFF + user * EXTRA_USER_LEN;
 
@@ -123,6 +121,7 @@ bool UsbData::parse(const QByteArray& data)
         if (id < 1 || id > 10)
             continue;
 
+        UserData* ud = new UserData();
         ud->setId(id);
         ud->setHeight(data[extra_offset + 1]);
         ud->setBirthDate(uchar2QDate(data[extra_offset + 2], data[extra_offset + 3]));
