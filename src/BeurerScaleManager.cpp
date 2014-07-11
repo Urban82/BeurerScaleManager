@@ -32,6 +32,7 @@
 BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
     , usb(new UsbDownloader(this))
+    , usb_data(new UsbData(this))
 {
     ui = new Ui::BeurerScaleManager();
     ui->setupUi(this);
@@ -61,11 +62,10 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
     qDebug() << "Data received:" << data.size() << "bytes";
     qDebug() << data.toHex();
 
-    UsbData usb_data;
-    if (usb_data.parse(data)) {
-        qDebug() << "Parsed" << usb_data.getUserData().size() << "users";
-        qDebug() << "Scale date and time is" << usb_data.getDateTime();
-        qDebug() << usb_data;
+    if (usb_data->parse(data)) {
+        qDebug() << "Parsed" << usb_data->getUserData().size() << "users";
+        qDebug() << "Scale date and time is" << usb_data->getDateTime();
+        qDebug() << *usb_data;
     }
 }
 

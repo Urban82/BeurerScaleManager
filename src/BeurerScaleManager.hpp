@@ -32,6 +32,7 @@ class BeurerScaleManager;
 }
 
 class UsbDownloader;
+class UsbData;
 
 /*!
  * \class BeurerScaleManager
@@ -62,6 +63,9 @@ protected Q_SLOTS:
 protected:
     //! The UsbDownloader object.
     UsbDownloader* usb;
+
+    //! The UsbData object.
+    UsbData* usb_data;
 
 private:
     Ui::BeurerScaleManager* ui;
