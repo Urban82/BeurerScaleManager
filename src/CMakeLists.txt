@@ -6,6 +6,8 @@ set(SRCS
 
     UserMeasurement.cpp
     UserData.cpp
+
+    UserDataModel.cpp
 )
 set(HDRS
     BeurerScaleManager.hpp
@@ -15,6 +17,8 @@ set(HDRS
 
     UserMeasurement.hpp
     UserData.hpp
+
+    UserDataModel.hpp
 )
 set(UIS
     BeurerScaleManager.ui
