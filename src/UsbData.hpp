@@ -1,6 +1,6 @@
 /*!
  * \file UsbData.hpp
- * \author Danilo Treffiletti <danilo@treffiletti.it>
+ * \author Danilo Treffiletti <urban82@gmail.com>
  * \date 2014-07-07
  * \brief Header for the UsbData class
  * \copyright 2014 (c) Danilo Treffiletti
@@ -88,7 +88,17 @@ private:
     friend QDebug operator<<(QDebug dbg, const UsbData& ud);
 };
 
+/*! QDebug stream operator for UsbData.
+ * \param dbg the QDebug object
+ * \param ud the UsbData object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UsbData& ud);
+/*! QDebug stream operator for UsbData.
+ * \param dbg the QDebug object
+ * \param ud the UsbData object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UsbData* ud);
 
 #endif // USBDATA_HPP

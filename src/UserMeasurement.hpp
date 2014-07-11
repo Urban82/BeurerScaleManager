@@ -155,7 +155,17 @@ protected:
     friend QDebug operator<<(QDebug dbg, const UserMeasurement& um);
 };
 
+/*! QDebug stream operator for UserMeasurement.
+ * \param dbg the QDebug object
+ * \param um the UserMeasurement object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UserMeasurement& um);
+/*! QDebug stream operator for UserMeasurement.
+ * \param dbg the QDebug object
+ * \param um the UserMeasurement object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UserMeasurement* um);
 
 //! List of measurements

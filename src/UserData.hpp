@@ -180,7 +180,17 @@ protected:
     friend QDebug operator<<(QDebug dbg, const UserData& ud);
 };
 
+/*! QDebug stream operator for UserData.
+ * \param dbg the QDebug object
+ * \param ud the UserData object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UserData& ud);
+/*! QDebug stream operator for UserData.
+ * \param dbg the QDebug object
+ * \param ud the UserData object
+ * \return the QDebug object
+ */
 QDebug operator<<(QDebug dbg, const UserData* ud);
 
 //! List of user data
