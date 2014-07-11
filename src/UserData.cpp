@@ -105,7 +105,7 @@ QDebug operator<<(QDebug dbg, const UserData& ud)
     dbg.nospace() << "UserData("
                   << ud.m_id << ", "
                   << ud.m_birthDate.toString() << ", "
-                  << ud.m_height << "m, ";
+                  << ud.m_height << "cm, ";
     switch (ud.m_gender) {
         case UserData::Male:
             dbg.nospace() << "M";
