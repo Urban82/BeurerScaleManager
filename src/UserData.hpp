@@ -27,6 +27,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QDebug>
 #include <QtCore/QDate>
+#include <QtCore/QList>
 
 #include "UserMeasurement.hpp"
 
@@ -181,5 +182,8 @@ protected:
 
 QDebug operator<<(QDebug dbg, const UserData& ud);
 QDebug operator<<(QDebug dbg, const UserData* ud);
+
+//! List of user data
+typedef QList<UserData*> UserDataList;
 
 #endif // USERDATA_HPP

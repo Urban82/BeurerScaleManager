@@ -99,7 +99,7 @@ QDateTime UsbData::getDateTime() const
     return m_dateTime;
 }
 
-QList<UserData*>& UsbData::getUserData()
+UserDataList& UsbData::getUserData()
 {
     return m_userData;
 }

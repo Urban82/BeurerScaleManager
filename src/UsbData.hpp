@@ -27,7 +27,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QDebug>
 #include <QtCore/QDateTime>
-#include <QtCore/QList>
 #include <QtCore/QByteArray>
 
 #include "UserData.hpp"
@@ -53,7 +52,7 @@ class UsbData : public QObject
     /*! The data for all the users.
      * \sa getUserData
      */
-    Q_PROPERTY(QList<UserData*> userData READ getUserData);
+    Q_PROPERTY(UserDataList userData READ getUserData);
 
 public:
     /*! Constructor of the class.
@@ -70,7 +69,7 @@ public:
     /*! Getter for the userData property.
      * \sa userData
      */
-    QList<UserData*>& getUserData();
+    UserDataList& getUserData();
 
 public Q_SLOTS:
     /*! \brief Parse the USB data.
@@ -83,8 +82,8 @@ public Q_SLOTS:
     bool parse(const QByteArray& data);
 
 private:
-    QDateTime           m_dateTime;
-    QList<UserData*>    m_userData;
+    QDateTime       m_dateTime;
+    UserDataList    m_userData;
 
     friend QDebug operator<<(QDebug dbg, const UsbData& ud);
 };
