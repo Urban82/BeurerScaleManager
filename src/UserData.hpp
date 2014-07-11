@@ -83,7 +83,7 @@ private:
      */
     Q_PROPERTY(uchar height READ getHeight WRITE setHeight);
     /*! The gender of the user.
-     * \sa Gender getGender setGender
+     * \sa Gender getGender setGender getGenderString
      */
     Q_PROPERTY(Gender gender READ getGender WRITE setGender);
     /*! The degree of activity of the user.
@@ -118,7 +118,7 @@ public:
     uchar getHeight() const;
 
     /*! Getter for the gender property.
-     * \sa Gender gender setGender
+     * \sa Gender gender setGender getGenderString
      */
     Gender getGender() const;
 
@@ -131,6 +131,14 @@ public:
      * \sa UserMeasurement UserMeasurementList measurements setMeasurements
      */
     UserMeasurementList& getMeasurements();
+
+    /*! Get gender as string.
+     * Retrieves the gender as a single character string: \c M or \c F.
+     * A \c ? is returned if an invalid gender is set.
+     * \return the gender as string
+     * \sa Gender gender getGender setGender
+     */
+    QString getGenderString() const;
 
 public Q_SLOTS:
     /*! Setter for the id property.
@@ -153,7 +161,7 @@ public Q_SLOTS:
 
     /*! Setter for the gender property.
      * \param gender the new value
-     * \sa Gender gender getGender
+     * \sa Gender gender getGender getGenderString
      */
     void setGender(const Gender& gender);
 
@@ -173,8 +181,8 @@ protected:
     uchar               m_id;           //!< id property value.             \sa id getId setId
     QDate               m_birthDate;    //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
     uchar               m_height;       //!< height property value.         \sa height getHeight setHeight
-    Gender              m_gender;       //!< gender property value.         \sa gender getGender setGender
-    Activity            m_activity;     //!< activity property value.       \sa activity getActivity setActivity
+    Gender              m_gender;       //!< gender property value.         \sa Gender gender getGender setGender getGenderString
+    Activity            m_activity;     //!< activity property value.       \sa Activity activity getActivity setActivity
     UserMeasurementList m_measurements; //!< measurements property values.  \sa measurements getMeasurements setMeasurements
 
     friend QDebug operator<<(QDebug dbg, const UserData& ud);

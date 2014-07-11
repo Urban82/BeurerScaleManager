@@ -77,6 +77,18 @@ void UserData::setGender(const UserData::Gender& gender)
     m_gender = gender;
 }
 
+QString UserData::getGenderString() const
+{
+    switch (m_gender) {
+        case Male:
+            return tr("M");
+        case Female:
+            return tr("F");
+        default:
+            return "?";
+    }
+}
+
 UserData::Activity UserData::getActivity() const
 {
     return m_activity;
