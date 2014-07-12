@@ -26,6 +26,8 @@
 
 #include "UsbDownloader.hpp"
 #include "UsbData.hpp"
+#include "UserDataModel.hpp"
+#include "UserMeasurementModel.hpp"
 
 #include <QtCore/QDebug>
 
@@ -50,6 +52,18 @@ void BeurerScaleManager::startDownload()
     qDebug() << "START download";
     ui->btnStartDownload->setDisabled(true);
     ui->progressDownload->setValue(0);
+    ui->comboUser->setDisabled(true);
+    ui->tableMeasurements->setDisabled(true);
+
+    // Clear comboUser
+    QAbstractItemModel* oldModel = ui->comboUser->model();
+    ui->tableMeasurements->setModel(0);
+    delete oldModel;
+
+    // Clear tableMeasurements
+    oldModel = ui->tableMeasurements->model();
+    ui->tableMeasurements->setModel(0);
+    delete oldModel;
 
     usb->start();
 }
@@ -66,6 +80,9 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
         qDebug() << "Parsed" << usb_data->getUserData().size() << "users";
         qDebug() << "Scale date and time is" << usb_data->getDateTime();
         qDebug() << *usb_data;
+
+        ui->comboUser->setModel(new UserDataModel(usb_data->getUserData(), usb_data));
+        ui->comboUser->setEnabled(true);
     }
 }
 
@@ -73,4 +90,21 @@ void BeurerScaleManager::downloadError()
 {
     qDebug() << "ERROR download";
     ui->btnStartDownload->setEnabled(true);
+}
+
+void BeurerScaleManager::selectUser(const int index)
+{
+    qDebug() << "Selected user at" << index;
+    if (index < 0 || index >= usb_data->getUserData().size())
+        return;
+
+    UserData* userData = usb_data->getUserData().at(index);
+    qDebug() << userData;
+
+    QAbstractItemModel* oldModel = ui->tableMeasurements->model();
+    ui->tableMeasurements->setModel(new UserMeasurementModel(userData->getMeasurements(), userData));
+    delete oldModel;
+
+    ui->tableMeasurements->setEnabled(true);
+    ui->tableMeasurements->selectRow(userData->getMeasurements().size() - 1);
 }

@@ -33,32 +33,87 @@ COPYRIGHT: 2014 (c) Danilo Treffiletti
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
-  <widget class="QPushButton" name="btnStartDownload">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>60</y>
-     <width>161</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&amp;Start Download</string>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progressDownload">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>150</y>
-     <width>341</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="format">
-    <string notr="true">%p%</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="layoutDownload">
+     <item>
+      <widget class="QPushButton" name="btnStartDownload">
+       <property name="text">
+        <string>&amp;Start Download</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QProgressBar" name="progressDownload">
+       <property name="format">
+        <string notr="true">%p%</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="layoutUser">
+     <item>
+      <widget class="QLabel" name="labelUser">
+       <property name="text">
+        <string>Select &amp;user profile:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboUser</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboUser">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableMeasurements">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>18</number>
+     </attribute>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>
@@ -69,17 +124,34 @@ COPYRIGHT: 2014 (c) Danilo Treffiletti
    <slot>startDownload()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>101</y>
+     <x>113</x>
+     <y>28</y>
     </hint>
     <hint type="destinationlabel">
-     <x>285</x>
-     <y>224</y>
+     <x>130</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboUser</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>BeurerScaleManager</receiver>
+   <slot>selectUser(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>76</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>startDownload()</slot>
+  <slot>selectUser(int)</slot>
  </slots>
 </ui>

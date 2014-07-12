@@ -60,6 +60,9 @@ protected Q_SLOTS:
     //! The download was not completed for an error.
     void downloadError();
 
+    //! A user was selected in the combo box.
+    void selectUser(const int index);
+
 protected:
     //! The UsbDownloader object.
     UsbDownloader* usb;
