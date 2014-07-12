@@ -113,6 +113,9 @@ bool UsbData::parse(const QByteArray& data)
     QTime scale_time = uchar2QTime(data[SCALE_TIME_OFF], data[SCALE_TIME_OFF + 1]);
     m_dateTime = QDateTime(scale_date, scale_time);
 
+    qDeleteAll(m_userData);
+    m_userData.clear();
+
     for (int user = 0; user < NUM_USERS; ++user) {
         int user_offset = user * USER_LEN;
         int extra_offset = EXTRA_BLOCK_OFF + user * EXTRA_USER_LEN;
