@@ -22,6 +22,9 @@
  */
 
 #include <QtCore/QDebug>
+#include <QtCore/QTranslator>
+#include <QtCore/QLocale>
+#include <QtCore/QLibraryInfo>
 
 #include <QtGui/QApplication>
 
@@ -35,6 +38,19 @@
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+
+    // Get translation for qt dialogs
+    QTranslator qtTranslator;
+    qDebug() << "Loading translation for" << QLocale::system().name();
+    if (!qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        if (!qtTranslator.load("qt_" + QLocale::system().name(), "translations")) {
+            qWarning() << "Cannot load QT translation for" << QLocale::system().name();
+        }
+    }
+    if (!qtTranslator.load(QLocale::system().name(), "translations")) {
+        qWarning() << "Cannot load translation for" << QLocale::system().name();
+    }
+    app.installTranslator(&qtTranslator);
 
     BeurerScaleManager win;
     win.show();
