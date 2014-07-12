@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LANGS=""
+LANGS="it"
 SRC_DIR="src"
 TS_DIR="translations"
 
