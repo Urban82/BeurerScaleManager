@@ -36,6 +36,8 @@ BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     , usb(new UsbDownloader(this))
     , usb_data(new UsbData(this))
 {
+    setWindowTitle("Beurer Scale Manager");
+
     ui = new Ui::BeurerScaleManager();
     ui->setupUi(this);
 
