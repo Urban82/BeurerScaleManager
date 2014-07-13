@@ -13,6 +13,16 @@
         <source>Select &amp;user profile:</source>
         <translation>Seleziona profilo &amp;utente:</translation>
     </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="93"/>
+        <source>Wrong scale settings</source>
+        <translation>Impostazioni bilancia errati</translation>
+    </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="94"/>
+        <source>&lt;b&gt;Warning&lt;/b&gt;: the date and time set in the scale (%1) are not correct!&lt;br&gt;&lt;br&gt;Please check the settings.</source>
+        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: la data e l&apos;orario impostati nella bilancia (%1) non sono corretti!&lt;br&gt;&lt;br&gt;Perfavore controlla le impostazioni.</translation>
+    </message>
 </context>
 <context>
     <name>UserData</name>

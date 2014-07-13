@@ -30,6 +30,7 @@
 #include "UserMeasurementModel.hpp"
 
 #include <QtCore/QDebug>
+#include <QtGui/QMessageBox>
 
 BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
@@ -85,6 +86,14 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
 
         ui->comboUser->setModel(new UserDataModel(usb_data->getUserData(), usb_data));
         ui->comboUser->setEnabled(true);
+
+        int diffTime = usb_data->getDateTime().secsTo(QDateTime::currentDateTime());
+        if (diffTime < -300 || diffTime > 300) {
+            QMessageBox::warning(this,
+                                 windowTitle() + " - " + tr("Wrong scale settings"),
+                                 tr("<b>Warning</b>: the date and time set in the scale (%1) are not correct!<br><br>Please check the settings.").arg(usb_data->getDateTime().toString(Qt::SystemLocaleShortDate))
+            );
+        }
     }
 }
 
