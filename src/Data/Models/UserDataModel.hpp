@@ -28,13 +28,14 @@
 #include <QtCore/QVariant>
 #include <QtCore/QModelIndex>
 
-#include "UserData.hpp"
+#include <Data/UserData.hpp>
 
 namespace BSM {
 namespace Data {
+namespace Models {
 
 /*!
- * \class BSM::Data::UserDataModel
+ * \class BSM::Data::Models::UserDataModel
  * \brief Model for the UserData objects
  *
  * This class is the model to insert a UserDataList in a list-view, like a QComboBox.
@@ -66,6 +67,7 @@ private:
     const UserDataList  m_list;
 };
 
+} // namespace Models
 } // namespace Data
 } // namespace BSM
 

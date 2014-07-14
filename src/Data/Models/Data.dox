@@ -1,0 +1,5 @@
+/*! \namespace BSM::Data::Models
+ * \brief Classes for data models.
+ *
+ * This namespace holds all class the are used as data-models for the Qt views.
+ */

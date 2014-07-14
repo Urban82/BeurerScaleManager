@@ -26,6 +26,7 @@
 
 namespace BSM {
 namespace Data {
+namespace Models {
 
 UserDataModel::UserDataModel(const UserDataList& list, QObject* parent)
     : QAbstractItemModel(parent)
@@ -82,5 +83,6 @@ QModelIndex UserDataModel::index(int row, int column, const QModelIndex& parent)
     return QModelIndex();
 }
 
+} // namespace Models
 } // namespace Data
 } // namespace BSM

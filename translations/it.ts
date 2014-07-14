@@ -15,6 +15,39 @@
     </message>
 </context>
 <context>
+    <name>BSM::Data::Models::UserMeasurementModel</name>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="119"/>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="121"/>
+        <source>Time</source>
+        <translation>Orario</translation>
+    </message>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="123"/>
+        <source>Weight</source>
+        <translation>Peso</translation>
+    </message>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="125"/>
+        <source>% Body fat</source>
+        <translation>% Massa grassa</translation>
+    </message>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="127"/>
+        <source>% Water</source>
+        <translation>% Acqua</translation>
+    </message>
+    <message>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="129"/>
+        <source>% Muscle</source>
+        <translation>% Massa muscolare</translation>
+    </message>
+</context>
+<context>
     <name>BSM::Data::UserData</name>
     <message>
         <location filename="../src/Data/UserData.cpp" line="87"/>
@@ -25,39 +58,6 @@
         <location filename="../src/Data/UserData.cpp" line="89"/>
         <source>F</source>
         <translation>F</translation>
-    </message>
-</context>
-<context>
-    <name>BSM::Data::UserMeasurementModel</name>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="118"/>
-        <source>Date</source>
-        <translation>Data</translation>
-    </message>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="120"/>
-        <source>Time</source>
-        <translation>Orario</translation>
-    </message>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="122"/>
-        <source>Weight</source>
-        <translation>Peso</translation>
-    </message>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="124"/>
-        <source>% Body fat</source>
-        <translation>% Massa grassa</translation>
-    </message>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="126"/>
-        <source>% Water</source>
-        <translation>% Acqua</translation>
-    </message>
-    <message>
-        <location filename="../src/Data/UserMeasurementModel.cpp" line="128"/>
-        <source>% Muscle</source>
-        <translation>% Massa muscolare</translation>
     </message>
 </context>
 <context>

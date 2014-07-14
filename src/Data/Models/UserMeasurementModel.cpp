@@ -22,13 +22,13 @@
  */
 
 #include "UserMeasurementModel.hpp"
-#include "UserMeasurement.hpp"
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
 
 namespace BSM {
 namespace Data {
+namespace Models {
 
 UserMeasurementModel::UserMeasurementModel(const UserMeasurementList& list, QObject* parent)
     : QAbstractItemModel(parent)
@@ -132,5 +132,6 @@ QVariant UserMeasurementModel::headerData(int section, Qt::Orientation orientati
     return QVariant();
 }
 
+} // namespace Models
 } // namespace Data
 } // namespace BSM

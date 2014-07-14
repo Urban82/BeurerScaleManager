@@ -28,13 +28,14 @@
 #include <QtCore/QVariant>
 #include <QtCore/QModelIndex>
 
-#include "UserMeasurement.hpp"
+#include <Data/UserMeasurement.hpp>
 
 namespace BSM {
 namespace Data {
+namespace Models {
 
 /*!
- * \class BSM::Data::UserMeasurementModel
+ * \class BSM::Data::Models::UserMeasurementModel
  * \brief Model for the UserMeasurement objects
  *
  * This class is the model to insert a UserMeasurementList in a list-view, like a QComboBox.
@@ -68,6 +69,7 @@ private:
     const UserMeasurementList  m_list;
 };
 
+} // namespace Models
 } // namespace Data
 } // namespace BSM
 
