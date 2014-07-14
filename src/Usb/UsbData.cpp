@@ -102,7 +102,7 @@ QDateTime UsbData::getDateTime() const
     return m_dateTime;
 }
 
-UserDataList& UsbData::getUserData()
+Data::UserDataList& UsbData::getUserData()
 {
     return m_userData;
 }
@@ -127,30 +127,30 @@ bool UsbData::parse(const QByteArray& data)
         if (id < 1 || id > 10)
             continue;
 
-        UserData* ud = new UserData();
+        Data::UserData* ud = new Data::UserData();
         ud->setId(id);
         ud->setHeight(data[extra_offset + 1]);
         ud->setBirthDate(uchar2QDate(data[extra_offset + 2], data[extra_offset + 3]));
-        ud->setGender( ((data[extra_offset + 4] & 0x80) == 0x00) ? UserData::Male : UserData::Female );
+        ud->setGender( ((data[extra_offset + 4] & 0x80) == 0x00) ? Data::UserData::Male : Data::UserData::Female );
         switch (data[extra_offset + 4] & 0x0F) {
             case 0:
-                ud->setActivity(UserData::None);
+                ud->setActivity(Data::UserData::None);
                 break;
             case 1:
-                ud->setActivity(UserData::Low);
+                ud->setActivity(Data::UserData::Low);
                 break;
             case 2:
-                ud->setActivity(UserData::Medium);
+                ud->setActivity(Data::UserData::Medium);
                 break;
             case 3:
-                ud->setActivity(UserData::High);
+                ud->setActivity(Data::UserData::High);
                 break;
             case 4:
-                ud->setActivity(UserData::VeryHigh);
+                ud->setActivity(Data::UserData::VeryHigh);
                 break;
             default:
                 // Invalid value, set to None
-                ud->setActivity(UserData::None);
+                ud->setActivity(Data::UserData::None);
                 break;
         }
 
@@ -168,7 +168,7 @@ bool UsbData::parse(const QByteArray& data)
             if (dateTime.isNull() || !dateTime.isValid())
                 break;
 
-            UserMeasurement* um = new UserMeasurement();
+            Data::UserMeasurement* um = new Data::UserMeasurement();
             um->setWeight(uchar2ushort(data[weight_offset], data[weight_offset + 1]) * 0.1);
             um->setBodyFatPercent(uchar2ushort(data[bodyFat_offset], data[bodyFat_offset + 1]) * 0.1);
             um->setWaterPercent(uchar2ushort(data[water_offset], data[water_offset + 1]) * 0.1);

@@ -1,0 +1,5 @@
+/*! \namespace BSM::Data
+ * \brief Data representation classes
+ *
+ * This namespace holds all class the are used to represents data.
+ */

@@ -29,12 +29,13 @@
 #include <QtCore/QDate>
 #include <QtCore/QList>
 
-#include "UserMeasurement.hpp"
+#include <Data/UserMeasurement.hpp>
 
 namespace BSM {
+namespace Data {
 
 /*!
- * \class BSM::UserData
+ * \class BSM::Data::UserData
  * \brief Measurements and personal data for the user.
  *
  * This class holds the measurements data and the personal data for each user.
@@ -206,6 +207,7 @@ QDebug operator<<(QDebug dbg, const UserData* ud);
 //! List of user data
 typedef QList<UserData*> UserDataList;
 
+} // namespace Data
 } // namespace BSM
 
 #endif // USERDATA_HPP

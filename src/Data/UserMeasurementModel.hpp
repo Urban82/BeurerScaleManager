@@ -31,9 +31,10 @@
 #include "UserMeasurement.hpp"
 
 namespace BSM {
+namespace Data {
 
 /*!
- * \class BSM::UserMeasurementModel
+ * \class BSM::Data::UserMeasurementModel
  * \brief Model for the UserMeasurement objects
  *
  * This class is the model to insert a UserMeasurementList in a list-view, like a QComboBox.
@@ -67,6 +68,7 @@ private:
     const UserMeasurementList  m_list;
 };
 
+} // namespace Data
 } // namespace BSM
 
 #endif // USERMEASUREMENTMODEL_HPP

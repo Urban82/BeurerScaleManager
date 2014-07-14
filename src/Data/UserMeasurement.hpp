@@ -30,9 +30,10 @@
 #include <QtCore/QList>
 
 namespace BSM {
+namespace Data {
 
 /*!
- * \class BSM::UserMeasurement
+ * \class BSM::Data::UserMeasurement
  * \brief Measurement for the user.
  *
  * This class holds the measurement data for a single weighing.
@@ -173,6 +174,7 @@ QDebug operator<<(QDebug dbg, const UserMeasurement* um);
 //! List of measurements
 typedef QList<UserMeasurement*> UserMeasurementList;
 
+} // namespace Data
 } // namespace BSM
 
 #endif // USERMEASUREMENT_HPP

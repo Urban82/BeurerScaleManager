@@ -24,6 +24,7 @@
 #include "UserData.hpp"
 
 namespace BSM {
+namespace Data {
 
 UserData::UserData(QObject* parent)
     : QObject(parent)
@@ -116,7 +117,7 @@ QDebug operator<<(QDebug dbg, const UserData& ud)
 #ifdef QT_NO_DEBUG_OUTPUT
     return dbg;
 #else
-    dbg.nospace() << "UserData("
+    dbg.nospace() << "Data::UserData("
                   << ud.m_id << ", "
                   << ud.m_birthDate.toString() << ", "
                   << ud.m_height << "cm, ";
@@ -146,9 +147,10 @@ QDebug operator<<(QDebug dbg, const UserData* ud)
 #else
     if (ud)
         return operator<<(dbg, *ud);
-    dbg.nospace() << "UserData()";
+    dbg.nospace() << "Data::UserData()";
     return dbg.space();
 #endif
 }
 
+} // namespace Data
 } // namespace BSM

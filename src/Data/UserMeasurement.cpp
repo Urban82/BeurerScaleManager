@@ -24,6 +24,7 @@
 #include "UserMeasurement.hpp"
 
 namespace BSM {
+namespace Data {
 
 UserMeasurement::UserMeasurement(QObject* parent)
     : QObject(parent)
@@ -113,7 +114,7 @@ QDebug operator<<(QDebug dbg, const UserMeasurement& um)
 #ifdef QT_NO_DEBUG_OUTPUT
     return dbg;
 #else
-    dbg.nospace() << "UserMeasurement("
+    dbg.nospace() << "Data::UserMeasurement("
                   << um.m_dateTime.toString() << " - "
                   << um.m_weight << "kg, "
                   << um.m_bodyFatPercent << "%, "
@@ -130,9 +131,10 @@ QDebug operator<<(QDebug dbg, const UserMeasurement* um)
 #else
     if (um)
         return operator<<(dbg, *um);
-    dbg.nospace() << "UserMeasurement()";
+    dbg.nospace() << "Data::UserMeasurement()";
     return dbg.space();
 #endif
 }
 
+} // namespace Data
 } // namespace BSM

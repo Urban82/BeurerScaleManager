@@ -1,20 +1,8 @@
 set(SRCS
     BeurerScaleManager.cpp
-
-    UserMeasurement.cpp
-    UserData.cpp
-
-    UserDataModel.cpp
-    UserMeasurementModel.cpp
 )
 set(HDRS
     BeurerScaleManager.hpp
-
-    UserMeasurement.hpp
-    UserData.hpp
-
-    UserDataModel.hpp
-    UserMeasurementModel.hpp
 )
 set(UIS
     BeurerScaleManager.ui
@@ -23,6 +11,7 @@ list_add_prefix(SRCS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(HDRS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(UIS ${CMAKE_CURRENT_SOURCE_DIR}/)
 
+add_subdirectory(Data)
 add_subdirectory(Usb)
 
 set(BSM_SRCS ${BSM_SRCS} ${SRCS} PARENT_SCOPE)

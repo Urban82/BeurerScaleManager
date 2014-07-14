@@ -26,8 +26,8 @@
 
 #include <Usb/UsbDownloader.hpp>
 #include <Usb/UsbData.hpp>
-#include "UserDataModel.hpp"
-#include "UserMeasurementModel.hpp"
+#include <Data/UserDataModel.hpp>
+#include <Data/UserMeasurementModel.hpp>
 
 #include <QtCore/QDebug>
 #include <QtGui/QMessageBox>
@@ -86,7 +86,7 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
         qDebug() << "Scale date and time is" << usb_data->getDateTime();
         qDebug() << *usb_data;
 
-        ui->comboUser->setModel(new UserDataModel(usb_data->getUserData(), usb_data));
+        ui->comboUser->setModel(new Data::UserDataModel(usb_data->getUserData(), usb_data));
         ui->comboUser->setEnabled(true);
 
         int diffTime = usb_data->getDateTime().secsTo(QDateTime::currentDateTime());
@@ -111,11 +111,11 @@ void BeurerScaleManager::selectUser(const int index)
     if (index < 0 || index >= usb_data->getUserData().size())
         return;
 
-    UserData* userData = usb_data->getUserData().at(index);
+    Data::UserData* userData = usb_data->getUserData().at(index);
     qDebug() << userData;
 
     QAbstractItemModel* oldModel = ui->tableMeasurements->model();
-    ui->tableMeasurements->setModel(new UserMeasurementModel(userData->getMeasurements(), userData));
+    ui->tableMeasurements->setModel(new Data::UserMeasurementModel(userData->getMeasurements(), userData));
     delete oldModel;
 
     ui->tableMeasurements->setEnabled(true);
