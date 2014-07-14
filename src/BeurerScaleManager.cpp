@@ -24,8 +24,8 @@
 #include "BeurerScaleManager.hpp"
 #include "ui_BeurerScaleManager.h"
 
-#include "UsbDownloader.hpp"
-#include "UsbData.hpp"
+#include <Usb/UsbDownloader.hpp>
+#include <Usb/UsbData.hpp>
 #include "UserDataModel.hpp"
 #include "UserMeasurementModel.hpp"
 
@@ -36,8 +36,8 @@ namespace BSM {
 
 BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
-    , usb(new UsbDownloader(this))
-    , usb_data(new UsbData(this))
+    , usb(new Usb::UsbDownloader(this))
+    , usb_data(new Usb::UsbData(this))
 {
     setWindowTitle("Beurer Scale Manager");
 

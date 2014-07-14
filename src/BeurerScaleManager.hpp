@@ -32,8 +32,10 @@ namespace Ui {
 
 namespace BSM {
 
-class UsbDownloader;
-class UsbData;
+namespace Usb {
+    class UsbDownloader;
+    class UsbData;
+}
 
 /*!
  * \class BSM::BeurerScaleManager
@@ -66,10 +68,10 @@ protected Q_SLOTS:
 
 protected:
     //! The UsbDownloader object.
-    UsbDownloader* usb;
+    Usb::UsbDownloader* usb;
 
     //! The UsbData object.
-    UsbData* usb_data;
+    Usb::UsbData* usb_data;
 
 private:
     Ui::BeurerScaleManager* ui;

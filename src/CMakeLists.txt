@@ -1,9 +1,6 @@
 set(SRCS
     BeurerScaleManager.cpp
 
-    UsbDownloader.cpp
-    UsbData.cpp
-
     UserMeasurement.cpp
     UserData.cpp
 
@@ -12,9 +9,6 @@ set(SRCS
 )
 set(HDRS
     BeurerScaleManager.hpp
-
-    UsbDownloader.hpp
-    UsbData.hpp
 
     UserMeasurement.hpp
     UserData.hpp
@@ -28,6 +22,8 @@ set(UIS
 list_add_prefix(SRCS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(HDRS ${CMAKE_CURRENT_SOURCE_DIR}/)
 list_add_prefix(UIS ${CMAKE_CURRENT_SOURCE_DIR}/)
+
+add_subdirectory(Usb)
 
 set(BSM_SRCS ${BSM_SRCS} ${SRCS} PARENT_SCOPE)
 set(BSM_HDRS ${BSM_HDRS} ${HDRS} PARENT_SCOPE)

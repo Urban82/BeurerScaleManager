@@ -30,9 +30,10 @@
 class libusb_context;
 
 namespace BSM {
+namespace Usb {
 
 /*!
- * \class BSM::UsbDownloader
+ * \class BSM::Usb::UsbDownloader
  * \brief Downloader for the data from the scale.
  *
  * This class ask the scale for the data in its memory and then download them.
@@ -73,6 +74,7 @@ protected:
     virtual void run();
 };
 
+} // namespace Usb
 } // namespace BSM
 
 #endif // USBDOWNLOADER_HPP

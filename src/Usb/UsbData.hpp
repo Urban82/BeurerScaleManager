@@ -29,12 +29,13 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QByteArray>
 
-#include "UserData.hpp"
+#include <UserData.hpp>
 
 namespace BSM {
+namespace Usb {
 
 /*!
- * \class BSM::UsbData
+ * \class BSM::Usb::UsbData
  * \brief Data received via USB from the scale.
  *
  * This class holds the data received from the scale via USB.
@@ -103,6 +104,7 @@ QDebug operator<<(QDebug dbg, const UsbData& ud);
  */
 QDebug operator<<(QDebug dbg, const UsbData* ud);
 
+} // namespace Usb
 } // namespace BSM
 
 #endif // USBDATA_HPP

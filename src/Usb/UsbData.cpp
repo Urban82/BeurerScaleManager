@@ -27,6 +27,7 @@
 #include <QtCore/QTime>
 
 namespace BSM {
+namespace Usb {
 
 //! Number of users in the scale memory.
 #define NUM_USERS        10
@@ -188,7 +189,7 @@ QDebug operator<<(QDebug dbg, const UsbData& ud)
 #ifdef QT_NO_DEBUG_OUTPUT
     return dbg;
 #else
-    dbg.nospace() << "UsbData("
+    dbg.nospace() << "Usb::UsbData("
                   << ud.m_dateTime.toString() << ", "
                   << ud.m_userData.size() << " " << ud.m_userData << ")";
     return dbg.space();
@@ -202,7 +203,7 @@ QDebug operator<<(QDebug dbg, const UsbData* ud)
 #else
     if (ud)
         return operator<<(dbg, *ud);
-    dbg.nospace() << "UsbData()";
+    dbg.nospace() << "Usb::UsbData()";
     return dbg.space();
 #endif
 }
@@ -229,4 +230,5 @@ QTime uchar2QTime(const uchar b1, const uchar b2)
     return QTime(b1, b2);
 }
 
+} // namespace Usb
 } // namespace BSM

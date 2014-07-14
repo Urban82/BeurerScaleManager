@@ -1,0 +1,6 @@
+/*! \namespace BSM::Usb
+ * \brief USB download classes.
+ *
+ * This namespace holds all classes related to the USB protocol and the download
+ * of the data from the scale.
+ */

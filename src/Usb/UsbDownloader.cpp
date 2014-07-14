@@ -29,6 +29,7 @@
 #include <QtCore/QFile>
 
 namespace BSM {
+namespace Usb {
 
 //! USB Vendor ID for the Beurer USB Scale
 #define BSM_VID             0x04d9
@@ -292,4 +293,5 @@ void cb_in(struct libusb_transfer *transfer)
         libusb_submit_transfer(transfer);
 }
 
+} // namespace Usb
 } // namespace BSM
