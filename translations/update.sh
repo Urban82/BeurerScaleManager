@@ -22,5 +22,5 @@ for lang in $LANGS; do
     TS="$TS $TS_DIR/$lang.ts"
 done
 
-lupdate -recursive $SRC_DIR -ts $TS
+lupdate -recursive $SRC_DIR -no-obsolete -ts $TS
 echo "Done!"
