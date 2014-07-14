@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     }
     app.installTranslator(&qtTranslator);
 
-    BeurerScaleManager win;
+    BSM::BeurerScaleManager win;
     win.show();
 
     return app.exec();

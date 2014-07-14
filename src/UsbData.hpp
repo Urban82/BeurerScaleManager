@@ -31,8 +31,10 @@
 
 #include "UserData.hpp"
 
+namespace BSM {
+
 /*!
- * \class UsbData
+ * \class BSM::UsbData
  * \brief Data received via USB from the scale.
  *
  * This class holds the data received from the scale via USB.
@@ -100,5 +102,7 @@ QDebug operator<<(QDebug dbg, const UsbData& ud);
  * \return the QDebug object
  */
 QDebug operator<<(QDebug dbg, const UsbData* ud);
+
+} // namespace BSM
 
 #endif // USBDATA_HPP

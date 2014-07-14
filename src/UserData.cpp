@@ -23,6 +23,8 @@
 
 #include "UserData.hpp"
 
+namespace BSM {
+
 UserData::UserData(QObject* parent)
     : QObject(parent)
     , m_id(0)
@@ -148,3 +150,5 @@ QDebug operator<<(QDebug dbg, const UserData* ud)
     return dbg.space();
 #endif
 }
+
+} // namespace BSM

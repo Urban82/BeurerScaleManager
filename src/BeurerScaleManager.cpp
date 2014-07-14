@@ -32,6 +32,8 @@
 #include <QtCore/QDebug>
 #include <QtGui/QMessageBox>
 
+namespace BSM {
+
 BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
     , usb(new UsbDownloader(this))
@@ -119,3 +121,5 @@ void BeurerScaleManager::selectUser(const int index)
     ui->tableMeasurements->setEnabled(true);
     ui->tableMeasurements->selectRow(userData->getMeasurements().size() - 1);
 }
+
+} // namespace BSM

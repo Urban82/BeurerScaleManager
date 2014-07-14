@@ -27,6 +27,8 @@
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
 
+namespace BSM {
+
 UserMeasurementModel::UserMeasurementModel(const UserMeasurementList& list, QObject* parent)
     : QAbstractItemModel(parent)
     , m_list(list)
@@ -128,3 +130,5 @@ QVariant UserMeasurementModel::headerData(int section, Qt::Orientation orientati
 
     return QVariant();
 }
+
+} // namespace BSM

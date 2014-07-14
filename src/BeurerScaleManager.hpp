@@ -26,16 +26,17 @@
 
 #include <QtGui/QWidget>
 
-namespace Ui
-{
-class BeurerScaleManager;
+namespace Ui {
+    class BeurerScaleManager;
 }
+
+namespace BSM {
 
 class UsbDownloader;
 class UsbData;
 
 /*!
- * \class BeurerScaleManager
+ * \class BSM::BeurerScaleManager
  * \brief QWidget for the main window.
  *
  * This class implements the QWidget for the main window.
@@ -73,5 +74,7 @@ protected:
 private:
     Ui::BeurerScaleManager* ui;
 };
+
+} // namespace BSM
 
 #endif // BEURERSCALEMANAGER_HPP

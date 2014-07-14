@@ -26,6 +26,8 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 
+namespace BSM {
+
 //! Number of users in the scale memory.
 #define NUM_USERS        10
 //! Number of variables saved for each user.
@@ -226,3 +228,5 @@ QTime uchar2QTime(const uchar b1, const uchar b2)
         return QTime();
     return QTime(b1, b2);
 }
+
+} // namespace BSM

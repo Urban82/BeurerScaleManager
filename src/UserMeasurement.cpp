@@ -23,6 +23,8 @@
 
 #include "UserMeasurement.hpp"
 
+namespace BSM {
+
 UserMeasurement::UserMeasurement(QObject* parent)
     : QObject(parent)
     , m_weight(0)
@@ -132,3 +134,5 @@ QDebug operator<<(QDebug dbg, const UserMeasurement* um)
     return dbg.space();
 #endif
 }
+
+} // namespace BSM

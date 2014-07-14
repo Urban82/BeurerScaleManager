@@ -24,6 +24,8 @@
 #include "UserDataModel.hpp"
 #include "UserData.hpp"
 
+namespace BSM {
+
 UserDataModel::UserDataModel(const UserDataList& list, QObject* parent)
     : QAbstractItemModel(parent)
     , m_list(list)
@@ -78,3 +80,5 @@ QModelIndex UserDataModel::index(int row, int column, const QModelIndex& parent)
 
     return QModelIndex();
 }
+
+} // namespace BSM

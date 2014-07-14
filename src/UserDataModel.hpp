@@ -30,8 +30,10 @@
 
 #include "UserData.hpp"
 
+namespace BSM {
+
 /*!
- * \class UserDataModel
+ * \class BSM::UserDataModel
  * \brief Model for the UserData objects
  *
  * This class is the model to insert a UserDataList in a list-view, like a QComboBox.
@@ -62,5 +64,7 @@ public:
 private:
     const UserDataList  m_list;
 };
+
+} // namespace BSM
 
 #endif // USERDATAMODEL_HPP
