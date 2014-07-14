@@ -48,8 +48,6 @@ class UsbData : public QObject
     Q_OBJECT
     Q_DISABLE_COPY(UsbData)
 
-    typedef Data::UserDataList Data_UserDataList;
-
     /*! The date and the time of the scale.
      * \sa getDateTime
      */
@@ -57,7 +55,12 @@ class UsbData : public QObject
     /*! The data for all the users.
      * \sa getUserData
      */
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    typedef Data::UserDataList Data_UserDataList;
     Q_PROPERTY(Data_UserDataList userData READ getUserData);
+#else
+    Q_PROPERTY(Data::UserDataList userData READ getUserData); // This one is gust used by doxygen
+#endif
 
 public:
     /*! Constructor of the class.
