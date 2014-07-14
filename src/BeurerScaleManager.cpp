@@ -103,6 +103,11 @@ void BeurerScaleManager::downloadError()
 {
     qDebug() << "ERROR download";
     ui->btnStartDownload->setEnabled(true);
+
+    QMessageBox::critical(this,
+                         windowTitle() + " - " + tr("Download error"),
+                         tr("<b>Warning</b>: no scale found or download error!<br><br>Please check USB cable and try again.")
+    );
 }
 
 void BeurerScaleManager::selectUser(const int index)

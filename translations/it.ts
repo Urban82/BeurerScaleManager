@@ -11,38 +11,48 @@
     <message>
         <location filename="../src/BeurerScaleManager.cpp" line="96"/>
         <source>&lt;b&gt;Warning&lt;/b&gt;: the date and time set in the scale (%1) are not correct!&lt;br&gt;&lt;br&gt;Please check the settings.</source>
-        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: la data e l&apos;orario impostati nella bilancia (%1) non sono corretti!&lt;br&gt;&lt;br&gt;Perfavore controlla le impostazioni.</translation>
+        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: la data e l&apos;orario impostati nella bilancia (%1) non sono corretti!&lt;br&gt;&lt;br&gt;Si prega di controlla le impostazioni.</translation>
+    </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="108"/>
+        <source>Download error</source>
+        <translation>Errore download</translation>
+    </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="109"/>
+        <source>&lt;b&gt;Warning&lt;/b&gt;: no scale found or download error!&lt;br&gt;&lt;br&gt;Please check USB cable and try again.</source>
+        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: nessuna bilancia trovata o errore nel download!&lt;br&gt;&lt;br&gt;Si prega di controllare il cavo USB e riprovare nuovamente.</translation>
     </message>
 </context>
 <context>
     <name>BSM::Data::Models::UserMeasurementModel</name>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="119"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="118"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="121"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="120"/>
         <source>Time</source>
         <translation>Orario</translation>
     </message>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="123"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="122"/>
         <source>Weight</source>
         <translation>Peso</translation>
     </message>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="125"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="124"/>
         <source>% Body fat</source>
         <translation>% Massa grassa</translation>
     </message>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="127"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="126"/>
         <source>% Water</source>
         <translation>% Acqua</translation>
     </message>
     <message>
-        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="129"/>
+        <location filename="../src/Data/Models/UserMeasurementModel.cpp" line="128"/>
         <source>% Muscle</source>
         <translation>% Massa muscolare</translation>
     </message>
