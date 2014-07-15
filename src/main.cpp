@@ -47,6 +47,7 @@ int main(int argc, char** argv)
             qWarning() << "Cannot load QT translation for" << QLocale::system().name();
         }
     }
+    // TODO Check translations in global path (/usr/share/
     if (!qtTranslator.load(QLocale::system().name(), "translations")) {
         qWarning() << "Cannot load translation for" << QLocale::system().name();
     }
