@@ -36,7 +36,7 @@ namespace Usb {
 
 /*!
  * \class BSM::Usb::UsbData
- * \brief Data received via USB from the scale.
+ * \brief %Data received via USB from the scale.
  *
  * This class holds the data received from the scale via USB.
  * Some received data are note decoded ore used: for now only users measurements,
@@ -57,9 +57,9 @@ class UsbData : public QObject
      */
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     typedef Data::UserDataList Data_UserDataList;
-    Q_PROPERTY(Data_UserDataList userData READ getUserData);
+    Q_PROPERTY(Data_UserDataList userData READ getUserData);  // This one is used by Qt that doesn't handle the namespace correctly
 #else
-    Q_PROPERTY(Data::UserDataList userData READ getUserData); // This one is gust used by doxygen
+    Q_PROPERTY(Data::UserDataList userData READ getUserData); // This one is used by doxygen
 #endif
 
 public:
