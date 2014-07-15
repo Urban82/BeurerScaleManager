@@ -1,10 +1,14 @@
 set(SRCS
     UserMeasurement.cpp
     UserData.cpp
+
+    UserDataDB.cpp
 )
 set(HDRS
     UserMeasurement.hpp
     UserData.hpp
+
+    UserDataDB.hpp
 )
 
 qt4_wrap_cpp(SRCS ${HDRS})
