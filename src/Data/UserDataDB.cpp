@@ -23,6 +23,8 @@
 
 #include "UserDataDB.hpp"
 
+#include <Usb/UsbData.hpp>
+
 namespace BSM {
 namespace Data {
 
@@ -52,6 +54,35 @@ QDateTime UserDataDB::getLastDownload() const
 void UserDataDB::setLastDownload(const QDateTime& lastDownload)
 {
     m_lastDownload = lastDownload;
+}
+
+bool UserDataDB::merge(Usb::UsbData& usbData)
+{
+    UserData* userData = 0;
+    foreach(UserData* u, usbData.getUserData()) {
+        if (u->getId() == m_id) {
+            userData = u;
+            break;
+        }
+    }
+    if (!userData)
+        return false; // No data found for this user
+
+    if (userData->getBirthDate() != m_birthDate ||
+        userData->getHeight()    != m_height    ||
+        userData->getGender()    != m_gender    ||
+        userData->getActivity()  != m_activity
+    )
+        return false; // Not the correct user, something changed on the scale?
+
+    foreach(UserMeasurement* m, userData->getMeasurements()) {
+        if (m->getDateTime() > m_lastDownload)
+            m_measurements.append(new UserMeasurement(m, this));
+    }
+
+    // TODO Save new data
+
+    return false;
 }
 
 } // namespace Data

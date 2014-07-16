@@ -27,6 +27,11 @@
 #include <Data/UserData.hpp>
 
 namespace BSM {
+
+namespace Usb {
+    class UsbData;
+}
+
 namespace Data {
 
 /*!
@@ -57,7 +62,7 @@ public:
     /*! Constructor of the class.
      * \param parent the parent QObject
      */
-    explicit UserDataDB(QObject* parent);
+    explicit UserDataDB(QObject* parent = 0);
     virtual ~UserDataDB();
 
     /*! Getter for the name property.
@@ -69,6 +74,16 @@ public:
      * \sa lastDownload setLastDownload
      */
     QDateTime getLastDownload() const;
+
+    /*! Merge data from USB.
+     *
+     * The data received from the USB scale are merged with the current data for
+     * the user. The data prior to the last download date and time are ignored.
+     * \param usbData the data from the USB scale
+     * \return \c true on success or \c false on failure
+     * \sa Usb::UsbData
+     */
+    bool merge(Usb::UsbData& usbData);
 
 public slots:
     /*! Setter for the name property.
