@@ -35,6 +35,16 @@ UserMeasurement::UserMeasurement(QObject* parent)
 {
 }
 
+UserMeasurement::UserMeasurement(const UserMeasurement* other, QObject* parent)
+    : QObject(parent)
+    , m_dateTime(other->m_dateTime)
+    , m_weight(other->m_weight)
+    , m_bodyFatPercent(other->m_bodyFatPercent)
+    , m_waterPercent(other->m_waterPercent)
+    , m_musclePercent(other->m_musclePercent)
+{
+}
+
 UserMeasurement::~UserMeasurement()
 {
 }

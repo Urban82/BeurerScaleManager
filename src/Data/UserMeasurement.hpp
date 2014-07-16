@@ -69,6 +69,11 @@ public:
      * \param parent the parent QObject
      */
     explicit UserMeasurement(QObject* parent = 0);
+    /*! Clone constructor.
+     * \param other the UserData object to clone
+     * \param parent the parent QObject
+     */
+    explicit UserMeasurement(const UserMeasurement* other, QObject* parent = 0);
     virtual ~UserMeasurement();
 
     /*! Relative operator (greater than)
