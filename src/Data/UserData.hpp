@@ -143,7 +143,7 @@ public:
      */
     QString getGenderString() const;
 
-public Q_SLOTS:
+public slots:
     /*! Setter for the id property.
      * \param id the new value
      * \sa id getId

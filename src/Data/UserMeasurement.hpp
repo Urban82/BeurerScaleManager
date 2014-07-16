@@ -117,7 +117,7 @@ public:
      */
     double getMusclePercent() const;
 
-public Q_SLOTS:
+public slots:
     /*! Setter for the dateTime property.
      * \param dateTime the new value
      * \sa dateTime getDateTime

@@ -79,7 +79,7 @@ public:
      */
     Data::UserDataList& getUserData();
 
-public Q_SLOTS:
+public slots:
     /*! \brief Parse the USB data.
      *
      * The data received from the scale are parsed to collect each measurement

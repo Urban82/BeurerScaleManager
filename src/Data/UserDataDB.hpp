@@ -70,7 +70,7 @@ public:
      */
     QDateTime getLastDownload() const;
 
-public Q_SLOTS:
+public slots:
     /*! Setter for the name property.
      * \param name the new value
      * \sa name getName
