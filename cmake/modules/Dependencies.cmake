@@ -1,6 +1,6 @@
 include(MacroLogFeature)
 
-find_package(Qt4 4.8.0 COMPONENTS QtCore)
+find_package(Qt4 4.8.0 COMPONENTS QtCore QtGui)
 macro_log_feature(QT4_FOUND "Qt 4" "Qt 4 framework" "http://qt-project.org/" TRUE 4.8.0)
 
 find_package(LibUSB 1.0)
