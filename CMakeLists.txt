@@ -50,7 +50,7 @@ if(DEBUG)
 endif(DEBUG)
 
 add_executable(BeurerScaleManager ${BSM_SRCS})
-target_link_libraries(BeurerScaleManager ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBUSB_LIBRARIES})
+target_link_libraries(BeurerScaleManager ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTSQL_LIBRARY} ${LIBUSB_LIBRARIES})
 install(TARGETS BeurerScaleManager RUNTIME DESTINATION bin)
 
 if(DOXYGEN_FOUND)
