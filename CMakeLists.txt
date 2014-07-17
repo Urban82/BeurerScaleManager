@@ -14,7 +14,7 @@ include(Dependencies)
 
 include_directories(${QT_INCLUDES} ${LIBUSB_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(BSM_SRCS src/main.cpp)
+set(BSM_SRCS src/main.cpp src/utils.cpp)
 set(BSM_HDRS)
 set(BSM_UIS)
 set(BSM_RCS)

@@ -1,8 +1,8 @@
 /*!
- * \file main.cpp
+ * \file utils.hpp
  * \author Danilo Treffiletti <urban82@gmail.com>
- * \date 2014-06-29
- * \brief Starting point for the application.
+ * \date 2014-07-17
+ * \brief Application global utility functions.
  * \copyright 2014 (c) Danilo Treffiletti
  *
  *    This file is part of BeurerScaleManager.
@@ -21,24 +21,16 @@
  *    along with BeurerScaleManager.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
-#include <utils.hpp>
-#include <BeurerScaleManager.hpp>
+namespace BSM {
+namespace Utils {
 
-/*! Starting point for the application.
- * \param argc the number of command-line arguments
- * \param argv the array of command-line arguments
- * \return the exit status value: \c 0 if no errors
- */
-int main(int argc, char** argv)
-{
-    QApplication app(argc, argv);
+//! Load the translation for the current language
+void loadTranslation();
 
-    BSM::Utils::loadTranslation();
+} // namespace Utils
+} // namespace BSM
 
-    BSM::BeurerScaleManager win;
-    win.show();
-
-    return app.exec();
-}
+#endif // UTILS_HPP

@@ -29,3 +29,7 @@
 /*! \namespace BSM
  * \brief Main namespace for the application.
  */
+
+/*! \namespace BSM::Utils
+ * \brief Collection of utilities for the application.
+ */
