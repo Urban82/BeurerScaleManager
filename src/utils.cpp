@@ -30,6 +30,8 @@
 
 #include <QtGui/QApplication>
 
+#include <config.hpp>
+
 namespace BSM {
 namespace Utils {
 
@@ -54,8 +56,8 @@ void loadTranslation()
 
     // Get translation for application
     QTranslator* bsmTr = new QTranslator(qApp);
-    // TODO Check translations in global path (/usr/share/...)
     if (!localeName.startsWith(QLatin1String("en")) &&
+        !bsmTr->load(localeName, BSM_CFG_TRANSLATIONS_PATH, searchDelimiters) &&
         !bsmTr->load(localeName, "translations", searchDelimiters)
     ) {
         qWarning() << "Cannot load translation for" << localeName;

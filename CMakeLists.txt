@@ -49,6 +49,8 @@ if(DEBUG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 endif(DEBUG)
 
+configure_file(src/config.in.hpp ${CMAKE_CURRENT_BINARY_DIR}/config.hpp ESCAPE_QUOTES @ONLY)
+
 add_executable(BeurerScaleManager ${BSM_SRCS})
 target_link_libraries(BeurerScaleManager ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTSQL_LIBRARY} ${LIBUSB_LIBRARIES})
 install(TARGETS BeurerScaleManager RUNTIME DESTINATION bin)
