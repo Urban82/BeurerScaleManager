@@ -32,10 +32,14 @@
 #include <QtGui/QApplication>
 #include <QtGui/QMessageBox>
 
+#include <QtSql/QSqlQuery>
+
 #include <config.hpp>
 
 namespace BSM {
 namespace Utils {
+
+QSqlDatabase db;
 
 void loadTranslation()
 {
@@ -108,6 +112,54 @@ bool checkUserDirectory()
 QString getSavingDirectory()
 {
     return QDir::homePath() + "/" BSM_SAVING_FOLDER "/";
+}
+
+bool openDdAndCheckTables()
+{
+    // DB path
+    QString dbPath = getSavingDirectory() + "BeurerScaleManager.db";
+    qDebug() << "DB in" << dbPath;
+
+    // Open DB
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(dbPath);
+    if (!db.open()) {
+        qCritical() << "Cannot open DB";
+        QMessageBox::critical(0,
+                              "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Database not opened"),
+                              qApp->translate("BSM::Utils", "Cannot open the database \"%1\".<br><br>Please check your environment.").arg(dbPath)
+        );
+        return false;
+    }
+
+    // Create version table, if doesn't exists
+    if (!executeQuery("CREATE TABLE IF NOT EXISTS TablesVersions (tableName TEXT PRIMARY KEY, version INTEGER);")) {
+        qCritical() << "Cannot create version table";
+        QMessageBox::critical(0,
+                              "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Cannot create table"),
+                              qApp->translate("BSM::Utils", "Cannot create table \"%1\".<br><br>Please check your environment.").arg("TablesVersions")
+        );
+        return false;
+    }
+
+    return false;
+}
+
+void closeDb()
+{
+    db.close();
+}
+
+bool executeQuery(QString sql)
+{
+    QSqlQuery query(db);
+
+    if (!query.prepare(sql))
+        return false;
+    if (!query.exec())
+        return false;
+
+    return true;
 }
 
 } // namespace Utils

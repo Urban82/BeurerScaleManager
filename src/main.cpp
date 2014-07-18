@@ -38,6 +38,8 @@ int main(int argc, char** argv)
     BSM::Utils::loadTranslation();
     if (!BSM::Utils::checkUserDirectory())
         return -1;
+    if (!BSM::Utils::openDdAndCheckTables())
+        return -2;
 
     BSM::BeurerScaleManager win;
     win.show();

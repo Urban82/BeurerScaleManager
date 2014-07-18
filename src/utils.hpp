@@ -24,8 +24,15 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include <QtCore/QString>
+
+#include <QtSql/QSqlDatabase>
+
 namespace BSM {
 namespace Utils {
+
+//! Instance of the DB.
+extern QSqlDatabase db;
 
 //! Load the translation for the current language.
 void loadTranslation();
@@ -35,6 +42,18 @@ bool checkUserDirectory();
 
 //! Retrieve the user folder for saving.
 QString getSavingDirectory();
+
+//! Open the DB and check for tables.
+bool openDdAndCheckTables();
+
+//! Close the DB
+void closeDb();
+
+/*! Execute query on the DB.
+ * \param sql the SQL query
+ * \return \c true on success or \c false on failure
+ */
+bool executeQuery(QString sql);
 
 } // namespace Utils
 } // namespace BSM
