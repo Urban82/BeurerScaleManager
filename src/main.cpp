@@ -21,10 +21,15 @@
  *    along with BeurerScaleManager.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
+#include <QtCore/QDebug>
 #include <QtGui/QApplication>
 
 #include <utils.hpp>
 #include <BeurerScaleManager.hpp>
+
+//! Exit function to close the DB
+void closedb();
 
 /*! Starting point for the application.
  * \param argc the number of command-line arguments
@@ -34,6 +39,9 @@
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+
+    if (atexit(closedb))
+        qCritical() << "Cannot register atexit function";
 
     BSM::Utils::loadTranslation();
     if (!BSM::Utils::checkUserDirectory())
@@ -45,4 +53,10 @@ int main(int argc, char** argv)
     win.show();
 
     return app.exec();
+}
+
+void closedb()
+{
+    qDebug() << "Closing the DB at exit";
+    BSM::Utils::closeDb();
 }
