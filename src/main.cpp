@@ -36,6 +36,8 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
 
     BSM::Utils::loadTranslation();
+    if (!BSM::Utils::checkUserDirectory())
+        return -1;
 
     BSM::BeurerScaleManager win;
     win.show();

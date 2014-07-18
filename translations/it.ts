@@ -71,6 +71,39 @@
     </message>
 </context>
 <context>
+    <name>BSM::Utils</name>
+    <message>
+        <location filename="../src/utils.cpp" line="79"/>
+        <source>Directory not found</source>
+        <translation>Cartella non trovata</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="80"/>
+        <source>Cannot find user directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile trovare la cartella dell&apos;utente &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="90"/>
+        <source>Directory not created</source>
+        <translation>Cartella non creata</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="91"/>
+        <source>Cannot create user saving directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile creare la cartella per i dati &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="98"/>
+        <source>Directory not opened</source>
+        <translation>Cartella non aperta</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="99"/>
+        <source>Cannot open user saving directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile aprire la cartella per i dati &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
+</context>
+<context>
     <name>BeurerScaleManager</name>
     <message>
         <location filename="../src/BeurerScaleManager.ui" line="42"/>

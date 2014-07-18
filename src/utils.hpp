@@ -27,8 +27,14 @@
 namespace BSM {
 namespace Utils {
 
-//! Load the translation for the current language
+//! Load the translation for the current language.
 void loadTranslation();
+
+//! Check user folder for saving.
+bool checkUserDirectory();
+
+//! Retrieve the user folder for saving.
+QString getSavingDirectory();
 
 } // namespace Utils
 } // namespace BSM

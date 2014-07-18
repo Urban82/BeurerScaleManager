@@ -27,8 +27,10 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QLocale>
 #include <QtCore/QLibraryInfo>
+#include <QtCore/QDir>
 
 #include <QtGui/QApplication>
+#include <QtGui/QMessageBox>
 
 #include <config.hpp>
 
@@ -63,6 +65,49 @@ void loadTranslation()
         qWarning() << "Cannot load translation for" << localeName;
     }
     qApp->installTranslator(bsmTr);
+}
+
+bool checkUserDirectory()
+{
+    // User folder
+    QDir path = QDir::home();
+    if (!path.exists()) {
+        qCritical() << "Cannot find user directory" << path.path();
+        QMessageBox::critical(0,
+                              "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Directory not found"),
+                              qApp->translate("BSM::Utils", "Cannot find user directory \"%1\".<br><br>Please check your environment.").arg(path.path())
+        );
+        return false;
+    }
+    qDebug() << "User directory" << path.path() << "OK";
+
+    if (!path.exists(BSM_SAVING_FOLDER)) {
+        qDebug() << "Try to create" << path.filePath(BSM_SAVING_FOLDER);
+        if (!path.mkdir(BSM_SAVING_FOLDER)) {
+            qCritical() << "Cannot create saving directory";
+            QMessageBox::critical(0,
+                                  "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Directory not created"),
+                                  qApp->translate("BSM::Utils", "Cannot create user saving directory \"%1\".<br><br>Please check your environment.").arg(path.filePath(BSM_SAVING_FOLDER))
+            );
+            return false;
+        }
+    }
+    if (!path.cd(BSM_SAVING_FOLDER)) {
+        qCritical() << "Cannot open saving directory";
+        QMessageBox::critical(0,
+                              "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Directory not opened"),
+                              qApp->translate("BSM::Utils", "Cannot open user saving directory \"%1\".<br><br>Please check your environment.").arg(path.filePath(BSM_SAVING_FOLDER))
+        );
+        return false;
+    }
+    qDebug() << "User saving directory" << path.path() << "OK";
+
+    return true;
+}
+
+QString getSavingDirectory()
+{
+    return QDir::homePath() + "/" BSM_SAVING_FOLDER "/";
 }
 
 } // namespace Utils

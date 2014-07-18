@@ -29,4 +29,7 @@
 //! Path of the directory that contains translation files
 #define BSM_CFG_TRANSLATIONS_PATH "@CMAKE_INSTALL_PREFIX@/share/BSM/translations"
 
+//! Name of the user folder for saving
+#define BSM_SAVING_FOLDER ".BeurerScaleManager"
+
 #endif // CONFIG_HPP
