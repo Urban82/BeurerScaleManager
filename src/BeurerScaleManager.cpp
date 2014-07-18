@@ -93,7 +93,7 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
         if (diffTime < -300 || diffTime > 300) {
             QMessageBox::warning(this,
                                  windowTitle() + " - " + tr("Wrong scale settings"),
-                                 tr("<b>Warning</b>: the date and time set in the scale (%1) are not correct!<br><br>Please check the settings.").arg(usb_data->getDateTime().toString(Qt::SystemLocaleShortDate))
+                                 tr("The date and time set in the scale (%1) are not correct!<br><br>Please check the settings.").arg(usb_data->getDateTime().toString(Qt::SystemLocaleShortDate))
             );
         }
     }
@@ -106,7 +106,7 @@ void BeurerScaleManager::downloadError()
 
     QMessageBox::critical(this,
                          windowTitle() + " - " + tr("Download error"),
-                         tr("<b>Warning</b>: no scale found or download error!<br><br>Please check USB cable and try again.")
+                         tr("No scale found or download error!<br><br>Please check USB cable and try again.")
     );
 }
 

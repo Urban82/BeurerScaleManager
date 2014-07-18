@@ -10,18 +10,18 @@
     </message>
     <message>
         <location filename="../src/BeurerScaleManager.cpp" line="96"/>
-        <source>&lt;b&gt;Warning&lt;/b&gt;: the date and time set in the scale (%1) are not correct!&lt;br&gt;&lt;br&gt;Please check the settings.</source>
-        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: la data e l&apos;orario impostati nella bilancia (%1) non sono corretti!&lt;br&gt;&lt;br&gt;Si prega di controlla le impostazioni.</translation>
+        <source>The date and time set in the scale (%1) are not correct!&lt;br&gt;&lt;br&gt;Please check the settings.</source>
+        <translation>La data e l&apos;orario impostati nella bilancia (%1) non sono corretti!&lt;br&gt;&lt;br&gt;Si prega di controllare le impostazioni.</translation>
+    </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="109"/>
+        <source>No scale found or download error!&lt;br&gt;&lt;br&gt;Please check USB cable and try again.</source>
+        <translation>Nessuna bilancia trovata o errore nel download!&lt;br&gt;&lt;br&gt;Si prega di controllare il cavo USB e riprovare nuovamente.</translation>
     </message>
     <message>
         <location filename="../src/BeurerScaleManager.cpp" line="108"/>
         <source>Download error</source>
         <translation>Errore download</translation>
-    </message>
-    <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="109"/>
-        <source>&lt;b&gt;Warning&lt;/b&gt;: no scale found or download error!&lt;br&gt;&lt;br&gt;Please check USB cable and try again.</source>
-        <translation>&lt;b&gt;Attenzione&lt;/b&gt;: nessuna bilancia trovata o errore nel download!&lt;br&gt;&lt;br&gt;Si prega di controllare il cavo USB e riprovare nuovamente.</translation>
     </message>
 </context>
 <context>
