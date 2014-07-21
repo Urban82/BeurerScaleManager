@@ -142,7 +142,7 @@ bool openDdAndCheckTables()
         return false;
     }
 
-    return false;
+    return true;
 }
 
 void closeDb()
