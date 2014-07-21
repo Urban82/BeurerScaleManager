@@ -73,34 +73,55 @@
 <context>
     <name>BSM::Utils</name>
     <message>
-        <location filename="../src/utils.cpp" line="79"/>
+        <location filename="../src/utils.cpp" line="84"/>
         <source>Directory not found</source>
         <translation>Cartella non trovata</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="80"/>
+        <location filename="../src/utils.cpp" line="85"/>
         <source>Cannot find user directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
         <translation>Impossibile trovare la cartella dell&apos;utente &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="90"/>
+        <location filename="../src/utils.cpp" line="96"/>
         <source>Directory not created</source>
         <translation>Cartella non creata</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="91"/>
+        <location filename="../src/utils.cpp" line="97"/>
         <source>Cannot create user saving directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
         <translation>Impossibile creare la cartella per i dati &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="98"/>
+        <location filename="../src/utils.cpp" line="105"/>
         <source>Directory not opened</source>
         <translation>Cartella non aperta</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="99"/>
+        <location filename="../src/utils.cpp" line="106"/>
         <source>Cannot open user saving directory &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
         <translation>Impossibile aprire la cartella per i dati &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="132"/>
+        <source>Database not opened</source>
+        <translation>Batabase non aperto</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="133"/>
+        <source>Cannot open the database &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile aprire il database &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="142"/>
+        <location filename="../src/utils.cpp" line="157"/>
+        <source>Cannot create table</source>
+        <translation>Impossibile creare la tabella</translation>
+    </message>
+    <message>
+        <location filename="../src/utils.cpp" line="143"/>
+        <source>Cannot create table &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile creare la tabella &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
 </context>
 <context>

@@ -36,6 +36,8 @@
 
 #include <config.hpp>
 
+#define VERSION_TABLE_NAME "TablesVersions"
+
 namespace BSM {
 namespace Utils {
 
@@ -133,11 +135,11 @@ bool openDdAndCheckTables()
     }
 
     // Create version table, if doesn't exists
-    if (!executeQuery("CREATE TABLE IF NOT EXISTS TablesVersions (tableName TEXT PRIMARY KEY, version INTEGER);")) {
+    if (!executeQuery("CREATE TABLE IF NOT EXISTS " VERSION_TABLE_NAME " (tableName TEXT PRIMARY KEY, version INTEGER);")) {
         qCritical() << "Cannot create version table";
         QMessageBox::critical(0,
                               "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Cannot create table"),
-                              qApp->translate("BSM::Utils", "Cannot create table \"%1\".<br><br>Please check your environment.").arg("TablesVersions")
+                              qApp->translate("BSM::Utils", "Cannot create table \"%1\".<br><br>Please check your environment.").arg(VERSION_TABLE_NAME)
         );
         return false;
     }
@@ -148,6 +150,60 @@ bool openDdAndCheckTables()
 void closeDb()
 {
     db.close();
+}
+
+bool isTablePresent(const QString& tableName)
+{
+    return (db.tables().indexOf(tableName) >= 0);
+}
+
+int getTableVersion(const QString& tableName)
+{
+    if (!isTablePresent(VERSION_TABLE_NAME))
+        return -1;
+    if (!isTablePresent(tableName))
+        return 0;
+
+    QSqlQuery query(db);
+
+    if (query.prepare("SELECT version FROM " VERSION_TABLE_NAME " WHERE tableName = :tableName;")) {
+        query.bindValue(":tableName", tableName);
+        if (query.exec()) {
+            if (query.next()) {
+                QVariant version = query.record().value("version");
+                if (version.isValid()) {
+                    bool ok;
+                    int retval = version.toUInt(&ok);
+                    if (ok)
+                        return retval;
+                }
+            }
+        }
+    }
+
+    qWarning() << "Cannot find version for table" << tableName;
+    return -1;
+}
+
+bool setTableVersion(const QString& tableName, const int tableVersion)
+{
+    if (!isTablePresent(VERSION_TABLE_NAME))
+        return false;
+    if (!isTablePresent(tableName))
+        return false;
+
+    QSqlQuery query(db);
+
+    if (query.prepare("INSERT OR REPLACE INTO TablesVersions (tableName, version) VALUES (:tableName, :version);")) {
+        query.bindValue(":tableName", QVariant(tableName));
+        query.bindValue(":version", tableVersion);
+        if (query.exec()) {
+            return true;
+        }
+    }
+
+    qWarning() << "Cannot save version for table" << tableName;
+    return false;
 }
 
 bool executeQuery(QString sql)

@@ -46,8 +46,16 @@ QString getSavingDirectory();
 //! Open the DB and check for tables.
 bool openDdAndCheckTables();
 
-//! Close the DB
+//! Close the DB.
 void closeDb();
+
+//! Check fro table presence
+bool isTablePresent (const QString& tableName);
+
+//! Get the version of the table.
+int getTableVersion(const QString& tableName);
+//! Set the version of the table.
+bool setTableVersion(const QString& tableName, const int tableVersion);
 
 /*! Execute query on the DB.
  * \param sql the SQL query
