@@ -25,6 +25,8 @@
 #define UTILS_HPP
 
 #include <QtCore/QString>
+#include <QtCore/QList>
+#include <QtCore/QPair>
 
 #include <QtSql/QSqlDatabase>
 
@@ -49,8 +51,16 @@ bool openDdAndCheckTables();
 //! Close the DB.
 void closeDb();
 
-//! Check fro table presence
+//! Check for table presence
 bool isTablePresent (const QString& tableName);
+//! Column definition type
+typedef QPair<QString, QString> Column;
+//! Column list type
+typedef QList<Column> ColumnList;
+//! Create a table
+bool createTable(const QString& tableName, const ColumnList& tableDefinition);
+//! Drop a table
+bool dropTable(const QString& tableName);
 
 //! Get the version of the table.
 int getTableVersion(const QString& tableName);

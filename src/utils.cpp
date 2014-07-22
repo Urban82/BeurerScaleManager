@@ -137,7 +137,7 @@ bool openDdAndCheckTables()
     }
 
     // Create version table, if doesn't exists
-    if (!executeQuery("CREATE TABLE IF NOT EXISTS " VERSION_TABLE_NAME " (tableName TEXT PRIMARY KEY, version INTEGER);")) {
+    if (!executeQuery("CREATE TABLE IF NOT EXISTS " VERSION_TABLE_NAME " (tableName TEXT PRIMARY KEY, version INTEGER) WITHOUT ROWID;")) {
         qCritical() << "Cannot create version table";
         QMessageBox::critical(0,
                               "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Cannot create table"),
@@ -157,6 +157,32 @@ void closeDb()
 bool isTablePresent(const QString& tableName)
 {
     return (db.tables().indexOf(tableName) >= 0);
+}
+
+bool createTable(const QString& tableName, const ColumnList& tableDefinition)
+{
+    QStringList tmp;
+    ColumnList::ConstIterator it, itEnd = tableDefinition.end();
+    for (it = tableDefinition.begin(); it != itEnd; ++it)
+        tmp << it->first + " " + it->second;
+
+    QString sql = QString("CREATE TABLE `%1` (%2) WITHOUT ROWID;").arg(tableName).arg(tmp.join(", "));
+    qDebug() << "Creating table" << tableName << ":" << sql;
+    return executeQuery(sql);
+}
+
+bool dropTable(const QString& tableName)
+{
+    if (!isTablePresent(tableName))
+        return true;
+
+    QSqlQuery query(db);
+
+    if (executeQuery("DROP TABLE " + tableName + ";"))
+        return true;
+
+    qWarning() << "Cannot drop table" << tableName;
+    return false;
 }
 
 int getTableVersion(const QString& tableName)
