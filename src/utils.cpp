@@ -33,6 +33,7 @@
 #include <QtGui/QMessageBox>
 
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
 
 #include <config.hpp>
 
