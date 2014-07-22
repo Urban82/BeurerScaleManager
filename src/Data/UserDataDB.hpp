@@ -79,11 +79,12 @@ public:
      *
      * The data received from the USB scale are merged with the current data for
      * the user. The data prior to the last download date and time are ignored.
-     * \param usbData the data from the USB scale
+     * \param scaleDateTime the date and time of the scale for the last download
+     * \param userData the user data from the USB scale
      * \return \c true on success or \c false on failure
-     * \sa Usb::UsbData
+     * \sa UserData
      */
-    bool merge(Usb::UsbData& usbData);
+    bool merge(const QDateTime& scaleDateTime, BSM::Data::UserData& userData);
 
 public slots:
     /*! Setter for the name property.

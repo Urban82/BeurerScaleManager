@@ -28,11 +28,12 @@
 namespace BSM {
 namespace Data {
 
-UserDataDB::~UserDataDB()
+UserDataDB::UserDataDB(QObject* parent)
+    : UserData(parent)
 {
 }
 
-UserDataDB::UserDataDB(QObject* parent)
+UserDataDB::~UserDataDB()
 {
 }
 
@@ -56,29 +57,23 @@ void UserDataDB::setLastDownload(const QDateTime& lastDownload)
     m_lastDownload = lastDownload;
 }
 
-bool UserDataDB::merge(Usb::UsbData& usbData)
+bool UserDataDB::merge(const QDateTime& scaleDateTime, BSM::Data::UserData& userData)
 {
-    UserData* userData = 0;
-    foreach(UserData* u, usbData.getUserData()) {
-        if (u->getId() == m_id) {
-            userData = u;
-            break;
-        }
-    }
-    if (!userData)
-        return false; // No data found for this user
-
-    if (userData->getBirthDate() != m_birthDate ||
-        userData->getHeight()    != m_height    ||
-        userData->getGender()    != m_gender    ||
-        userData->getActivity()  != m_activity
+    if (userData.getId()        != m_id        ||
+        userData.getBirthDate() != m_birthDate ||
+        userData.getHeight()    != m_height    ||
+        userData.getGender()    != m_gender    ||
+        userData.getActivity()  != m_activity
     )
         return false; // Not the correct user, something changed on the scale?
 
-    foreach(UserMeasurement* m, userData->getMeasurements()) {
+    // Import measurements
+    foreach(UserMeasurement* m, userData.getMeasurements()) {
         if (m->getDateTime() > m_lastDownload)
             m_measurements.append(new UserMeasurement(m, this));
     }
+    // Save lastDownload
+    m_lastDownload = scaleDateTime;
 
     // TODO Save new data
 
