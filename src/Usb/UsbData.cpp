@@ -50,6 +50,8 @@ namespace Usb {
 #define EXTRA_BLOCK_OFF (NUM_USERS * USER_LEN + 256)
 //! Size in byte of each user block in the extra block
 #define EXTRA_USER_LEN    8
+//! Size in byte of the offset in the ptr block
+#define PTR_BLOCK_OFF   (EXTRA_BLOCK_OFF + NUM_USERS * EXTRA_USER_LEN + 16)
 
 //! Size in byte of the offset of the scale date
 #define SCALE_DATE_OFF  (NUM_USERS * USER_LEN + 480)
@@ -154,13 +156,19 @@ bool UsbData::parse(const QByteArray& data)
                 break;
         }
 
-        for (int sample = 0; sample < NUM_SAMPLES; ++sample) {
-            int weight_offset  = user_offset + 0 * VAR_LEN + sample * SAMPLE_LEN;
-            int bodyFat_offset = user_offset + 1 * VAR_LEN + sample * SAMPLE_LEN;
-            int water_offset   = user_offset + 2 * VAR_LEN + sample * SAMPLE_LEN;
-            int muscle_offset  = user_offset + 3 * VAR_LEN + sample * SAMPLE_LEN;
-            int date_offset    = user_offset + 4 * VAR_LEN + sample * SAMPLE_LEN;
-            int time_offset    = user_offset + 5 * VAR_LEN + sample * SAMPLE_LEN;
+        uchar num_samples = data[extra_offset + 5];
+        uchar ptr_samples = data[PTR_BLOCK_OFF + user];
+
+        for (int sample = 0; sample < NUM_SAMPLES && sample < num_samples; ++sample) {
+            int sample_offset = sample;
+            if (num_samples == NUM_SAMPLES)
+                sample_offset = (sample + ptr_samples) % NUM_SAMPLES;
+            int weight_offset  = user_offset + 0 * VAR_LEN + sample_offset * SAMPLE_LEN;
+            int bodyFat_offset = user_offset + 1 * VAR_LEN + sample_offset * SAMPLE_LEN;
+            int water_offset   = user_offset + 2 * VAR_LEN + sample_offset * SAMPLE_LEN;
+            int muscle_offset  = user_offset + 3 * VAR_LEN + sample_offset * SAMPLE_LEN;
+            int date_offset    = user_offset + 4 * VAR_LEN + sample_offset * SAMPLE_LEN;
+            int time_offset    = user_offset + 5 * VAR_LEN + sample_offset * SAMPLE_LEN;
 
             QDate date = uchar2QDate(data[date_offset], data[date_offset + 1]);
             QTime time = uchar2QTime(data[time_offset], data[time_offset + 1]);
