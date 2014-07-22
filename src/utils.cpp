@@ -37,6 +37,7 @@
 
 #include <config.hpp>
 
+//! Table name for version table
 #define VERSION_TABLE_NAME "TablesVersions"
 
 namespace BSM {
