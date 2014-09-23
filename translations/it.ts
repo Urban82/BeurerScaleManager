@@ -123,6 +123,11 @@
         <source>Cannot create table &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
         <translation>Impossibile creare la tabella &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
+    <message>
+        <location filename="../src/utils.cpp" line="158"/>
+        <source>Cannot create the following tables: %1.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
+        <translation>Impossibile creare le seguenti tabelle: %1.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
+    </message>
 </context>
 <context>
     <name>BeurerScaleManager</name>

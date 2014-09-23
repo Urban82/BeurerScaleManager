@@ -65,6 +65,17 @@ public:
     explicit UserDataDB(QObject* parent = 0);
     virtual ~UserDataDB();
 
+    /*! Create the DB table.
+     * \return \c true on success or \c false on failure
+     */
+    static bool createTable();
+
+    //! Name of the DB table.
+    static const QString tableName;
+
+    //! Version of the table
+    static const uint tableVersion;
+
     /*! Getter for the name property.
      * \sa name setName
      */

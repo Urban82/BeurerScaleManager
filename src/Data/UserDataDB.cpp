@@ -23,10 +23,14 @@
 
 #include "UserDataDB.hpp"
 
+#include <utils.hpp>
 #include <Usb/UsbData.hpp>
 
 namespace BSM {
 namespace Data {
+
+const QString UserDataDB::tableName = "UserData";
+const uint UserDataDB::tableVersion = 1;
 
 UserDataDB::UserDataDB(QObject* parent)
     : UserData(parent)
@@ -40,6 +44,40 @@ UserDataDB::~UserDataDB()
 QString UserDataDB::getName() const
 {
     return m_name;
+}
+
+bool UserDataDB::createTable()
+{
+    int version = Utils::getTableVersion(tableName);
+
+    // Check if table is already present and updated
+    if (version == tableVersion)
+        return true;
+
+    // Updates of the table will go here
+
+    // Unknown version: drop and start again!
+    // WARNING: all data will be lost, prompt the user?
+    if (!Utils::dropTable(tableName))
+        return false;
+
+    // Create table
+    Utils::ColumnList columns;
+    columns.append(Utils::Column("id", "INTEGER PRIMARY KEY NOT NULL"));
+    columns.append(Utils::Column("name", "TEXT NOT NULL"));
+    columns.append(Utils::Column("birthDate", "TEXT NOT NULL"));
+    columns.append(Utils::Column("height", "INTEGER NOT NULL"));
+    columns.append(Utils::Column("gender", "INTEGER NOT NULL"));
+    columns.append(Utils::Column("activity", "INTEGER NOT NULL"));
+    columns.append(Utils::Column("lastDownload", "TEXT NOT NULL"));
+    if (!Utils::createTable(tableName, columns))
+        return false;
+
+    // Save table version
+    if (!Utils::setTableVersion(tableName, tableVersion))
+        return false;
+
+    return true;
 }
 
 void UserDataDB::setName(const QString& name)

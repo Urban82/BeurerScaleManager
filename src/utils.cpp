@@ -37,6 +37,9 @@
 
 #include <config.hpp>
 
+// For the createTable functions
+#include <Data/UserDataDB.hpp>
+
 //! Table name for version table
 #define VERSION_TABLE_NAME "TablesVersions"
 
@@ -142,6 +145,21 @@ bool openDdAndCheckTables()
         QMessageBox::critical(0,
                               "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Cannot create table"),
                               qApp->translate("BSM::Utils", "Cannot create table \"%1\".<br><br>Please check your environment.").arg(VERSION_TABLE_NAME)
+        );
+        return false;
+    }
+
+    // Check or create tables for objects
+    QStringList failedTables;
+    if (!Data::UserDataDB::createTable()) {
+        qCritical() << "Cannot create table" << Data::UserDataDB::tableName;
+        failedTables << Data::UserDataDB::tableName;
+    }
+    // Check for errors
+    if (!failedTables.isEmpty()) {
+        QMessageBox::critical(0,
+                              "Beurer Scale Manager - " + qApp->translate("BSM::Utils", "Cannot create table"),
+                              qApp->translate("BSM::Utils", "Cannot create the following tables: %1.<br><br>Please check your environment.").arg(failedTables.join(","))
         );
         return false;
     }
