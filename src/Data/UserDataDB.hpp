@@ -26,6 +26,8 @@
 
 #include <Data/UserData.hpp>
 
+#include <QtSql/QSqlRecord>
+
 namespace BSM {
 
 namespace Usb {
@@ -33,6 +35,10 @@ namespace Usb {
 }
 
 namespace Data {
+
+class UserDataDB;
+//! List of user data
+typedef QList<UserDataDB*> UserDataDBList;
 
 /*!
  * \class BSM::Data::UserDataDB
@@ -76,6 +82,11 @@ public:
     //! Version of the table
     static const uint tableVersion;
 
+    /*! Load all user data from the DB
+     * \return the list of user data as UserDataDBList
+     */
+    static UserDataDBList loadAll();
+
     /*! Getter for the name property.
      * \sa name setName
      */
@@ -113,6 +124,12 @@ public slots:
 protected:
     QString     m_name;         //!< name property value.           \sa name getName setName
     QDateTime   m_lastDownload; //!< lastDownload property value.   \sa lastDownload getLastDownload setLastDownload
+
+    /*! Parse a QSqlRecord into the UserDataDB object
+     * \param record the QSqlRecord to parse
+     * \return \c true on success or \c false on failure
+     */
+    bool parse(const QSqlRecord& record);
 
     friend QDebug operator<<(QDebug dbg, const UserDataDB& ud);
 };

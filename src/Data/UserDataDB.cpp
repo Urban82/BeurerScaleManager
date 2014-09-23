@@ -26,6 +26,8 @@
 #include <utils.hpp>
 #include <Usb/UsbData.hpp>
 
+#include <QtSql/QSqlQuery>
+
 namespace BSM {
 namespace Data {
 
@@ -76,6 +78,91 @@ bool UserDataDB::createTable()
     // Save table version
     if (!Utils::setTableVersion(tableName, tableVersion))
         return false;
+
+    return true;
+}
+
+UserDataDBList UserDataDB::loadAll()
+{
+    UserDataDBList list;
+
+    QSqlQuery query;
+    if (!query.prepare("SELECT * FROM " + tableName + " ORDER BY id;")) {
+        qCritical() << "Cannot prepare query for UserDataDB::loadAll()";
+        return list;
+    }
+    if (!query.exec()) {
+        qCritical() << "Cannot execute query for UserDataDB::loadAll()";
+        return list;
+    }
+    while (query.next()) {
+        UserDataDB* ud = new UserDataDB();
+        if (ud->parse(query.record())) {
+            list.append(ud);
+        }
+        else {
+            qWarning() << "Cannot parse record" << query.record();
+            delete ud;
+            ud = 0;
+        }
+    }
+
+    return list;
+}
+
+bool UserDataDB::parse(const QSqlRecord& record)
+{
+    QVariant value;
+    bool ok;
+
+    value = record.value("id");
+    if (!value.isValid())
+        return false;
+    m_id = value.toUInt(&ok);
+    if (!ok)
+        return false;
+
+    value = record.value("name");
+    if (!value.isValid())
+        return false;
+    m_name = value.toString();
+
+    value = record.value("birthDate");
+    if (!value.isValid())
+        return false;
+    m_birthDate = value.toDate();
+
+    value = record.value("height");
+    if (!value.isValid())
+        return false;
+    m_height = value.toUInt(&ok);
+    if (!ok)
+        return false;
+
+    value = record.value("gender");
+    if (!value.isValid())
+        return false;
+    unsigned gender = value.toUInt(&ok);
+    if (!ok)
+        return false;
+    if (gender < UserData::Male || gender > UserData::Female)
+        return false;
+    m_gender = (UserData::Gender) gender;
+
+    value = record.value("activity");
+    if (!value.isValid())
+        return false;
+    unsigned activity = value.toUInt(&ok);
+    if (!ok)
+        return false;
+    if (activity > UserData::VeryHigh)
+        return false;
+    m_activity = (UserData::Activity) activity;
+
+    value = record.value("lastDownload");
+    if (!value.isValid())
+        return false;
+    m_lastDownload = value.toDateTime();
 
     return true;
 }
