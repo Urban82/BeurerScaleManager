@@ -113,7 +113,22 @@ public slots:
 protected:
     QString     m_name;         //!< name property value.           \sa name getName setName
     QDateTime   m_lastDownload; //!< lastDownload property value.   \sa lastDownload getLastDownload setLastDownload
+
+    friend QDebug operator<<(QDebug dbg, const UserDataDB& ud);
 };
+
+/*! QDebug stream operator for UserData.
+ * \param dbg the QDebug object
+ * \param ud the UserDataDB object
+ * \return the QDebug object
+ */
+QDebug operator<<(QDebug dbg, const UserDataDB& ud);
+/*! QDebug stream operator for UserData.
+ * \param dbg the QDebug object
+ * \param ud the UserDataDB object
+ * \return the QDebug object
+ */
+QDebug operator<<(QDebug dbg, const UserDataDB* ud);
 
 } // namespace Data
 } // namespace BSM

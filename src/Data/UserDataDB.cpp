@@ -118,5 +118,47 @@ bool UserDataDB::merge(const QDateTime& scaleDateTime, BSM::Data::UserData& user
     return false;
 }
 
+QDebug operator<<(QDebug dbg, const UserDataDB& ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    dbg.nospace() << "Data::UserDataDB("
+                  << ud.m_id << ", "
+                  << ud.m_name << ", "
+                  << ud.m_birthDate.toString() << ", "
+                  << ud.m_height << "cm, ";
+    switch (ud.m_gender) {
+        case UserData::Male:
+            dbg.nospace() << "M";
+            break;
+        case UserData::Female:
+            dbg.nospace() << "F";
+            break;
+        default:
+            dbg.nospace() << "?";
+            break;
+    }
+    dbg.nospace() << ", "
+                  << (int) ud.m_activity << ", "
+                  << ud.m_lastDownload.toString() << ", ";
+    dbg.nospace() << ud.m_measurements.size() << " " << ud.m_measurements;
+    dbg.nospace() << ")";
+    return dbg.space();
+#endif
+}
+
+QDebug operator<<(QDebug dbg, const UserDataDB* ud)
+{
+#ifdef QT_NO_DEBUG_OUTPUT
+    return dbg;
+#else
+    if (ud)
+        return operator<<(dbg, *ud);
+    dbg.nospace() << "Data::UserDataDB()";
+    return dbg.space();
+#endif
+}
+
 } // namespace Data
 } // namespace BSM
