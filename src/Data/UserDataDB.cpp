@@ -87,7 +87,7 @@ UserDataDBList UserDataDB::loadAll()
     UserDataDBList list;
 
     QSqlQuery query;
-    if (!query.prepare("SELECT * FROM " + tableName + " ORDER BY id;")) {
+    if (!query.prepare("SELECT * FROM " + tableName + " ORDER BY name;")) {
         qCritical() << "Cannot prepare query for UserDataDB::loadAll()";
         return list;
     }
