@@ -47,6 +47,10 @@ BeurerScaleManager::BeurerScaleManager(QWidget* parent, Qt::WindowFlags f)
     connect(usb, SIGNAL(progress(int)), ui->progressDownload, SLOT(setValue(int)));
     connect(usb, SIGNAL(completed(QByteArray)), this, SLOT(downloadCompleted(QByteArray)));
     connect(usb, SIGNAL(error()), this, SLOT(downloadError()));
+
+    users = Data::UserDataDB::loadAll();
+    ui->comboUser->setModel(new Data::Models::UserDataModel(users, this));
+    ui->comboUser->setEnabled(true);
 }
 
 BeurerScaleManager::~BeurerScaleManager()
@@ -57,16 +61,10 @@ void BeurerScaleManager::startDownload()
     qDebug() << "START download";
     ui->btnStartDownload->setDisabled(true);
     ui->progressDownload->setValue(0);
-    ui->comboUser->setDisabled(true);
     ui->tableMeasurements->setDisabled(true);
 
-    // Clear comboUser
-    QAbstractItemModel* oldModel = ui->comboUser->model();
-    ui->tableMeasurements->setModel(0);
-    delete oldModel;
-
     // Clear tableMeasurements
-    oldModel = ui->tableMeasurements->model();
+    QAbstractItemModel* oldModel = ui->tableMeasurements->model();
     ui->tableMeasurements->setModel(0);
     delete oldModel;
 
@@ -86,8 +84,7 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
         qDebug() << "Scale date and time is" << usb_data->getDateTime();
         qDebug() << *usb_data;
 
-        ui->comboUser->setModel(new Data::Models::UserDataModel(usb_data->getUserData(), usb_data));
-        ui->comboUser->setEnabled(true);
+        // TODO merge DB data with USB data
 
         int diffTime = usb_data->getDateTime().secsTo(QDateTime::currentDateTime());
         if (diffTime < -300 || diffTime > 300) {
@@ -112,12 +109,9 @@ void BeurerScaleManager::downloadError()
 
 void BeurerScaleManager::selectUser(const int index)
 {
-    qDebug() << "Selected user at" << index;
-    if (index < 0 || index >= usb_data->getUserData().size())
+    Data::UserDataDB* userData = static_cast<Data::UserDataDB*>(ui->comboUser->model()->index(index, 0).internalPointer());
+    if (!userData)
         return;
-
-    Data::UserData* userData = usb_data->getUserData().at(index);
-    qDebug() << userData;
 
     QAbstractItemModel* oldModel = ui->tableMeasurements->model();
     ui->tableMeasurements->setModel(new Data::Models::UserMeasurementModel(userData->getMeasurements(), userData));

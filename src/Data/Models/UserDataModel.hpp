@@ -28,7 +28,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QModelIndex>
 
-#include <Data/UserData.hpp>
+#include <Data/UserDataDB.hpp>
 
 namespace BSM {
 namespace Data {
@@ -49,7 +49,7 @@ public:
      * \param list the UserDataList to represents
      * \param parent the parent QObject
      */
-    UserDataModel(const UserDataList& list, QObject* parent = 0);
+    UserDataModel(const UserDataDBList& list, QObject* parent = 0);
     virtual ~UserDataModel();
 
     //! Returns the data stored under the given \p role for the item referred to by the \p index.
@@ -64,7 +64,7 @@ public:
     virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
 
 private:
-    const UserDataList  m_list;
+    const UserDataDBList  m_list;
 };
 
 } // namespace Models

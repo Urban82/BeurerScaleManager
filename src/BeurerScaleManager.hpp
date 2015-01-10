@@ -26,6 +26,8 @@
 
 #include <QtGui/QWidget>
 
+#include <Data/UserDataDB.hpp>
+
 namespace Ui {
     class BeurerScaleManager;
 }
@@ -72,6 +74,9 @@ protected:
 
     //! The UsbData object.
     Usb::UsbData* usb_data;
+
+    //! The list of users from the DB
+    Data::UserDataDBList users;
 
 private:
     Ui::BeurerScaleManager* ui;

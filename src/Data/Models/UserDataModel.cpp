@@ -28,7 +28,7 @@ namespace BSM {
 namespace Data {
 namespace Models {
 
-UserDataModel::UserDataModel(const UserDataList& list, QObject* parent)
+UserDataModel::UserDataModel(const UserDataDBList& list, QObject* parent)
     : QAbstractItemModel(parent)
     , m_list(list)
 {}
@@ -41,17 +41,12 @@ QVariant UserDataModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    UserData* userData = static_cast<UserData*>(index.internalPointer());
+    UserDataDB* userData = static_cast<UserDataDB*>(index.internalPointer());
     if (!userData)
         return QVariant();
 
     if (role == Qt::DisplayRole)
-        return QString("P%1 - %2 - %3 cm - %4")
-                .arg(userData->getId())
-                .arg(userData->getGenderString())
-                .arg(userData->getHeight())
-                .arg(userData->getBirthDate().toString(Qt::SystemLocaleShortDate))
-        ;
+        return userData->getName();
 
     return QVariant();
 }
@@ -76,7 +71,7 @@ QModelIndex UserDataModel::index(int row, int column, const QModelIndex& parent)
     if (!hasIndex(row, column, parent))
         return QModelIndex();
 
-    UserData* userData = m_list.at(row);
+    UserDataDB* userData = m_list.at(row);
     if (userData)
         return createIndex(row, column, userData);
 
