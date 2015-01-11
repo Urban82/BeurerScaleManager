@@ -31,6 +31,7 @@
 
 #include <QtCore/QDebug>
 #include <QtGui/QMessageBox>
+#include <QtGui/QInputDialog>
 
 namespace BSM {
 
@@ -77,12 +78,10 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
     ui->btnStartDownload->setEnabled(true);
 
     qDebug() << "Data received:" << data.size() << "bytes";
-    qDebug() << data.toHex();
 
     if (usb_data->parse(data)) {
         qDebug() << "Parsed" << usb_data->getUserData().size() << "users";
         qDebug() << "Scale date and time is" << usb_data->getDateTime();
-        qDebug() << *usb_data;
 
         foreach(Data::UserData* user, usb_data->getUserData()) {
             bool found = false;
@@ -94,17 +93,81 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
                 }
             }
             if (!found) {
-                qDebug() << "Not found on DB" << user;
-                // TODO Ask for add
+                // Ask for add
+                if (QMessageBox::question(this,
+                                          windowTitle() + " - " + tr("New scale user"),
+                                          tr("It seems that a new user was added on the scale.")
+                                            + "<br><br>"
+                                            + tr("Do you want to add an account for the user with ID %1?").arg(user->getId()),
+                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
+                ) == QMessageBox::Yes) {
+                    QString name = QString();
+                    while (name.isNull() || name.isEmpty()) {
+                        bool ok;
+                        name = QInputDialog::getText(this,
+                                                     windowTitle() + " - " + tr("New scale user"),
+                                                     tr("Insert a name for the new user:"),
+                                                     QLineEdit::Normal, QString(), &ok
+                        );
+                        if (!ok || !name.isEmpty())
+                            break;
+                        QMessageBox::critical(this,
+                                              windowTitle() + " - " + tr("New scale user"),
+                                              tr("Please insert a valid name for the user!")
+                        );
+                    }
+                    if (!name.isEmpty()) {
+                        Data::UserDataDB* userDB = new Data::UserDataDB();
+                        userDB->setId(user->getId());
+                        userDB->setName(name);
+                        userDB->setBirthDate(user->getBirthDate());
+                        userDB->setHeight(user->getHeight());
+                        userDB->setGender(user->getGender());
+                        userDB->setActivity(user->getActivity());
+                        if (userDB->merge(usb_data->getDateTime(), *user)) {
+                            Data::UserDataDBList::iterator it = users.begin();
+                            Data::UserDataDBList::iterator itEnd = users.end();
+                            while (it != itEnd) {
+                                if ((*it)->getName() > userDB->getName())
+                                    break;
+                                ++it;
+                            }
+                            if (it != itEnd)
+                                users.insert(it, userDB);
+                            else
+                                users.append(userDB);
+                        }
+                    }
+                }
             }
         }
-        selectUser(ui->comboUser->currentIndex());
+        int currentId = -1;
+        if (ui->comboUser->currentIndex() >= 0) {
+            Data::UserDataDB* userData = static_cast<Data::UserDataDB*>(ui->comboUser->model()->index(ui->comboUser->currentIndex(), 0).internalPointer());
+            if (userData)
+                currentId = userData->getId();
+        }
+        QAbstractItemModel* oldModel = ui->comboUser->model();
+        ui->comboUser->setModel(new Data::Models::UserDataModel(users, this));
+        delete oldModel;
+        if (currentId >= 0) {
+            QAbstractItemModel* model = ui->comboUser->model();
+            for (int i = 0; i < model->rowCount(); ++i) {
+                Data::UserDataDB* userData = static_cast<Data::UserDataDB*>(model->index(i, 0).internalPointer());
+                if (userData && userData->getId() == currentId) {
+                    ui->comboUser->setCurrentIndex(i);
+                    break;
+                }
+            }
+        }
 
         int diffTime = usb_data->getDateTime().secsTo(QDateTime::currentDateTime());
         if (diffTime < -300 || diffTime > 300) {
             QMessageBox::warning(this,
                                  windowTitle() + " - " + tr("Wrong scale settings"),
-                                 tr("The date and time set in the scale (%1) are not correct!<br><br>Please check the settings.").arg(usb_data->getDateTime().toString(Qt::SystemLocaleShortDate))
+                                 tr("The date and time set in the scale (%1) are not correct!").arg(usb_data->getDateTime().toString(Qt::SystemLocaleShortDate))
+                                    + "<br><br>"
+                                    + tr("Please check the settings.")
             );
         }
     }
