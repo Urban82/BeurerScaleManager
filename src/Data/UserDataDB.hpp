@@ -108,6 +108,11 @@ public:
      */
     bool merge(const QDateTime& scaleDateTime, BSM::Data::UserData& userData);
 
+    /*! Save data on DB.
+     * \return \c true on success or \c false on failure
+     */
+    bool save() const;
+
 public slots:
     /*! Setter for the name property.
      * \param name the new value

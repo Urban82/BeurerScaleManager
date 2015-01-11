@@ -200,9 +200,34 @@ bool UserDataDB::merge(const QDateTime& scaleDateTime, BSM::Data::UserData& user
     // Save lastDownload
     m_lastDownload = scaleDateTime;
 
-    // TODO Save new data
+    // Save new data
+    return save();
+}
 
-    return false;
+bool UserDataDB::save() const
+{
+    QSqlQuery query;
+    if (!query.prepare("INSERT OR REPLACE INTO " + tableName +
+                               " ( id,  name,  birthDate,  height,  gender,  activity,  lastDownload)"
+                        " VALUES (:id, :name, :birthDate, :height, :gender, :activity, :lastDownload);")) {
+        qCritical() << "Cannot prepare query for UserDataDB::save()";
+        return false;
+    }
+    query.bindValue(":id", m_id);
+    query.bindValue(":name", m_name);
+    query.bindValue(":birthDate", m_birthDate);
+    query.bindValue(":height", m_height);
+    query.bindValue(":gender", m_gender);
+    query.bindValue(":activity", m_activity);
+    query.bindValue(":lastDownload", m_lastDownload);
+    if (!query.exec()) {
+        qCritical() << "Cannot execute query for UserDataDB::save()";
+        return false;
+    }
+
+    // TODO Save measurements
+
+    return true;
 }
 
 QDebug operator<<(QDebug dbg, const UserDataDB& ud)
