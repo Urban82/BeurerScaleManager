@@ -84,7 +84,21 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
         qDebug() << "Scale date and time is" << usb_data->getDateTime();
         qDebug() << *usb_data;
 
-        // TODO merge DB data with USB data
+        foreach(Data::UserData* user, usb_data->getUserData()) {
+            bool found = false;
+            foreach(Data::UserDataDB* userDB, users) {
+                if (user->getId() == userDB->getId()) {
+                    found = true;
+                    userDB->merge(usb_data->getDateTime(), *user);
+                    break;
+                }
+            }
+            if (!found) {
+                qDebug() << "Not found on DB" << user;
+                // TODO Ask for add
+            }
+        }
+        selectUser(ui->comboUser->currentIndex());
 
         int diffTime = usb_data->getDateTime().secsTo(QDateTime::currentDateTime());
         if (diffTime < -300 || diffTime > 300) {
