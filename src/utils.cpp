@@ -34,6 +34,7 @@
 
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
+#include <QtSql/QSqlError>
 
 #include <config.hpp>
 
@@ -280,10 +281,14 @@ bool executeQuery(QString sql)
 {
     QSqlQuery query(db);
 
-    if (!query.prepare(sql))
+    if (!query.prepare(sql)) {
+        qCritical() << "Cannot prepare query" << sql << ":" << query.lastError().text();
         return false;
-    if (!query.exec())
+    }
+    if (!query.exec()) {
+        qCritical() << "Cannot execute query" << sql << ":" << query.lastError().text();
         return false;
+    }
 
     return true;
 }
