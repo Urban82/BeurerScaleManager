@@ -29,11 +29,6 @@
 #include <QtSql/QSqlRecord>
 
 namespace BSM {
-
-namespace Usb {
-    class UsbData;
-}
-
 namespace Data {
 
 class UserDataDB;
