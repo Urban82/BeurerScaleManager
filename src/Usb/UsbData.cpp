@@ -109,6 +109,11 @@ Data::UserDataList& UsbData::getUserData()
     return m_userData;
 }
 
+Data::UserMeasurementList& UsbData::getUserMeasurements(const Data::UserData& user)
+{
+    return m_userMeasurements[user.getId()];
+}
+
 bool UsbData::parse(const QByteArray& data)
 {
     if (data.size() != EXPECTED_LEN)
@@ -183,7 +188,7 @@ bool UsbData::parse(const QByteArray& data)
             um->setMusclePercent(uchar2ushort(data[muscle_offset], data[muscle_offset + 1]) * 0.1);
             um->setDateTime(dateTime);
 
-            ud->getMeasurements().append(um);
+            m_userMeasurements[id].append(um);
         }
 
         m_userData.append(ud);

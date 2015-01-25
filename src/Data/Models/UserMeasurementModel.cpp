@@ -30,7 +30,7 @@ namespace BSM {
 namespace Data {
 namespace Models {
 
-UserMeasurementModel::UserMeasurementModel(const UserMeasurementList& list, QObject* parent)
+UserMeasurementModel::UserMeasurementModel(const UserMeasurementDBList& list, QObject* parent)
     : QAbstractItemModel(parent)
     , m_list(list)
 {}
@@ -43,7 +43,7 @@ QVariant UserMeasurementModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    UserMeasurement* userMeasurement = static_cast<UserMeasurement*>(index.internalPointer());
+    UserMeasurementDB* userMeasurement = static_cast<UserMeasurementDB*>(index.internalPointer());
     if (!userMeasurement)
         return QVariant();
 
@@ -103,7 +103,7 @@ QModelIndex UserMeasurementModel::index(int row, int column, const QModelIndex& 
     if (!hasIndex(row, column, parent))
         return QModelIndex();
 
-    UserMeasurement* userMeasurement = m_list.at(row);
+    UserMeasurementDB* userMeasurement = m_list.at(row);
     if (userMeasurement)
         return createIndex(row, column, userMeasurement);
 

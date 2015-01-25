@@ -37,7 +37,6 @@ UserData::UserData(QObject* parent)
 
 UserData::~UserData()
 {
-    qDeleteAll(m_measurements);
 }
 
 uchar UserData::getId() const
@@ -102,16 +101,6 @@ void UserData::setActivity(const UserData::Activity& activity)
     m_activity = activity;
 }
 
-UserMeasurementList& UserData::getMeasurements()
-{
-    return m_measurements;
-}
-
-void UserData::setMeasurements(const UserMeasurementList& measurements)
-{
-    m_measurements = measurements;
-}
-
 QDebug operator<<(QDebug dbg, const UserData& ud)
 {
 #ifdef QT_NO_DEBUG_OUTPUT
@@ -133,8 +122,7 @@ QDebug operator<<(QDebug dbg, const UserData& ud)
             break;
     }
     dbg.nospace() << ", "
-                  << (int) ud.m_activity << ", ";
-    dbg.nospace() << ud.m_measurements.size() << " " << ud.m_measurements;
+                  << (int) ud.m_activity;
     dbg.nospace() << ")";
     return dbg.space();
 #endif

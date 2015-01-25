@@ -29,8 +29,6 @@
 #include <QtCore/QDate>
 #include <QtCore/QList>
 
-#include <Data/UserMeasurement.hpp>
-
 namespace BSM {
 namespace Data {
 
@@ -93,10 +91,6 @@ private:
      * \sa Activity getActivity setActivity
      */
     Q_PROPERTY(Activity activity READ getActivity WRITE setActivity);
-    /*! The measurements of the user.
-     * \sa UserMeasurement UserMeasurementList getMeasurements setMeasurements
-     */
-    Q_PROPERTY(UserMeasurementList measurements READ getMeasurements WRITE setMeasurements);
 
 public:
     /*! Constructor of the class.
@@ -129,11 +123,6 @@ public:
      * \sa Activity activity setActivity
      */
     Activity getActivity() const;
-
-    /*! Getter for the measurements property.
-     * \sa UserMeasurement UserMeasurementList measurements setMeasurements
-     */
-    UserMeasurementList& getMeasurements();
 
     /*! Get gender as string.
      * Retrieves the gender as a single character string: \c M or \c F.
@@ -174,19 +163,12 @@ public slots:
      */
     void setActivity(const Activity& activity);
 
-    /*! Setter for the measurements property.
-     * \param measurements the new value
-     * \sa UserMeasurement UserMeasurementList measurements getMeasurements
-     */
-    void setMeasurements(const UserMeasurementList& measurements);
-
 protected:
     uchar               m_id;           //!< id property value.             \sa id getId setId
     QDate               m_birthDate;    //!< birthDate property value.      \sa birthDate getBirthDate setBirthDate
     uchar               m_height;       //!< height property value.         \sa height getHeight setHeight
     Gender              m_gender;       //!< gender property value.         \sa Gender gender getGender setGender getGenderString
     Activity            m_activity;     //!< activity property value.       \sa Activity activity getActivity setActivity
-    UserMeasurementList m_measurements; //!< measurements property values.  \sa measurements getMeasurements setMeasurements
 
     friend QDebug operator<<(QDebug dbg, const UserData& ud);
 };

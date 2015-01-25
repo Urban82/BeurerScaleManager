@@ -88,7 +88,7 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
             foreach(Data::UserDataDB* userDB, users) {
                 if (user->getId() == userDB->getId()) {
                     found = true;
-                    userDB->merge(usb_data->getDateTime(), *user);
+                    userDB->merge(usb_data->getDateTime(), *user, usb_data->getUserMeasurements(*user));
                     break;
                 }
             }
@@ -121,10 +121,8 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
                         userDB->setId(user->getId());
                         userDB->setName(name);
                         userDB->setBirthDate(user->getBirthDate());
-                        userDB->setHeight(user->getHeight());
                         userDB->setGender(user->getGender());
-                        userDB->setActivity(user->getActivity());
-                        if (userDB->merge(usb_data->getDateTime(), *user)) {
+                        if (userDB->merge(usb_data->getDateTime(), *user, usb_data->getUserMeasurements(*user))) {
                             Data::UserDataDBList::iterator it = users.begin();
                             Data::UserDataDBList::iterator itEnd = users.end();
                             while (it != itEnd) {

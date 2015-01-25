@@ -30,6 +30,7 @@
 #include <QtCore/QByteArray>
 
 #include <Data/UserData.hpp>
+#include <Data/UserMeasurement.hpp>
 
 namespace BSM {
 namespace Usb {
@@ -79,6 +80,9 @@ public:
      */
     Data::UserDataList& getUserData();
 
+    //! Getter for the UserMeasurement list
+    Data::UserMeasurementList& getUserMeasurements(const Data::UserData& user);
+
 public slots:
     /*! \brief Parse the USB data.
      *
@@ -90,8 +94,10 @@ public slots:
     bool parse(const QByteArray& data);
 
 private:
+    typedef QHash<uchar, Data::UserMeasurementList> UserMeasurementMap;
     QDateTime           m_dateTime;
     Data::UserDataList  m_userData;
+    UserMeasurementMap  m_userMeasurements;
 
     friend QDebug operator<<(QDebug dbg, const UsbData& ud);
 };

@@ -28,7 +28,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QModelIndex>
 
-#include <Data/UserMeasurement.hpp>
+#include <Data/UserMeasurementDB.hpp>
 
 namespace BSM {
 namespace Data {
@@ -46,10 +46,10 @@ class UserMeasurementModel : public QAbstractItemModel
 
 public:
     /*! Constructor of the class.
-     * \param list the UserMeasurementList to represents
+     * \param list the UserMeasurementDBList to represents
      * \param parent the parent QObject
      */
-    UserMeasurementModel(const UserMeasurementList& list, QObject* parent = 0);
+    UserMeasurementModel(const UserMeasurementDBList& list, QObject* parent = 0);
     virtual ~UserMeasurementModel();
 
     //! Returns the data stored under the given \p role for the item referred to by the \p index.
@@ -66,7 +66,7 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 private:
-    const UserMeasurementList  m_list;
+    const UserMeasurementDBList m_list;
 };
 
 } // namespace Models

@@ -94,7 +94,6 @@ UserDataDBList UserDataDB::loadAll()
     while (query.next()) {
         UserDataDB* ud = new UserDataDB();
         if (ud->parse(query.record())) {
-            ud->m_measurements = UserMeasurementDB::loadAll(ud);
             list.append(ud);
         }
         else {
@@ -184,21 +183,32 @@ void UserDataDB::setLastDownload(const QDateTime& lastDownload)
     m_lastDownload = lastDownload;
 }
 
-bool UserDataDB::merge(const QDateTime& scaleDateTime, BSM::Data::UserData& userData)
+UserMeasurementDBList UserDataDB::getMeasurements()
+{
+    return UserMeasurementDB::loadAll(this);
+}
+
+bool UserDataDB::merge(const QDateTime& scaleDateTime, const UserData& userData, const UserMeasurementList& userMeasurements)
 {
     if (userData.getId()        != m_id        ||
         userData.getBirthDate() != m_birthDate ||
-        userData.getHeight()    != m_height    ||
-        userData.getGender()    != m_gender    ||
-        userData.getActivity()  != m_activity
+        userData.getGender()    != m_gender
     )
         return false; // Not the correct user, something changed on the scale?
 
+    // Update user parameters
+    m_height = userData.getHeight();
+    m_activity = userData.getActivity();
+
     // Import measurements
-    foreach(UserMeasurement* m, userData.getMeasurements()) {
-        if (m->getDateTime() > m_lastDownload)
-            m_measurements.append(new UserMeasurement(m, this));
+    foreach(UserMeasurement* m, userMeasurements) {
+        if (m->getDateTime() > m_lastDownload) {
+            // Save new UserMeasurementDB for this user
+            UserMeasurementDB* measurement_db = new UserMeasurementDB(*m, this);
+            measurement_db->save();
+        }
     }
+
     // Save lastDownload
     m_lastDownload = scaleDateTime;
 
@@ -227,8 +237,6 @@ bool UserDataDB::save() const
         return false;
     }
 
-    // TODO Save measurements
-
     return true;
 }
 
@@ -255,8 +263,7 @@ QDebug operator<<(QDebug dbg, const UserDataDB& ud)
     }
     dbg.nospace() << ", "
                   << (int) ud.m_activity << ", "
-                  << ud.m_lastDownload.toString() << ", ";
-    dbg.nospace() << ud.m_measurements.size() << " " << ud.m_measurements;
+                  << ud.m_lastDownload.toString();
     dbg.nospace() << ")";
     return dbg.space();
 #endif

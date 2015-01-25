@@ -25,6 +25,7 @@
 #define USERDATADB_HPP
 
 #include <Data/UserData.hpp>
+#include <Data/UserMeasurementDB.hpp>
 
 #include <QtSql/QSqlRecord>
 
@@ -92,6 +93,11 @@ public:
      */
     QDateTime getLastDownload() const;
 
+    /*! Getter for the UserMeasurement list for the user.
+     * \sa UserMeasurement UserDBMeasurement UserMeasurementDBList
+     */
+    UserMeasurementDBList getMeasurements();
+
     /*! Merge data from USB.
      *
      * The data received from the USB scale are merged with the current data for
@@ -101,7 +107,7 @@ public:
      * \return \c true on success or \c false on failure
      * \sa UserData
      */
-    bool merge(const QDateTime& scaleDateTime, BSM::Data::UserData& userData);
+    bool merge(const QDateTime& scaleDateTime, const UserData& userData, const UserMeasurementList& userMeasurements);
 
     /*! Save data on DB.
      * \return \c true on success or \c false on failure
