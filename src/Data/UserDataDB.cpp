@@ -2,7 +2,7 @@
  * \file UserDataDB.cpp
  * \author Danilo Treffiletti <urban82@gmail.com>
  * \date 2014-07-15
- * \brief Header for the UserDataDB class
+ * \brief Implementation for the UserDataDB class
  * \copyright 2014 (c) Danilo Treffiletti
  *
  *    This file is part of BeurerScaleManager.
