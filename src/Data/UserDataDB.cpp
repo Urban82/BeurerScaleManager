@@ -24,6 +24,7 @@
 #include "UserDataDB.hpp"
 
 #include <utils.hpp>
+#include <Data/UserMeasurementDB.hpp>
 #include <Usb/UsbData.hpp>
 
 #include <QtSql/QSqlQuery>
@@ -93,6 +94,7 @@ UserDataDBList UserDataDB::loadAll()
     while (query.next()) {
         UserDataDB* ud = new UserDataDB();
         if (ud->parse(query.record())) {
+            ud->m_measurements = UserMeasurementDB::loadAll(ud);
             list.append(ud);
         }
         else {

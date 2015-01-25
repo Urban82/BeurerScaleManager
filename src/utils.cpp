@@ -40,6 +40,7 @@
 
 // For the createTable functions
 #include <Data/UserDataDB.hpp>
+#include <Data/UserMeasurementDB.hpp>
 
 //! Table name for version table
 #define VERSION_TABLE_NAME "TablesVersions"
@@ -155,6 +156,10 @@ bool openDdAndCheckTables()
     if (!Data::UserDataDB::createTable()) {
         qCritical() << "Cannot create table" << Data::UserDataDB::tableName;
         failedTables << Data::UserDataDB::tableName;
+    }
+    if (!Data::UserMeasurementDB::createTable()) {
+        qCritical() << "Cannot create table" << Data::UserMeasurementDB::tableName;
+        failedTables << Data::UserMeasurementDB::tableName;
     }
     // Check for errors
     if (!failedTables.isEmpty()) {

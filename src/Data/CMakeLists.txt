@@ -2,12 +2,14 @@ set(SRCS
     UserMeasurement.cpp
     UserData.cpp
 
+    UserMeasurementDB.cpp
     UserDataDB.cpp
 )
 set(HDRS
     UserMeasurement.hpp
     UserData.hpp
 
+    UserMeasurementDB.hpp
     UserDataDB.hpp
 )
 
