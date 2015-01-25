@@ -36,21 +36,18 @@ const uint UserMeasurementDB::tableVersion = 1;
 
 UserMeasurementDB::UserMeasurementDB(QObject* parent)
     : UserMeasurement(parent)
-    , m_id(0)
     , m_userId(0)
 {
 }
 
 UserMeasurementDB::UserMeasurementDB(UserData* user)
     : UserMeasurement(user)
-    , m_id(0)
     , m_userId(user->getId())
 {
 }
 
 UserMeasurementDB::UserMeasurementDB(const UserMeasurement& measurement, UserData* user)
     : UserMeasurement(user)
-    , m_id(0)
     , m_userId(user->getId())
 {
     m_dateTime = measurement.getDateTime();
@@ -81,7 +78,6 @@ bool UserMeasurementDB::createTable()
 
     // Create table
     Utils::ColumnList columns;
-    columns.append(Utils::Column("id", "INTEGER NOT NULL"));
     columns.append(Utils::Column("userId", "INTEGER NOT NULL"));
     columns.append(Utils::Column("dateTime", "TEXT NOT NULL"));
     columns.append(Utils::Column("weight", "REAL NOT NULL"));
@@ -89,7 +85,7 @@ bool UserMeasurementDB::createTable()
     columns.append(Utils::Column("waterPercent", "REAL NOT NULL"));
     columns.append(Utils::Column("musclePercent", "REAL NOT NULL"));
     Utils::TableConstraintList constraints;
-    constraints.append(Utils::TableConstraint(Utils::PrimaryKey, "(id, userId)"));
+    constraints.append(Utils::TableConstraint(Utils::PrimaryKey, "(userId, dateTime)"));
     constraints.append(Utils::TableConstraint(Utils::ForeignKey, "(userId) REFERENCES UserData(`id`) ON DELETE CASCADE ON UPDATE CASCADE"));
     if (!Utils::createTable(tableName, columns, constraints))
         return false;
@@ -145,13 +141,6 @@ bool UserMeasurementDB::parse(const QSqlRecord& record)
     if (!ok || tmp_userId != m_userId)
         return false;
 
-    value = record.value("id");
-    if (!value.isValid())
-        return false;
-    m_id = value.toULongLong(&ok);
-    if (!ok)
-        return false;
-
     value = record.value("dateTime");
     if (!value.isValid())
         return false;
@@ -188,16 +177,6 @@ bool UserMeasurementDB::parse(const QSqlRecord& record)
     return true;
 }
 
-qulonglong UserMeasurementDB::getId() const
-{
-    return m_id;
-}
-
-void UserMeasurementDB::setId(const qulonglong& id)
-{
-    m_id = id;
-}
-
 uchar UserMeasurementDB::getUserId() const
 {
     return m_userId;
@@ -213,41 +192,17 @@ bool UserMeasurementDB::save()
     QSqlQuery query;
 
     // Check data
-    if (m_userId == 0) {
+    if (m_userId == 0 || !m_dateTime.isValid()) {
         qCritical() << "Could not save" << this;
         return false;
     }
 
-    if (m_id == 0) {
-        // Get next id for this user
-        if (!query.prepare("SELECT MAX(id) AS max_id FROM " + tableName + " WHERE userId = :userId;")) {
-            qCritical() << "Cannot prepare query to get next id for this user";
-            return false;
-        }
-        query.bindValue(":userId", m_userId);
-        if (!query.exec()) {
-            qCritical() << "Cannot execute query to get next id for this user";
-            return false;
-        }
-        m_id = 1;
-        if (query.next()) {
-            QVariant value = query.record().value("max_id");
-            if (value.isValid()) {
-                bool ok;
-                qulonglong id = value.toULongLong(&ok);
-                if (ok)
-                    m_id = id + 1;
-            }
-        }
-    }
-
     if (!query.prepare("INSERT OR REPLACE INTO " + tableName +
-                               " ( id,  userId,  dateTime,  weight,  bodyFatPercent,  waterPercent,  musclePercent)"
-                        " VALUES (:id, :userId, :dateTime, :weight, :bodyFatPercent, :waterPercent, :musclePercent);")) {
+                               " ( userId,  dateTime,  weight,  bodyFatPercent,  waterPercent,  musclePercent)"
+                        " VALUES (:userId, :dateTime, :weight, :bodyFatPercent, :waterPercent, :musclePercent);")) {
         qCritical() << "Cannot prepare query for UserMeasurementDB::save()";
         return false;
     }
-    query.bindValue(":id", m_id);
     query.bindValue(":userId", m_userId);
     query.bindValue(":dateTime", m_dateTime);
     query.bindValue(":weight", m_weight);
@@ -268,7 +223,6 @@ QDebug operator<<(QDebug dbg, const UserMeasurementDB& um)
     return dbg;
 #else
     dbg.nospace() << "Data::UserMeasurementDB("
-                  << um.m_id << ", "
                   << um.m_userId << ", "
                   << um.m_dateTime.toString() << " - "
                   << um.m_weight << "kg, "

@@ -50,10 +50,6 @@ class UserMeasurementDB : public UserMeasurement
     Q_OBJECT
     Q_DISABLE_COPY(UserMeasurementDB)
 
-    /*! The id of the measurement.
-     * \sa getId setId
-     */
-    Q_PROPERTY(qulonglong id READ getId WRITE setId)
     /*! The user who owns the measurement.
      * \sa getUserId setUserId
      */
@@ -91,11 +87,6 @@ public:
      */
     static UserMeasurementDBList loadAll(UserData* user);
 
-    /*! Getter for the id property.
-     * \sa id setId
-     */
-    qulonglong getId() const;
-
     /*! Getter for the userId property.
      * \sa userId setUserId
      */
@@ -108,19 +99,12 @@ public:
 
 public slots:
     /*! Setter for the id property.
-     * \param id the new value
-     * \sa id getId
-     */
-    void setId(const qulonglong& id);
-
-    /*! Setter for the id property.
      * \param userId the new value
      * \sa id getId
      */
     void setUserId(const uchar& userId);
 
 protected:
-    qulonglong  m_id;       //!< id property value.         \sa id getId setId
     uchar       m_userId;   //!< user id property value.    \sa userId getUserId setUserId
 
     /*! Parse a QSqlRecord into the UserMeasurementDB object
