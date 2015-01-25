@@ -57,8 +57,19 @@ bool isTablePresent (const QString& tableName);
 typedef QPair<QString, QString> Column;
 //! Column list type
 typedef QList<Column> ColumnList;
+//! Table constraints enum
+enum TableConstraintTypes {
+    PrimaryKey,
+    Unique,
+    Check,
+    ForeignKey
+};
+//! Table constraint type
+typedef QPair<TableConstraintTypes, QString> TableConstraint;
+//! Table constraints list type
+typedef QList<TableConstraint> TableConstraintList;
 //! Create a table
-bool createTable(const QString& tableName, const ColumnList& tableDefinition);
+bool createTable(const QString& tableName, const ColumnList& tableDefinition, const TableConstraintList& tableConstraints = TableConstraintList());
 //! Drop a table
 bool dropTable(const QString& tableName);
 

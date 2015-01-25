@@ -177,12 +177,36 @@ bool isTablePresent(const QString& tableName)
     return (db.tables().indexOf(tableName) >= 0);
 }
 
-bool createTable(const QString& tableName, const ColumnList& tableDefinition)
+bool createTable(const QString& tableName, const ColumnList& tableDefinition, const TableConstraintList& tableConstraints)
 {
     QStringList tmp;
-    ColumnList::ConstIterator it, itEnd = tableDefinition.end();
-    for (it = tableDefinition.begin(); it != itEnd; ++it)
-        tmp << it->first + " " + it->second;
+    {
+        ColumnList::ConstIterator it, itEnd = tableDefinition.end();
+        for (it = tableDefinition.begin(); it != itEnd; ++it)
+            tmp << it->first + " " + it->second;
+    }
+    {
+        TableConstraintList::ConstIterator it, itEnd = tableConstraints.end();
+        for (it = tableConstraints.begin(); it != itEnd; ++it) {
+            switch (it->first) {
+                case PrimaryKey:
+                    tmp << "PRIMARY KEY " + it->second;
+                    break;
+                case Unique:
+                    tmp << "UNIQUE " + it->second;
+                    break;
+                case Check:
+                    tmp << "CHECK " + it->second;
+                    break;
+                case ForeignKey:
+                    tmp << "FOREIGN KEY " + it->second;
+                    break;
+                default:
+                    qCritical() << "Unknown table constraint" << it->first;
+                    return false;
+            }
+        }
+    }
 
     QString sql = QString("CREATE TABLE `%1` (%2) WITHOUT ROWID;").arg(tableName).arg(tmp.join(", "));
     qDebug() << "Creating table" << tableName << ":" << sql;
