@@ -43,11 +43,6 @@ UserDataDB::~UserDataDB()
 {
 }
 
-QString UserDataDB::getName() const
-{
-    return m_name;
-}
-
 bool UserDataDB::createTable()
 {
     int version = Utils::getTableVersion(tableName);
@@ -165,6 +160,11 @@ bool UserDataDB::parse(const QSqlRecord& record)
     m_lastDownload = value.toDateTime();
 
     return true;
+}
+
+QString UserDataDB::getName() const
+{
+    return m_name;
 }
 
 void UserDataDB::setName(const QString& name)
