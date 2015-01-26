@@ -84,6 +84,9 @@ bool setTableVersion(const QString& tableName, const int tableVersion);
  */
 bool executeQuery(QString sql);
 
+//! Enable or disable FOREIGN KEY pragma on DB
+bool setForeignKey(bool active);
+
 } // namespace Utils
 } // namespace BSM
 

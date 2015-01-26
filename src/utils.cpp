@@ -152,6 +152,7 @@ bool openDdAndCheckTables()
     }
 
     // Check or create tables for objects
+    setForeignKey(false); // Disable FK to allow DROP TABLE on upgrades
     QStringList failedTables;
     if (!Data::UserDataDB::createTable()) {
         qCritical() << "Cannot create table" << Data::UserDataDB::tableName;
@@ -161,6 +162,7 @@ bool openDdAndCheckTables()
         qCritical() << "Cannot create table" << Data::UserMeasurementDB::tableName;
         failedTables << Data::UserMeasurementDB::tableName;
     }
+    setForeignKey(true); // Enable FK for normal usage
     // Check for errors
     if (!failedTables.isEmpty()) {
         QMessageBox::critical(0,
@@ -296,6 +298,29 @@ bool executeQuery(QString sql)
     }
 
     return true;
+}
+
+bool setForeignKey(bool active)
+{
+    QSqlQuery query(db);
+    QString sql;
+
+    if (active)
+        sql = "PRAGMA foreign_keys=ON;";
+    else
+        sql = "PRAGMA foreign_keys=OFF;";
+
+    if (query.prepare(sql) && query.exec() && query.prepare("PRAGMA foreign_keys;") && query.exec() && query.next()) {
+        if (active && query.record().value(0).toInt() != 1)
+        {
+            qWarning() << "Cannot enable PRAGMA foreign_keys" << query.lastError().text();
+            return false;
+        }
+        return true;
+    }
+
+    qWarning() << "Missing PRAGMA foreign_keys on DB!" << query.lastError().text();
+    return false;
 }
 
 } // namespace Utils
