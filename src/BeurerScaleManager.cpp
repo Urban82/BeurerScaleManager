@@ -122,6 +122,13 @@ void BeurerScaleManager::downloadCompleted(const QByteArray& data)
                         userDB->setName(name);
                         userDB->setBirthDate(user->getBirthDate());
                         userDB->setGender(user->getGender());
+                        if (!userDB->save()) {
+                            QMessageBox::critical(this,
+                                                  windowTitle() + " - " + tr("New scale user"),
+                                                  tr("Error saving the new user!")
+                            );
+                            continue;
+                        }
                         if (userDB->merge(usb_data->getDateTime(), *user, usb_data->getUserMeasurements(*user))) {
                             Data::UserDataDBList::iterator it = users.begin();
                             Data::UserDataDBList::iterator itEnd = users.end();

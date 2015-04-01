@@ -7,6 +7,7 @@
         <location filename="../src/BeurerScaleManager.cpp" line="98"/>
         <location filename="../src/BeurerScaleManager.cpp" line="108"/>
         <location filename="../src/BeurerScaleManager.cpp" line="115"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="127"/>
         <source>New scale user</source>
         <translation>Nuovo utente della bilancia</translation>
     </message>
@@ -31,27 +32,32 @@
         <translation>Si prega di inserire un nuome valido per l&apos;utente!</translation>
     </message>
     <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="165"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="128"/>
+        <source>Error saving the new user!</source>
+        <translation>Errore durante il salvataggio del nuovo utente!</translation>
+    </message>
+    <message>
+        <location filename="../src/BeurerScaleManager.cpp" line="172"/>
         <source>Wrong scale settings</source>
         <translation>Impostazioni bilancia errati</translation>
     </message>
     <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="166"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="173"/>
         <source>The date and time set in the scale (%1) are not correct!</source>
         <translation>La data e l&amp;apos;orario impostati nella bilancia (%1) non sono corretti!</translation>
     </message>
     <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="168"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="175"/>
         <source>Please check the settings.</source>
         <translation>Si prega di controllare le impostazioni.</translation>
     </message>
     <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="181"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="188"/>
         <source>No scale found or download error!&lt;br&gt;&lt;br&gt;Please check USB cable and try again.</source>
         <translation>Nessuna bilancia trovata o errore nel download!&lt;br&gt;&lt;br&gt;Si prega di controllare il cavo USB e riprovare nuovamente.</translation>
     </message>
     <message>
-        <location filename="../src/BeurerScaleManager.cpp" line="180"/>
+        <location filename="../src/BeurerScaleManager.cpp" line="187"/>
         <source>Download error</source>
         <translation>Errore download</translation>
     </message>
@@ -146,7 +152,7 @@
     </message>
     <message>
         <location filename="../src/utils.cpp" line="148"/>
-        <location filename="../src/utils.cpp" line="167"/>
+        <location filename="../src/utils.cpp" line="169"/>
         <source>Cannot create table</source>
         <translation>Impossibile creare la tabella</translation>
     </message>
@@ -156,7 +162,7 @@
         <translation>Impossibile creare la tabella &quot;%1&quot;.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="168"/>
+        <location filename="../src/utils.cpp" line="170"/>
         <source>Cannot create the following tables: %1.&lt;br&gt;&lt;br&gt;Please check your environment.</source>
         <translation>Impossibile creare le seguenti tabelle: %1.&lt;br&gt;&lt;br&gt;Si prega di controllare l&apos;ambiente.</translation>
     </message>
