@@ -207,7 +207,8 @@ bool UserDataDB::merge(const QDateTime& scaleDateTime, const UserData& userData,
         if (m->getDateTime() > m_lastDownload) {
             // Save new UserMeasurementDB for this user
             UserMeasurementDB* measurement_db = new UserMeasurementDB(*m, this);
-            measurement_db->save();
+            if (!measurement_db->save())
+                qWarning() << "Cannot save measurement" << measurement_db;
         }
     }
 
