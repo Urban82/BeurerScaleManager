@@ -160,7 +160,11 @@ void UsbDownloader::run()
         usb_data.dump.open(QIODevice::WriteOnly | QIODevice::Truncate);
 #endif
         libusb_fill_interrupt_transfer(transfer_receive, handle, LIBUSB_ENDPOINT_IN | USB_INTERFACE_OUT, buffer_receive, sizeof(buffer_receive), cb_in, &usb_data, 30000);
-        libusb_submit_transfer(transfer_receive);
+        r = libusb_submit_transfer(transfer_receive);
+        if (r < 0) {
+            qCritical() << "libusb_submit_transfer error" << r;
+            break;
+        }
 
         // Prepare to send request
         qDebug() << "Send control request";
@@ -170,11 +174,14 @@ void UsbDownloader::run()
         buffer_send[LIBUSB_CONTROL_SETUP_SIZE] = USB_CTRL_DATA_FIRST;
         memset(buffer_send + LIBUSB_CONTROL_SETUP_SIZE + 1, 0, USB_CTRL_DATA_LEN - 1);
         libusb_fill_control_transfer(transfer_send, handle, buffer_send, cb_out, 0, 3000);
-        libusb_submit_transfer(transfer_send);
+        r = libusb_submit_transfer(transfer_send);
+        if (r < 0) {
+            qCritical() << "libusb_submit_transfer error" << r;
+            break;
+        }
 
         // Wait for completion
         while (!usb_data.completed) {
-            qDebug() << "Waiting!";
             r = libusb_handle_events_completed(ctx, 0);
             emit progress(100 * usb_data.data.size() / USB_EXPECTED_LEN);
             if (r < 0)
