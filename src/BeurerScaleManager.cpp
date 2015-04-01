@@ -180,6 +180,8 @@ void BeurerScaleManager::downloadError()
                          windowTitle() + " - " + tr("Download error"),
                          tr("No scale found or download error!<br><br>Please check USB cable and try again.")
     );
+
+    selectUser(ui->comboUser->currentIndex());
 }
 
 void BeurerScaleManager::selectUser(const int index)
