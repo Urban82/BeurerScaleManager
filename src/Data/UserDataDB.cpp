@@ -38,6 +38,7 @@ const uint UserDataDB::tableVersion = 1;
 
 UserDataDB::UserDataDB(QObject* parent)
     : UserData(parent)
+    , m_lastDownload(QDateTime(QDate(0, 1, 1)))
 {
 }
 
@@ -220,11 +221,46 @@ bool UserDataDB::merge(const QDateTime& scaleDateTime, const UserData& userData,
 bool UserDataDB::save() const
 {
     QSqlQuery query;
-    if (!query.prepare("INSERT OR REPLACE INTO " + tableName +
-                               " ( id,  name,  birthDate,  height,  gender,  activity,  lastDownload)"
-                        " VALUES (:id, :name, :birthDate, :height, :gender, :activity, :lastDownload);")) {
-        qCritical() << "Cannot prepare query for UserDataDB::save()" << query.lastError().text();
+    if (!query.prepare("SELECT COUNT(*) AS c FROM " + tableName + " WHERE id = :id")) {
+        qCritical() << "Cannot prepare SELECT query for UserDataDB::save()" << query.lastError().text();
         return false;
+    }
+    query.bindValue(":id", m_id);
+    if (!query.exec()) {
+        qCritical() << "Cannot execute SELECT query for UserDataDB::save()" << query.lastError().text();
+        return false;
+    }
+    if (!query.next()) {
+        qCritical() << "Cannot select record for UserDataDB::save()" << query.lastError().text();
+        return false;
+    }
+    bool ok;
+    int count = query.record().value("c").toInt(&ok);
+    if (!ok) {
+        qCritical() << "Cannot parse record for UserDataDB::save()" << query.lastError().text();
+        return false;
+    }
+
+    if (count == 0) {
+        if (!query.prepare("INSERT INTO " + tableName +
+                                " ( id,  name,  birthDate,  height,  gender,  activity,  lastDownload)"
+                            " VALUES (:id, :name, :birthDate, :height, :gender, :activity, :lastDownload);")) {
+            qCritical() << "Cannot prepare INSERT query" << query.lastQuery() << "for UserDataDB::save()" << query.lastError().text();
+            return false;
+        }
+    }
+    else {
+        if (!query.prepare("UPDATE " + tableName + " SET "
+                                "name         = :name, "
+                                "birthDate    = :birthDate, "
+                                "height       = :height, "
+                                "gender       = :gender, "
+                                "activity     = :activity, "
+                                "lastDownload = :lastDownload "
+                            "WHERE id = :id;")) {
+            qCritical() << "Cannot prepare UPDATE query" << query.lastQuery() << "for UserDataDB::save()" << query.lastError().text();
+            return false;
+        }
     }
     query.bindValue(":id", m_id);
     query.bindValue(":name", m_name);
