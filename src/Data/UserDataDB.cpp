@@ -28,6 +28,7 @@
 #include <Usb/UsbData.hpp>
 
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 
 namespace BSM {
 namespace Data {
@@ -84,11 +85,11 @@ UserDataDBList UserDataDB::loadAll()
 
     QSqlQuery query;
     if (!query.prepare("SELECT * FROM " + tableName + " ORDER BY name;")) {
-        qCritical() << "Cannot prepare query for UserDataDB::loadAll()";
+        qCritical() << "Cannot prepare query for UserDataDB::loadAll()" << query.lastError().text();
         return list;
     }
     if (!query.exec()) {
-        qCritical() << "Cannot execute query for UserDataDB::loadAll()";
+        qCritical() << "Cannot execute query for UserDataDB::loadAll()" << query.lastError().text();
         return list;
     }
     while (query.next()) {
@@ -222,7 +223,7 @@ bool UserDataDB::save() const
     if (!query.prepare("INSERT OR REPLACE INTO " + tableName +
                                " ( id,  name,  birthDate,  height,  gender,  activity,  lastDownload)"
                         " VALUES (:id, :name, :birthDate, :height, :gender, :activity, :lastDownload);")) {
-        qCritical() << "Cannot prepare query for UserDataDB::save()";
+        qCritical() << "Cannot prepare query for UserDataDB::save()" << query.lastError().text();
         return false;
     }
     query.bindValue(":id", m_id);
@@ -233,7 +234,7 @@ bool UserDataDB::save() const
     query.bindValue(":activity", m_activity);
     query.bindValue(":lastDownload", m_lastDownload);
     if (!query.exec()) {
-        qCritical() << "Cannot execute query for UserDataDB::save()";
+        qCritical() << "Cannot execute query for UserDataDB::save()" << query.lastError().text();
         return false;
     }
 

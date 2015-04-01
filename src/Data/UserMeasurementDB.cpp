@@ -27,6 +27,7 @@
 #include <Data/UserData.hpp>
 
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 
 namespace BSM {
 namespace Data {
@@ -106,12 +107,12 @@ UserMeasurementDBList UserMeasurementDB::loadAll(UserData* user)
 
     QSqlQuery query;
     if (!query.prepare("SELECT * FROM " + tableName + " WHERE userId = :userId ORDER BY dateTime;")) {
-        qCritical() << "Cannot prepare query for UserMeasurementDB::loadAll()";
+        qCritical() << "Cannot prepare query for UserMeasurementDB::loadAll()" << query.lastError().text();
         return list;
     }
     query.bindValue(":userId", user->getId());
     if (!query.exec()) {
-        qCritical() << "Cannot execute query for UserMeasurementDB::loadAll()";
+        qCritical() << "Cannot execute query for UserMeasurementDB::loadAll()" << query.lastError().text();
         return list;
     }
     while (query.next()) {
@@ -200,7 +201,7 @@ bool UserMeasurementDB::save()
     if (!query.prepare("INSERT OR REPLACE INTO " + tableName +
                                " ( userId,  dateTime,  weight,  bodyFatPercent,  waterPercent,  musclePercent)"
                         " VALUES (:userId, :dateTime, :weight, :bodyFatPercent, :waterPercent, :musclePercent);")) {
-        qCritical() << "Cannot prepare query for UserMeasurementDB::save()";
+        qCritical() << "Cannot prepare query for UserMeasurementDB::save()" << query.lastError().text();
         return false;
     }
     query.bindValue(":userId", m_userId);
@@ -210,7 +211,7 @@ bool UserMeasurementDB::save()
     query.bindValue(":waterPercent", m_waterPercent);
     query.bindValue(":musclePercent", m_musclePercent);
     if (!query.exec()) {
-        qCritical() << "Cannot execute query for UserMeasurementDB::save()";
+        qCritical() << "Cannot execute query for UserMeasurementDB::save()" << query.lastError().text();
         return false;
     }
 
