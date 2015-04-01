@@ -65,11 +65,6 @@ void BeurerScaleManager::startDownload()
     ui->progressDownload->setValue(0);
     ui->tableMeasurements->setDisabled(true);
 
-    // Clear tableMeasurements
-    QAbstractItemModel* oldModel = ui->tableMeasurements->model();
-    ui->tableMeasurements->setModel(0);
-    delete oldModel;
-
     usb->start();
 }
 
