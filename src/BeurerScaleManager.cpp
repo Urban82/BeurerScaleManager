@@ -32,6 +32,7 @@
 #include <QtCore/QDebug>
 #include <QtGui/QMessageBox>
 #include <QtGui/QInputDialog>
+#include <QtGui/QScrollBar>
 
 namespace BSM {
 
@@ -202,9 +203,8 @@ void BeurerScaleManager::selectUser(const int index)
     delete oldModel;
 
     ui->tableMeasurements->setEnabled(true);
-    int row = userData->getMeasurements().size() - 1;
-    ui->tableMeasurements->selectRow(row);
-    ui->tableMeasurements->showRow(row);
+    ui->tableMeasurements->selectRow(userData->getMeasurements().size() - 1);
+    ui->tableMeasurements->verticalScrollBar()->setValue(ui->tableMeasurements->verticalScrollBar()->maximum());
 }
 
 } // namespace BSM
