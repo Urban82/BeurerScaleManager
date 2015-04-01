@@ -193,7 +193,9 @@ void BeurerScaleManager::selectUser(const int index)
     delete oldModel;
 
     ui->tableMeasurements->setEnabled(true);
-    ui->tableMeasurements->selectRow(userData->getMeasurements().size() - 1);
+    int row = userData->getMeasurements().size() - 1;
+    ui->tableMeasurements->selectRow(row);
+    ui->tableMeasurements->showRow(row);
 }
 
 } // namespace BSM
