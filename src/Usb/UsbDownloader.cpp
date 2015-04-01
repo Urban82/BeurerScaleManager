@@ -56,6 +56,8 @@ namespace Usb {
 // #define USB_READ_DUMP       "usbdata.txt"
 //! File for the dump of the USB data (debug)
 // #define USB_WRITE_DUMP      "usbdump.txt"
+//! Show USB data IN and OUT on debug output
+// #define USB_DEBUG_IO_OUTPUT
 
 //! \private
 struct UsbDownloaderData {
@@ -261,17 +263,21 @@ void UsbDownloader::run()
 
 void cb_out(struct libusb_transfer *transfer)
 {
+#ifdef USB_DEBUG_IO_OUTPUT
     qDebug() << "[OUT]" << "status =" << transfer->status << "- actual length =" << transfer->actual_length;
+#endif
 }
 
 void cb_in(struct libusb_transfer *transfer)
 {
+#ifdef USB_DEBUG_IO_OUTPUT
     qDebug() << "[IN]" << "status =" << transfer->status << "- actual length =" << transfer->actual_length;
     QString s;
     for (int i = 0; i < transfer->actual_length; ++i) {
         s.append(QString("%1 ").arg((short) transfer->buffer[i], 2, 16, QChar('0')));
     }
     qDebug() << "[IN]" << s.toStdString().c_str();
+#endif
 
     UsbDownloaderData* usb_data = (UsbDownloaderData*) transfer->user_data;
 
